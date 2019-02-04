@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842D42B2220886D700CEB09F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D42B1220886D700CEB09F /* ResultViewController.swift */; };
 		8446E84122071299008FF376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446E84022071299008FF376 /* AppDelegate.swift */; };
 		8446E84322071299008FF376 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8446E84222071299008FF376 /* GameScene.sks */; };
 		8446E84522071299008FF376 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8446E84422071299008FF376 /* Actions.sks */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		842D42B1220886D700CEB09F /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		8446E83D22071299008FF376 /* ping-pong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ping-pong.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446E84022071299008FF376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8446E84222071299008FF376 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				8446E84422071299008FF376 /* Actions.sks */,
 				8446E84622071299008FF376 /* GameScene.swift */,
 				8446E84822071299008FF376 /* GameViewController.swift */,
+				842D42B1220886D700CEB09F /* ResultViewController.swift */,
 				8446E84A22071299008FF376 /* Main.storyboard */,
 				8446E84D2207129C008FF376 /* Assets.xcassets */,
 				8446E84F2207129C008FF376 /* LaunchScreen.storyboard */,
@@ -228,6 +231,7 @@
 				8446E84722071299008FF376 /* GameScene.swift in Sources */,
 				8446E84922071299008FF376 /* GameViewController.swift in Sources */,
 				8446E84122071299008FF376 /* AppDelegate.swift in Sources */,
+				842D42B2220886D700CEB09F /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
