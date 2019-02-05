@@ -30,6 +30,8 @@ class GameScene: SKScene {
 
         ball.physicsBody?.applyImpulse(CGVector(dx: 75, dy: 75))
         physicsBody = sceneBorder
+
+        physicsWorld.contactDelegate = self
     }
     
     
@@ -68,4 +70,20 @@ class GameScene: SKScene {
         let followBall = SKAction.moveTo(x: ball.position.x, duration: 0.5)
         enemy.run(followBall)
     }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard
+            let spriteNodeA = contact.bodyA.node as? SKSpriteNode,
+            let spriteNodeB = contact.bodyB.node as? SKSpriteNode
+        else { return }
+
+        let nodes: Set<SKSpriteNode> = [spriteNodeA, spriteNodeB]
+        guard nodes.contains(ball) else { return }
+        let play = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
+        ball.run(play)
+    }
+
+    func didEnd(_ contact: SKPhysicsContact) { }
 }
