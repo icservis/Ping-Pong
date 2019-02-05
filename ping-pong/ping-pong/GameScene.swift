@@ -14,6 +14,8 @@ class GameScene: SKScene {
     var player: SKSpriteNode!
     var enemy: SKSpriteNode!
 
+    let playPing = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
+
     private lazy var sceneBorder: SKPhysicsBody = {
         let sceneBorder = SKPhysicsBody(edgeLoopFrom: frame)
         sceneBorder.friction = 0
@@ -32,6 +34,7 @@ class GameScene: SKScene {
         physicsBody = sceneBorder
 
         physicsWorld.contactDelegate = self
+        let _ = playPing
     }
     
     
@@ -81,8 +84,7 @@ extension GameScene: SKPhysicsContactDelegate {
 
         let nodes: Set<SKSpriteNode> = [spriteNodeA, spriteNodeB]
         guard nodes.contains(ball) else { return }
-        let play = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
-        ball.run(play)
+        run(playPing)
     }
 
     func didEnd(_ contact: SKPhysicsContact) { }

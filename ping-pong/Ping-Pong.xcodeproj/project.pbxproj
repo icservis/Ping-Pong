@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		84161259220A1217000A3B27 /* ball-ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 84161258220A1217000A3B27 /* ball-ping.caf */; };
+		8416125B220A2155000A3B27 /* ball-ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8416125A220A2155000A3B27 /* ball-ping.caf */; };
 		842D42B2220886D700CEB09F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D42B1220886D700CEB09F /* ResultViewController.swift */; };
 		8446E84122071299008FF376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446E84022071299008FF376 /* AppDelegate.swift */; };
 		8446E84322071299008FF376 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8446E84222071299008FF376 /* GameScene.sks */; };
@@ -32,7 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		84161258220A1217000A3B27 /* ball-ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ball-ping.caf"; sourceTree = "<group>"; };
+		8416125A220A2155000A3B27 /* ball-ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ball-ping.caf"; sourceTree = "<group>"; };
 		842D42B1220886D700CEB09F /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		8446E83D22071299008FF376 /* ping-pong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ping-pong.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446E84022071299008FF376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 		84161257220A1217000A3B27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				84161258220A1217000A3B27 /* ball-ping.caf */,
+				8416125A220A2155000A3B27 /* ball-ping.caf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -220,7 +220,7 @@
 				8446E84C22071299008FF376 /* Main.storyboard in Resources */,
 				8446E84322071299008FF376 /* GameScene.sks in Resources */,
 				8446E84E2207129C008FF376 /* Assets.xcassets in Resources */,
-				84161259220A1217000A3B27 /* ball-ping.caf in Resources */,
+				8416125B220A2155000A3B27 /* ball-ping.caf in Resources */,
 				8446E8512207129C008FF376 /* LaunchScreen.storyboard in Resources */,
 				8446E84522071299008FF376 /* Actions.sks in Resources */,
 			);
