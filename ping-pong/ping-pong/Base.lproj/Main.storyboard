@@ -20,6 +20,9 @@
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Game" image="tennis rocket" id="VYQ-am-CHJ"/>
+                    <connections>
+                        <segue destination="2ym-f0-r3I" kind="presentation" identifier="results" id="rA5-IO-Dxz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
