@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8416125B220A2155000A3B27 /* ball-ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8416125A220A2155000A3B27 /* ball-ping.caf */; };
+		842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */; };
 		842D42B2220886D700CEB09F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D42B1220886D700CEB09F /* ResultViewController.swift */; };
 		8446E84122071299008FF376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446E84022071299008FF376 /* AppDelegate.swift */; };
 		8446E84322071299008FF376 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8446E84222071299008FF376 /* GameScene.sks */; };
@@ -19,6 +20,9 @@
 		8446E8512207129C008FF376 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8446E84F2207129C008FF376 /* LaunchScreen.storyboard */; };
 		8446E85C2207129C008FF376 /* ping_pongTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446E85B2207129C008FF376 /* ping_pongTests.swift */; };
 		8446E8682207137D008FF376 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8446E8672207137D008FF376 /* GameKit.framework */; };
+		84897932225A54270027818C /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84897931225A54270027818C /* MenuScene.swift */; };
+		84897934225A54610027818C /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84897933225A54610027818C /* MenuScene.sks */; };
+		84897936225A56070027818C /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84897935225A56070027818C /* ActionButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		8416125A220A2155000A3B27 /* ball-ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ball-ping.caf"; sourceTree = "<group>"; };
+		842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LLPIXEL3.ttf; sourceTree = "<group>"; };
 		842D42B1220886D700CEB09F /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		8446E83D22071299008FF376 /* ping-pong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ping-pong.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446E84022071299008FF376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +53,9 @@
 		8446E85B2207129C008FF376 /* ping_pongTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ping_pongTests.swift; sourceTree = "<group>"; };
 		8446E85D2207129C008FF376 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8446E8672207137D008FF376 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		84897931225A54270027818C /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		84897933225A54610027818C /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
+		84897935225A56070027818C /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +80,7 @@
 		84161257220A1217000A3B27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */,
 				8416125A220A2155000A3B27 /* ball-ping.caf */,
 			);
 			path = Resources;
@@ -101,15 +110,18 @@
 			children = (
 				8446E8522207129C008FF376 /* Info.plist */,
 				8446E84422071299008FF376 /* Actions.sks */,
-				8446E84222071299008FF376 /* GameScene.sks */,
 				8446E84022071299008FF376 /* AppDelegate.swift */,
 				8446E84622071299008FF376 /* GameScene.swift */,
+				8446E84222071299008FF376 /* GameScene.sks */,
+				84897931225A54270027818C /* MenuScene.swift */,
+				84897933225A54610027818C /* MenuScene.sks */,
 				8446E84822071299008FF376 /* GameViewController.swift */,
 				842D42B1220886D700CEB09F /* ResultViewController.swift */,
 				8446E84D2207129C008FF376 /* Assets.xcassets */,
 				8446E84F2207129C008FF376 /* LaunchScreen.storyboard */,
 				8446E84A22071299008FF376 /* Main.storyboard */,
 				84161257220A1217000A3B27 /* Resources */,
+				84897937225A574F0027818C /* Views */,
 			);
 			path = "ping-pong";
 			sourceTree = "<group>";
@@ -129,6 +141,14 @@
 				8446E8672207137D008FF376 /* GameKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84897937225A574F0027818C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				84897935225A56070027818C /* ActionButton.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,6 +201,7 @@
 				TargetAttributes = {
 					8446E83C22071299008FF376 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1130;
 						SystemCapabilities = {
 							com.apple.GameCenter.iOS = {
 								enabled = 1;
@@ -189,6 +210,7 @@
 					};
 					8446E8562207129C008FF376 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1130;
 						TestTargetID = 8446E83C22071299008FF376;
 					};
 				};
@@ -222,7 +244,9 @@
 				8446E84E2207129C008FF376 /* Assets.xcassets in Resources */,
 				8416125B220A2155000A3B27 /* ball-ping.caf in Resources */,
 				8446E8512207129C008FF376 /* LaunchScreen.storyboard in Resources */,
+				842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */,
 				8446E84522071299008FF376 /* Actions.sks in Resources */,
+				84897934225A54610027818C /* MenuScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,8 +266,10 @@
 			files = (
 				8446E84722071299008FF376 /* GameScene.swift in Sources */,
 				8446E84922071299008FF376 /* GameViewController.swift in Sources */,
+				84897932225A54270027818C /* MenuScene.swift in Sources */,
 				8446E84122071299008FF376 /* AppDelegate.swift in Sources */,
 				842D42B2220886D700CEB09F /* ResultViewController.swift in Sources */,
+				84897936225A56070027818C /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +442,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ic-servis.ping-pong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Ping Pong DEV";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -437,7 +463,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ic-servis.ping-pong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Ping Pong AdHoc";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -457,7 +483,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zentity.ping-pongTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ping-pong.app/ping-pong";
 			};
@@ -478,7 +504,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zentity.ping-pongTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ping-pong.app/ping-pong";
 			};

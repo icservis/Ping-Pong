@@ -10,15 +10,23 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    enum Difficulty {
+        case easy
+        case medium
+        case hard
+    }
+    var difficulty: Difficulty = .easy
     var ball: SKSpriteNode!
     var player: SKSpriteNode!
     var enemy: SKSpriteNode!
-    var scoreLabel: SKLabelNode!
+    var playerScore: SKLabelNode!
+    var enemyScore: SKLabelNode!
 
     let playPing = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
     var score: (player: Int, enemy: Int) = (0, 0) {
         didSet {
-            scoreLabel.text = "\(score.player) : \(score.enemy)"
+            playerScore.text = "\(score.player)"
+            enemyScore.text = "\(score.enemy)"
         }
     }
 
@@ -35,9 +43,11 @@ class GameScene: SKScene {
         ball = (childNode(withName: "ball") as! SKSpriteNode)
         player = (childNode(withName: "player") as! SKSpriteNode)
         enemy = (childNode(withName: "enemy") as! SKSpriteNode)
-        scoreLabel = (childNode(withName: "score") as! SKLabelNode)
+        playerScore = (childNode(withName: "playerScore") as! SKLabelNode)
+        enemyScore = (childNode(withName: "enemyScore") as! SKLabelNode)
 
-        ball.physicsBody?.applyImpulse(CGVector(dx: 75, dy: 75))
+        let impulse = CGVector(dx: CGFloat.random(in: 50...75), dy: CGFloat.random(in: 50...75))
+        ball.physicsBody?.applyImpulse(impulse)
         physicsBody = sceneBorder
 
         physicsWorld.contactDelegate = self
@@ -55,12 +65,21 @@ class GameScene: SKScene {
         ball.position = CGPoint(x: 0, y: 0)
     }
 
-    func addScore(playerWhoWon: SKSpriteNode) {
+    func endGame(playerWhoWon: SKSpriteNode) {
+        let randomX = Int.random(in: 50...75)
+        let randomY = Int.random(in: 50...75)
+        let radomSign = Bool.random() ? -1 : 1
         if playerWhoWon == enemy {
             score.enemy += 1
+            resetBall()
+            let impulse = CGVector(dx: radomSign * randomX, dy: -randomY)
+            ball.physicsBody?.applyImpulse(impulse)
         }
         if playerWhoWon == player {
             score.player += 1
+            resetBall()
+            let impulse = CGVector(dx: radomSign * randomX, dy: randomY)
+            ball.physicsBody?.applyImpulse(impulse)
         }
     }
     
@@ -99,16 +118,11 @@ class GameScene: SKScene {
         let followBall = SKAction.moveTo(x: ball.position.x, duration: 0.5)
         enemy.run(followBall)
 
-        let offset: CGFloat = 70
-        if ball.position.y <= player.position.y - offset {
-            addScore(playerWhoWon: enemy)
-            resetBall()
-            ball.physicsBody?.applyImpulse(CGVector(dx: -75, dy: -75))
+        if ball.position.y <= player.position.y {
+            endGame(playerWhoWon: enemy)
         }
-        if ball.position.y >= enemy.position.y + offset {
-            addScore(playerWhoWon: player)
-            resetBall()
-            ball.physicsBody?.applyImpulse(CGVector(dx: 75, dy: 75))
+        if ball.position.y >= enemy.position.y {
+            endGame(playerWhoWon: player)
         }
     }
 }
