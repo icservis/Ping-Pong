@@ -25,7 +25,8 @@ class ActionButton: SKSpriteNode {
                 isUserInteractionEnabled = true
                 alpha = 1.0
             case .selected:
-                alpha = 0.7
+                isUserInteractionEnabled = true
+                alpha = 0.75
             case .hidden:
                 isUserInteractionEnabled = false
                 alpha = 0.0
