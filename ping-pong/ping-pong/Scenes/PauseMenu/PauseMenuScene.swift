@@ -7,9 +7,8 @@
 //
 
 import SpriteKit
-import GameplayKit
 
-class ResumeScene: BaseScene {
+class PauseMenuScene: BaseScene {
     var resumeButton: ActionButton!
     var restartButton: ActionButton!
     var menuButton: ActionButton!
@@ -17,20 +16,20 @@ class ResumeScene: BaseScene {
     override func didMove(to view: SKView) {
         resumeButton = (childNode(withName: "resume") as! ActionButton)
         resumeButton.onStateChange = { [weak self] state in
-            guard case .selected = state else { return }
-            self?.loadGame()
+            guard let self = self, case .selected = state else { return }
+            self.resumeGame()
         }
 
         restartButton = (childNode(withName: "restart") as! ActionButton)
         restartButton.onStateChange = { [weak self] state in
-            guard case .selected = state else { return }
-            self?.restartGame()
+            guard let self = self, case .selected = state else { return }
+            self.restartGame()
         }
 
         menuButton = (childNode(withName: "menu") as! ActionButton)
         menuButton.onStateChange = { [weak self] state in
-            guard case .selected = state else { return }
-            self?.loadMainMenu()
+            guard let self = self, case .selected = state else { return }
+            self.goMainMenu()
         }
     }
 }

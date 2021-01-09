@@ -10,12 +10,27 @@ import SpriteKit
 import GameplayKit
 
 class BaseScene: SKScene {
+    lazy var stateMachine: GameStateMachine = {
+        let machine = GameStateMachine(states: [
+            GamePlayState(scene: self),
+            MainMenuState(scene: self),
+            LevelsMenuState(scene: self),
+            PauseMenuState(scene: self),
+            ScoreMenuState(scene: self),
+            GameOverMenuState(scene: self)
+        ])
+        return machine
+    }()
+
     enum Difficulty {
         case easy
         case medium
         case hard
     }
     var difficulty: Difficulty = .easy
+
+    //
+    // MARK: Score
     typealias Score = (player: Int, enemy: Int)
     var score: Score = (0, 0) {
         didSet {
@@ -45,13 +60,16 @@ class BaseScene: SKScene {
     func resetScore() {
         score = (player: 0, enemy: 0)
     }
-    
-    func loadGame() {
+
+    //
+    // MARK: Scenes
+    //
+
+    private func loadScene(_ fileNamed: String) {
         guard
             let view = view,
-            let scene = SKScene(fileNamed: "GameScene")
+            let scene = SKScene(fileNamed: fileNamed)
         else { return }
-
         // Set the scale mode to scale to fit the window
         scene.scaleMode = .aspectFit
 
@@ -62,54 +80,27 @@ class BaseScene: SKScene {
         view.showsNodeCount = false
     }
 
-    func restartGame() {
-        resetScore()
-        loadGame()
+    func loadGame() {
+        loadScene("GameScene")
     }
 
     func loadMainMenu() {
-        guard
-            let view = view,
-            let scene = SKScene(fileNamed: "MenuScene")
-        else { return }
-        // Set the scale mode to scale to fit the window
-        scene.scaleMode = .resizeFill
-
-        // Present the scene
-        view.presentScene(scene)
-        view.ignoresSiblingOrder = false
-        view.showsFPS = true
-        view.showsNodeCount = false
+        loadScene("MainMenuScene")
     }
 
-    func loadResumeMenu() {
-        guard
-            let view = view,
-            let scene = SKScene(fileNamed: "ResumeScene")
-        else { return }
-        // Set the scale mode to scale to fit the window
-        scene.scaleMode = .resizeFill
-
-        // Present the scene
-        view.presentScene(scene)
-        view.ignoresSiblingOrder = false
-        view.showsFPS = true
-        view.showsNodeCount = false
+    func loadLevelsMenu() {
+        loadScene("LevelsMenuScene")
     }
 
-    func loadMapMenu() {
-        guard
-            let view = view,
-            let scene = SKScene(fileNamed: "MapScene")
-        else { return }
+    func loadPauseMenu() {
+        loadScene("PauseMenuScene")
+    }
 
-        // Set the scale mode to scale to fit the window
-        scene.scaleMode = .resizeFill
+    func loadScoreMenu() {
+        loadScene("ScoreMenuScene")
+    }
 
-        // Present the scene
-        view.presentScene(scene)
-        view.ignoresSiblingOrder = false
-        view.showsFPS = true
-        view.showsNodeCount = false
+    func loadGameOverMenu() {
+        loadScene("GameOverScene")
     }
 }

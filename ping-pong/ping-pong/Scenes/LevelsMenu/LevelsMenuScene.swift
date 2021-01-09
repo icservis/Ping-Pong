@@ -7,8 +7,7 @@
 //
 
 import SpriteKit
-import GameplayKit
 
-class MapScene: SKScene {
+class LevelsMenuScene: BaseScene {
 
 }

@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 class GameScene: BaseScene {
     var ball: SKSpriteNode!
@@ -36,8 +35,8 @@ class GameScene: BaseScene {
         enemyScore = (childNode(withName: "enemyScore") as! SKLabelNode)
         pauseResume = (childNode(withName: "resume") as! ActionButton)
         pauseResume.onStateChange = { [weak self] state in
-            guard case .selected = state else { return }
-            self?.loadResumeMenu()
+            guard let self = self, case .selected = state else { return }
+            self.pauseGame()
         }
 
         let impulse = CGVector(dx: CGFloat.random(in: 50...75), dy: CGFloat.random(in: 50...75))

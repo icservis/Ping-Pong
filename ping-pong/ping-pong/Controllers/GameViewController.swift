@@ -10,13 +10,13 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
+final class GameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
         guard
             let view = view as? SKView,
-            let scene = SKScene(fileNamed: "MenuScene")
+            let scene = SKScene(fileNamed: "IntroScene")
         else { return }
 
         // Set the scale mode to scale to fit the window
