@@ -39,8 +39,8 @@ class Player: NSObject, NSCoding {
     typealias Score = (player: Int, enemy: Int)
     var score: Score = (player: 0, enemy: 0) {
         didSet {
-            store()
             scoreChanged?(score)
+            store()
         }
     }
 
@@ -79,12 +79,12 @@ class Player: NSObject, NSCoding {
     }
 
     func store() {
-        logger.trace("Player store to persistence level: \(level), score: \(score)")
         let defaults = UserDefaults.standard
         defaults.set(level.rawValue, forKey: Keys.level.rawValue)
         defaults.set(score.player, forKey: Keys.scorePlayer.rawValue)
         defaults.set(score.enemy, forKey: Keys.scoreEnemy.rawValue)
         defaults.synchronize()
+        logger.trace("Player store to persistence level: \(level), score: \(score)")
     }
 
     func restore() {
@@ -116,7 +116,7 @@ class Player: NSObject, NSCoding {
     }
 
     func resetScore() {
-            logger.trace("Player reset score")
+        logger.trace("Player reset score")
         self.score = (player: 0, enemy: 0)
     }
 

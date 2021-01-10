@@ -1,23 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "PAUSE SCREEN.png",
       "idiom" : "universal",
-      "filename" : "Pause.png",
       "scale" : "1x"
     },
     {
+      "filename" : "PAUSE SCREEN@2x.png",
       "idiom" : "universal",
-      "filename" : "Pause@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "PAUSE SCREEN@3x.png",
       "idiom" : "universal",
-      "filename" : "Pause@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
