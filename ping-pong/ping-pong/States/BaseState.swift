@@ -16,18 +16,4 @@ class BaseState: GKState {
         self.scene = scene
         super.init()
     }
-
-    override func willExit(to nextState: GKState) {
-        super.willExit(to: nextState)
-        debugPrint("\(self) will exit to: \(nextState)")
-    }
-
-    override func didEnter(from previousState: GKState?) {
-        super.didEnter(from: previousState)
-        if let previousState = previousState {
-            debugPrint("\(self) did enter from: \(previousState)")
-        } else {
-            debugPrint("\(self) did enter from none")
-        }
-    }
 }

@@ -20,10 +20,10 @@ final class GameViewController: BaseViewController {
         else { return }
 
         // Set the scale mode to scale to fit the window
-        scene.scaleMode = .resizeFill
+        scene.scaleMode = .aspectFit
 
         // Present the scene
-        view.presentScene(scene)
+        view.presentScene(scene, transition: .fade(withDuration: 0.25))
         view.ignoresSiblingOrder = false
         view.showsFPS = false
         view.showsNodeCount = false

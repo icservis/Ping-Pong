@@ -8,99 +8,80 @@
 
 import SpriteKit
 import GameplayKit
+import Logging
 
 class BaseScene: SKScene {
-    lazy var stateMachine: GameStateMachine = {
-        let machine = GameStateMachine(states: [
-            GamePlayState(scene: self),
-            MainMenuState(scene: self),
-            LevelsMenuState(scene: self),
-            PauseMenuState(scene: self),
-            ScoreMenuState(scene: self),
-            GameOverMenuState(scene: self)
-        ])
-        return machine
+    lazy var logger: Logger = {
+        var logger = Logger(label: "com.ic-servis.ping-pong.baseScene")
+        logger.logLevel = .trace
+        return logger
     }()
 
-    enum Difficulty {
-        case easy
-        case medium
-        case hard
-    }
-    var difficulty: Difficulty = .easy
-
-    //
-    // MARK: Score
-    typealias Score = (player: Int, enemy: Int)
-    var score: Score = (0, 0) {
-        didSet {
-            updateScore()
+    lazy var player: Player = {
+        let player = Player.defaultPlayer()
+        player.scoreChanged = { [weak self] score in
+            self?.scoreChanged(score)
         }
-    }
+        return player
+    }()
 
-    func updateScore() {
-        let defaults = UserDefaults.standard
-        defaults.set(score.player, forKey: "player")
-        defaults.set(score.enemy, forKey: "enemy")
-        defaults.synchronize()
-    }
-
-    func restoreScore() {
-        let defaults = UserDefaults.standard
-        guard
-            let playerScore = defaults.value(forKey: "player") as? Int,
-            let enemyScore = defaults.value(forKey: "enemy") as? Int
-        else {
-            resetScore()
-            return
-        }
-        score = (player: playerScore, enemy: enemyScore)
-    }
-
-    func resetScore() {
-        score = (player: 0, enemy: 0)
-    }
-
+    func scoreChanged(_ score: Player.Score) { }
+    
+    lazy var stateMachine: GameStateMachine = {
+        return GameStateMachine.defaultMachine(scene: self)
+    }()
     //
     // MARK: Scenes
     //
 
-    private func loadScene(_ fileNamed: String) {
+    @discardableResult
+    private func loadScene(
+        _ fileNamed: String,
+        transition: SKTransition = .fade(withDuration: 0.25)
+    ) -> SKScene? {
         guard
             let view = view,
             let scene = SKScene(fileNamed: fileNamed)
-        else { return }
+        else { return nil }
         // Set the scale mode to scale to fit the window
         scene.scaleMode = .aspectFit
 
         // Present the scene
-        view.presentScene(scene)
+        view.presentScene(scene, transition: transition)
         view.ignoresSiblingOrder = false
-        view.showsFPS = true
+        view.showsFPS = false
         view.showsNodeCount = false
+
+        return scene
     }
 
-    func loadGame() {
-        loadScene("GameScene")
+    @discardableResult
+    func loadGame() -> GameScene? {
+        return loadScene("GameScene") as? GameScene
     }
 
-    func loadMainMenu() {
-        loadScene("MainMenuScene")
+    @discardableResult
+    func loadMainMenu() -> MainMenuScene? {
+        return loadScene("MainMenuScene") as? MainMenuScene
     }
 
-    func loadLevelsMenu() {
-        loadScene("LevelsMenuScene")
+    @discardableResult
+    func loadLevelsMenu() -> LevelsMenuScene? {
+        return loadScene("LevelsMenuScene") as? LevelsMenuScene
     }
 
-    func loadPauseMenu() {
-        loadScene("PauseMenuScene")
+    @discardableResult
+    func loadPauseMenu() -> PauseMenuScene? {
+        return loadScene("PauseMenuScene") as? PauseMenuScene
     }
 
-    func loadScoreMenu() {
-        loadScene("ScoreMenuScene")
+    @discardableResult
+    func loadScoreMenu() -> ScoreMenuScene? {
+        return loadScene("ScoreMenuScene") as? ScoreMenuScene
     }
 
-    func loadGameOverMenu() {
-        loadScene("GameOverScene")
+    @discardableResult
+    func loadGameOverMenu() -> GameOverScene? {
+        return loadScene("GameOverScene") as? GameOverScene
     }
 }

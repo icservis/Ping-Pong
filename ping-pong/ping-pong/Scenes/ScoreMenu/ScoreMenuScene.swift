@@ -6,8 +6,16 @@
 //  Copyright © 2021 IC Servis, s.r.o. All rights reserved.
 //
 
-import UIKit
+import SpriteKit
 
 class ScoreMenuScene: BaseScene {
+    var menuButton: ActionButton!
 
+    override func didMove(to view: SKView) {
+        menuButton = (childNode(withName: "menu") as! ActionButton)
+        menuButton.onStateChange = { [weak self] state in
+            guard let self = self, case .selected = state else { return }
+            self.goMainMenu()
+        }
+    }
 }
