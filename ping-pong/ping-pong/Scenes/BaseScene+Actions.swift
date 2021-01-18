@@ -39,6 +39,7 @@ class BaseScene: SKScene {
         _ fileNamed: String,
         transition: SKTransition = .fade(withDuration: 0.25)
     ) -> SKScene? {
+        logger.trace("Load scene: \(fileNamed)")
         guard
             let view = view,
             let scene = SKScene(fileNamed: fileNamed)
@@ -83,5 +84,21 @@ class BaseScene: SKScene {
     @discardableResult
     func loadGameOverMenu() -> GameOverScene? {
         return loadScene("GameOverScene") as? GameOverScene
+    }
+
+    func instantiateViewController(with identifier: String, completion: (() -> Void)?) {
+        logger.trace("Instantiate view controller: \(identifier)")
+        guard
+            let window = self.view?.window,
+            let rootViewController = window.rootViewController
+        else { return }
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(identifier: identifier)
+
+        rootViewController.present(
+            vc,
+            animated: true,
+            completion: completion
+        )
     }
 }

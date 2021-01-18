@@ -28,7 +28,7 @@ class MainMenuScene: BaseScene {
         }
 
         scoreButton = (childNode(withName: "score") as! ActionButton)
-        levelsButton.onStateChange = { [weak self] state in
+        scoreButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
             self.goScoreMenu()
         }
