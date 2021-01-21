@@ -23,13 +23,13 @@ class ScoreMenuScene: BaseScene {
         topPlayersButton = (childNode(withName: "topPlayers") as! ActionButton)
         topPlayersButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
-            self.instantiateViewController(with: "TopPlayers", completion: nil)
+            self.instantiaGameCenter(state: .leaderboards, completion: nil)
         }
 
         achievementsButton = (childNode(withName: "achievements") as! ActionButton)
         achievementsButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
-            self.instantiateViewController(with: "Achievements", completion: nil)
+            self.instantiaGameCenter(state: .achievements, completion: nil)
         }
     }
 }

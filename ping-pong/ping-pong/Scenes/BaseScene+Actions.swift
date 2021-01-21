@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import GameKit
 import Logging
 
 class BaseScene: SKScene {
@@ -100,5 +101,26 @@ class BaseScene: SKScene {
             animated: true,
             completion: completion
         )
+    }
+
+    func instantiaGameCenter(state: GKGameCenterViewControllerState, completion: (() -> Void)?) {
+        logger.trace("Instantiate game center with: \(state.rawValue)")
+        guard
+            let window = self.view?.window,
+            let rootViewController = window.rootViewController
+        else { return }
+        let vc = GKGameCenterViewController(state: state)
+        vc.gameCenterDelegate = self
+        rootViewController.present(
+            vc,
+            animated: true,
+            completion: completion
+        )
+    }
+}
+
+extension BaseScene: GKGameCenterControllerDelegate {
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
 }
