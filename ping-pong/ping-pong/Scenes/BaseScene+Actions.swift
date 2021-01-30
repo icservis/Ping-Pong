@@ -103,7 +103,7 @@ class BaseScene: SKScene {
         )
     }
 
-    func instantiaGameCenter(state: GKGameCenterViewControllerState, completion: (() -> Void)?) {
+    func instantiateGameCenter(state: GKGameCenterViewControllerState, completion: (() -> Void)?) {
         logger.trace("Instantiate game center with: \(state.rawValue)")
         guard
             let window = self.view?.window,

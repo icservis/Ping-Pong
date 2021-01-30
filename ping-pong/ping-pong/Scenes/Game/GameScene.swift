@@ -9,6 +9,8 @@
 import SpriteKit
 
 class GameScene: BaseScene {
+    weak var controller: GameController?
+    
     var ballSprite: SKSpriteNode!
     var playerSprite: SKSpriteNode!
     var enemySprite: SKSpriteNode!
@@ -38,7 +40,10 @@ class GameScene: BaseScene {
         pauseResumeButton = (childNode(withName: "resume") as! ActionButton)
         pauseResumeButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
-            self.pauseGame()
+            view.isPaused = true
+            self.controller?.pauseGame { [unowned view] in
+                view.isPaused = false
+            }
         }
 
         let impulse = CGVector(

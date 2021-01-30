@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Initial View Controller-->
+        <!--Coordinator Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController storyboardIdentifier="Game" extendedLayoutIncludesOpaqueBars="YES" id="BV1-FR-VrT" customClass="InitialViewController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Coordinator" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BV1-FR-VrT" customClass="CoordinatorController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,25 +23,25 @@
             </objects>
             <point key="canvasLocation" x="1260" y="8"/>
         </scene>
-        <!--Top Players View Controller-->
+        <!--Intro Controller-->
         <scene sceneID="CPc-8W-vem">
             <objects>
-                <viewController storyboardIdentifier="TopPlayers" useStoryboardIdentifierAsRestorationIdentifier="YES" id="x5J-dv-OdX" customClass="TopPlayersViewController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Intro" useStoryboardIdentifierAsRestorationIdentifier="YES" id="x5J-dv-OdX" customClass="IntroController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e5D-F1-cSE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fop-Kt-WaH">
-                                <rect key="frame" x="164.5" y="597" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                                <rect key="frame" x="172.5" y="597" width="30" height="30"/>
+                                <state key="normal" title="Skip">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="backAction:" destination="x5J-dv-OdX" eventType="touchUpInside" id="10a-5H-HbW"/>
+                                    <action selector="skipAction:" destination="x5J-dv-OdX" eventType="touchUpInside" id="GzI-iQ-IL7"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Players" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE5-aF-f1b">
-                                <rect key="frame" x="141.5" y="20" width="92" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JE5-aF-f1b">
+                                <rect key="frame" x="168.5" y="72" width="38" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -52,36 +52,36 @@
                             <constraint firstItem="JE5-aF-f1b" firstAttribute="centerX" secondItem="e5D-F1-cSE" secondAttribute="centerX" id="2c8-VQ-LJX"/>
                             <constraint firstItem="d93-xz-i1Y" firstAttribute="bottom" secondItem="Fop-Kt-WaH" secondAttribute="bottom" constant="40" id="N6a-SP-2dL"/>
                             <constraint firstItem="Fop-Kt-WaH" firstAttribute="centerX" secondItem="e5D-F1-cSE" secondAttribute="centerX" id="die-cp-Eui"/>
-                            <constraint firstItem="JE5-aF-f1b" firstAttribute="top" secondItem="d93-xz-i1Y" secondAttribute="top" constant="20" id="oSO-RU-DQD"/>
+                            <constraint firstItem="JE5-aF-f1b" firstAttribute="top" secondItem="d93-xz-i1Y" secondAttribute="top" constant="72" id="oSO-RU-DQD"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="Fop-Kt-WaH" id="tkq-ho-hDP"/>
+                        <outlet property="skipButton" destination="Fop-Kt-WaH" id="pZf-SK-c2X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cmb-Vk-Yhz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2014" y="8"/>
+            <point key="canvasLocation" x="2013.5999999999999" y="7.6461769115442282"/>
         </scene>
-        <!--Achievements View Controller-->
+        <!--Main Menu Controller-->
         <scene sceneID="eI2-9F-Ytr">
             <objects>
-                <viewController storyboardIdentifier="Achievements" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3iG-O8-wcH" customClass="AchievementsViewController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainMenu" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3iG-O8-wcH" customClass="MainMenuController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DWT-gd-F3P">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpW-ku-Aq8">
-                                <rect key="frame" x="164.5" y="597" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                                <rect key="frame" x="167" y="597" width="41" height="30"/>
+                                <state key="normal" title="Game">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="backAction:" destination="3iG-O8-wcH" eventType="touchUpInside" id="rUe-bm-Mbv"/>
+                                    <action selector="loadGame:" destination="3iG-O8-wcH" eventType="touchUpInside" id="PjX-yo-WZ8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Achievemens" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T3-xp-HMB">
-                                <rect key="frame" x="134" y="20" width="107" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Menu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T3-xp-HMB">
+                                <rect key="frame" x="144" y="72" width="87" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -90,22 +90,83 @@
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <constraints>
                             <constraint firstItem="hpW-ku-Aq8" firstAttribute="centerX" secondItem="DWT-gd-F3P" secondAttribute="centerX" id="0HN-c5-edF"/>
-                            <constraint firstItem="6T3-xp-HMB" firstAttribute="top" secondItem="DeZ-5p-nqr" secondAttribute="top" constant="20" id="3Ju-H3-aQt"/>
+                            <constraint firstItem="6T3-xp-HMB" firstAttribute="top" secondItem="DeZ-5p-nqr" secondAttribute="top" constant="72" id="3Ju-H3-aQt"/>
                             <constraint firstItem="6T3-xp-HMB" firstAttribute="centerX" secondItem="DWT-gd-F3P" secondAttribute="centerX" id="JID-bZ-iOa"/>
                             <constraint firstItem="DeZ-5p-nqr" firstAttribute="bottom" secondItem="hpW-ku-Aq8" secondAttribute="bottom" constant="40" id="JqE-nK-ybZ"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="hpW-ku-Aq8" id="ZaD-Yi-OBI"/>
+                        <outlet property="gameButton" destination="hpW-ku-Aq8" id="0Jx-g2-ZZ6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCG-FL-eDQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2764" y="8"/>
         </scene>
+        <!--Game Controller-->
+        <scene sceneID="Jy3-5G-VUb">
+            <objects>
+                <viewController storyboardIdentifier="Game" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j3j-8u-Xor" customClass="GameController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xca-Bc-Bys" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="mie-az-Hsg"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cO9-tP-eI5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3546" y="8"/>
+        </scene>
+        <!--Bottom Sheet Controller-->
+        <scene sceneID="rkb-Ts-ldp">
+            <objects>
+                <viewController storyboardIdentifier="BottomSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h3L-JB-uG9" customClass="BottomSheetController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="FU1-EG-2QK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2Z-Gt-WgN">
+                                <rect key="frame" x="329" y="20" width="30" height="30"/>
+                                <state key="normal" title="X"/>
+                                <connections>
+                                    <action selector="closeAction:" destination="h3L-JB-uG9" eventType="touchUpInside" id="rBl-ad-cpI"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="816-BW-hzp">
+                                <rect key="frame" x="166" y="60" width="43.5" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pVE-0w-xUs"/>
+                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                        <constraints>
+                            <constraint firstItem="816-BW-hzp" firstAttribute="centerX" secondItem="FU1-EG-2QK" secondAttribute="centerX" id="3lN-Ec-Xpx"/>
+                            <constraint firstItem="y2Z-Gt-WgN" firstAttribute="top" secondItem="pVE-0w-xUs" secondAttribute="top" constant="20" id="E5J-pp-LA1"/>
+                            <constraint firstItem="pVE-0w-xUs" firstAttribute="trailing" secondItem="y2Z-Gt-WgN" secondAttribute="trailing" constant="16" id="LLu-ts-Vtn"/>
+                            <constraint firstItem="816-BW-hzp" firstAttribute="top" secondItem="pVE-0w-xUs" secondAttribute="top" constant="60" id="gGA-vx-7dh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="y2Z-Gt-WgN" id="G9y-CL-XYo"/>
+                        <outlet property="titleLabel" destination="816-BW-hzp" id="oFx-pd-Glt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1p8-gL-t0V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2014" y="756"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

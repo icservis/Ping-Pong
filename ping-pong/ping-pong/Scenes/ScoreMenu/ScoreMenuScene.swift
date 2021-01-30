@@ -25,25 +25,25 @@ class ScoreMenuScene: BaseScene {
         dashboardButton = (childNode(withName: "dashboard") as! ActionButton)
         dashboardButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
-            self.instantiaGameCenter(state: .dashboard, completion: nil)
+            self.instantiateGameCenter(state: .dashboard, completion: nil)
         }
 
         leaderboardButton = (childNode(withName: "leaderboard") as! ActionButton)
         leaderboardButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
-            self.instantiaGameCenter(state: .leaderboards, completion: nil)
+            self.instantiateGameCenter(state: .leaderboards, completion: nil)
         }
 
         achievementsButton = (childNode(withName: "achievements") as! ActionButton)
         achievementsButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
-            self.instantiaGameCenter(state: .achievements, completion: nil)
+            self.instantiateGameCenter(state: .achievements, completion: nil)
         }
 
         challengesButton = (childNode(withName: "challenges") as! ActionButton)
         challengesButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
-            self.instantiaGameCenter(state: .challenges, completion: nil)
+            self.instantiateGameCenter(state: .challenges, completion: nil)
         }
     }
 }

@@ -17,7 +17,9 @@ class BaseViewController: UIViewController {
         logger.logLevel = .trace
         return logger
     }()
-    
+
+    weak var coordinator: Coordinator?
+
     @discardableResult
     func loadScene(
         _ fileNamed: String,
@@ -38,30 +40,5 @@ class BaseViewController: UIViewController {
         view.showsNodeCount = false
 
         return scene
-    }
-
-    func authenticateUser() {
-        logger.trace("Authenticate user")
-        let player = GKLocalPlayer.local
-        player.authenticateHandler = { [weak self] vc, error in
-            guard error == nil else {
-                print(error?.localizedDescription ?? "Authentification error")
-                return
-            }
-            guard let self = self, let vc = vc else { return }
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
-
-    override var shouldAutorotate: Bool {
-        return false
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 }
