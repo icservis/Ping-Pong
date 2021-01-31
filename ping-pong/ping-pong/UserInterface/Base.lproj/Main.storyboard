@@ -118,10 +118,10 @@
             </objects>
             <point key="canvasLocation" x="3546" y="8"/>
         </scene>
-        <!--Bottom Sheet Controller-->
+        <!--Pause Menu Controller-->
         <scene sceneID="rkb-Ts-ldp">
             <objects>
-                <viewController storyboardIdentifier="BottomSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h3L-JB-uG9" customClass="BottomSheetController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PauseMenu" useStoryboardIdentifierAsRestorationIdentifier="YES" id="h3L-JB-uG9" customClass="PauseMenuController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="FU1-EG-2QK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,12 +130,12 @@
                                 <rect key="frame" x="329" y="20" width="30" height="30"/>
                                 <state key="normal" title="X"/>
                                 <connections>
-                                    <action selector="closeAction:" destination="h3L-JB-uG9" eventType="touchUpInside" id="rBl-ad-cpI"/>
+                                    <action selector="closeAction:" destination="h3L-JB-uG9" eventType="touchUpInside" id="5ED-Uu-d4h"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="816-BW-hzp">
-                                <rect key="frame" x="166" y="60" width="43.5" height="20.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pause" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="816-BW-hzp">
+                                <rect key="frame" x="164" y="60" width="47.5" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -150,13 +150,13 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="closeButton" destination="y2Z-Gt-WgN" id="G9y-CL-XYo"/>
-                        <outlet property="titleLabel" destination="816-BW-hzp" id="oFx-pd-Glt"/>
+                        <outlet property="closeButton" destination="y2Z-Gt-WgN" id="fkf-0c-6mw"/>
+                        <outlet property="titleLabel" destination="816-BW-hzp" id="Sq2-3J-ZFN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1p8-gL-t0V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2014" y="756"/>
+            <point key="canvasLocation" x="2013.5999999999999" y="755.17241379310349"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

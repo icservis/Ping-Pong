@@ -11,13 +11,12 @@ import GameKit
 import Logging
 
 protocol Coordinator: AnyObject {
-    typealias CompletionBlock = () -> Void
     var currentController: UIViewController? { get }
     func configureAccessPoint(isActive: Bool, showHighlights: Bool)
 
     func loadMainMenu()
     func loadGame(level: Player.Difficulty)
-    func loadPauseMenu(completion: CompletionBlock?)
+    func loadPauseMenu(completion: PauseMenuController.CloseBlock?)
 }
 
 final class CoordinatorController: UIViewController {
@@ -49,13 +48,6 @@ final class CoordinatorController: UIViewController {
         return controller
     }()
 
-    lazy var pauseMenuController: BottomSheetController = {
-        guard let controller = instatiateController(identifier: "BottomSheet") as? BottomSheetController else {
-            fatalError("Can not instantiate controller")
-        }
-        return controller
-    }()
-
     lazy var gameController: GameController = {
         guard let controller = instatiateController(identifier: "Game") as? GameController else {
             fatalError("Can not instantiate controller")
@@ -63,6 +55,8 @@ final class CoordinatorController: UIViewController {
         controller.coordinator = self
         return controller
     }()
+
+    lazy var presenter = SlideInPresentationCoordinator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,8 +117,8 @@ private extension CoordinatorController {
 
         NSLayoutConstraint.activate([
             viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            viewController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
-            viewController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
+            viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
@@ -167,16 +161,13 @@ extension CoordinatorController: Coordinator {
         transition(to: mainMenuController)
     }
 
-    func loadPauseMenu(completion: CompletionBlock?) {
+    func loadPauseMenu(completion: PauseMenuController.CloseBlock?) {
         logger.debug("Pause game")
-        pauseMenuController.closeBlock = { [weak self] forced in
-            self?.dismiss(animated: true) {
-                //guard forced else { return }
-                completion?()
-            }
-        }
-        pauseMenuController.modalPresentationStyle = .automatic
-        pauseMenuController.modalTransitionStyle = .coverVertical
+        guard let pauseMenuController = instatiateController(identifier: "PauseMenu") as? PauseMenuController else { return }
+        presenter.direction = .bottom
+        pauseMenuController.transitioningDelegate = presenter
+        pauseMenuController.modalPresentationStyle = .custom
+        pauseMenuController.closeBlock = completion
         present(pauseMenuController, animated: true, completion: nil)
     }
 

@@ -22,7 +22,7 @@ class GameController: BaseViewController {
         gameScene.player.resetScore()
     }
 
-    func pauseGame(completion: Coordinator.CompletionBlock?) {
+    func pauseGame(completion: PauseMenuController.CloseBlock?) {
         coordinator?.loadPauseMenu(completion: completion)
     }
 }
