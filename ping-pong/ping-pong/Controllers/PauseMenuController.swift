@@ -11,14 +11,16 @@ import UIKit
 class PauseMenuController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton! {
         didSet {
-            //closeButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
+            closeButton.titleLabel?.textColor = UIColor.PauseMenu.buttonText
+            closeButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
             closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
         }
     }
 
     @IBOutlet private weak var titleLabel: UILabel! {
         didSet {
-            //titleLabel.font = .scaledLabelFont(for: .llPixel3)
+            titleLabel.textColor = UIColor.PauseMenu.labelText
+            titleLabel.font = .scaledHeadlineFont(for: .llPixel3)
             titleLabel.adjustsFontForContentSizeCategory = true
         }
     }

@@ -10,7 +10,11 @@ import UIKit
 
 extension UIFont {
     enum CustomFontFamily: String {
-        case llPixel3 = "LLPIXEL3.ttf"
+        case llPixel3 = "LLPIXEL"
+    }
+
+    static func fontNames(for family: CustomFontFamily) -> [String] {
+        return fontNames(forFamilyName: family.rawValue)
     }
 
     static func scaledLabelFont(for family: CustomFontFamily) -> UIFont {
@@ -36,6 +40,13 @@ extension UIFont {
 
     static func scaledSystemFont(for family: CustomFontFamily) -> UIFont {
         guard let customFontFamily = UIFont(name: family.rawValue, size: UIFont.systemFontSize) else {
+            fatalError("Cannot instantiate font family")
+        }
+        return UIFontMetrics.default.scaledFont(for: customFontFamily)
+    }
+
+    static func scaledHeadlineFont(for family: CustomFontFamily) -> UIFont {
+        guard let customFontFamily = UIFont(name: family.rawValue, size: 36) else {
             fatalError("Cannot instantiate font family")
         }
         return UIFontMetrics.default.scaledFont(for: customFontFamily)
