@@ -12,6 +12,8 @@ class SlideInPresentationCoordinator: NSObject {
     var direction: SlideInPresentationDirection = .bottom
     var proportion: CGFloat = 0.4
     var disableCompactHeight = false
+
+    weak var interactionController: UIPercentDrivenInteractiveTransition?
 }
 
 extension SlideInPresentationCoordinator: UIViewControllerTransitioningDelegate {
@@ -20,6 +22,7 @@ extension SlideInPresentationCoordinator: UIViewControllerTransitioningDelegate 
         presenting: UIViewController?,
         source: UIViewController
     ) -> UIPresentationController? {
+
         let presentationController = SlideInPresentationController(
             presentedViewController: presented,
             presenting: presenting,
@@ -35,13 +38,19 @@ extension SlideInPresentationCoordinator: UIViewControllerTransitioningDelegate 
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        return SlideInPresentationAnimator(direction: direction, isPresentation: true)
+        return SlideInPresentationAnimator(direction: direction, mode: .presentation)
     }
 
     func animationController(
         forDismissed dismissed: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        return SlideInPresentationAnimator(direction: direction, isPresentation: false)
+        return SlideInPresentationAnimator(direction: direction, mode: .dismissal)
+    }
+
+    func interactionControllerForDismissal(
+        using animator: UIViewControllerAnimatedTransitioning
+    ) -> UIViewControllerInteractiveTransitioning? {
+        return interactionController
     }
 }
 

@@ -34,21 +34,27 @@ class PauseMenuController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupView()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
     }
 
-    override func updateViewConstraints() {
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+
+    private func setupView() {
+        self.view.alpha = 0.9
+        self.view.backgroundColor = UIColor.PauseMenu.background
         self.view.roundedCorners(
             corners: [.topLeft, .topRight],
             radius: 25.0
         )
-        super.updateViewConstraints()
+        let layer = view.layer
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.PauseMenu.border.cgColor
     }
 
     deinit {

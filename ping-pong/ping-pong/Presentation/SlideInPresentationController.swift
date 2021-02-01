@@ -12,6 +12,13 @@ class SlideInPresentationController: UIPresentationController {
     private let direction: SlideInPresentationDirection
     private let proportion: CGFloat
 
+    private var interactionController: UIPercentDrivenInteractiveTransition? {
+        didSet {
+            guard let coordinator = presentedViewController.transitioningDelegate as? SlideInPresentationCoordinator else { return }
+            coordinator.interactionController = interactionController
+        }
+    }
+
     lazy private var dimmingView: UIView = {
         let dimmingView = UIView()
         dimmingView.translatesAutoresizingMaskIntoConstraints = false
@@ -27,15 +34,18 @@ class SlideInPresentationController: UIPresentationController {
         proportion: CGFloat
     ) {
         self.direction = direction
-        self.proportion = proportion.clamped(to: 0...1)
+        let range: ClosedRange<CGFloat> = (0...1)
+        precondition(range.contains(proportion))
+        self.proportion = proportion
         super.init(
             presentedViewController: presentedViewController,
             presenting: presentingViewController
         )
-        self.setupDimmingView()
+        self.setupTapGesture()
+        self.setupPanGesture()
     }
 
-    private func setupDimmingView() {
+    private func setupTapGesture() {
         let recogniser = UITapGestureRecognizer(
             target: self,
             action: #selector(handleTap)
@@ -45,6 +55,33 @@ class SlideInPresentationController: UIPresentationController {
 
     @objc private func handleTap() {
         presentingViewController.dismiss(animated: true, completion: nil)
+    }
+
+    private func setupPanGesture() {
+        let recogniser = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        presentedViewController.view.addGestureRecognizer(recogniser)
+    }
+
+    @objc private func handleGesture(_ gesture: UIPanGestureRecognizer) {
+        let translate = gesture.translation(in: gesture.view)
+        let percent   = translate.y / gesture.view!.bounds.size.height
+
+        if gesture.state == .began {
+            interactionController = UIPercentDrivenInteractiveTransition()
+            presentingViewController.dismiss(animated: true, completion: nil)
+        } else if gesture.state == .changed {
+            interactionController?.update(percent)
+        } else if gesture.state == .cancelled {
+            interactionController?.cancel()
+        } else if gesture.state == .ended {
+            let velocity = gesture.velocity(in: gesture.view)
+            if (percent > 0.5 && velocity.y == 0) || velocity.y > 0 {
+                interactionController?.finish()
+            } else {
+                interactionController?.cancel()
+            }
+            interactionController = nil
+        }
     }
 
     override func presentationTransitionWillBegin() {

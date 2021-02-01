@@ -10,11 +10,24 @@ import UIKit
 
 class SlideInPresentationAnimator: NSObject {
     private let direction: SlideInPresentationDirection
-    private let isPresentation: Bool
+    enum Mode {
+        case presentation
+        case dismissal
 
-    init(direction: SlideInPresentationDirection, isPresentation: Bool) {
+        var key: UITransitionContextViewControllerKey {
+            switch self {
+            case .presentation:
+                return .to
+            case .dismissal:
+                return .from
+            }
+        }
+    }
+    private let mode: Mode
+
+    init(direction: SlideInPresentationDirection, mode: Mode) {
         self.direction = direction
-        self.isPresentation = isPresentation
+        self.mode = mode
     }
 }
 
@@ -24,11 +37,9 @@ extension SlideInPresentationAnimator: UIViewControllerAnimatedTransitioning {
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let key: UITransitionContextViewControllerKey = isPresentation ? .to : .from
+        guard let controller = transitionContext.viewController(forKey: mode.key) else { return }
 
-        guard let controller = transitionContext.viewController(forKey: key) else { return }
-
-        if isPresentation {
+        if case .presentation = mode {
             transitionContext.containerView.addSubview(controller.view)
         }
 
@@ -45,8 +56,16 @@ extension SlideInPresentationAnimator: UIViewControllerAnimatedTransitioning {
             dismissedFrame.origin.y = transitionContext.containerView.frame.size.height
         }
 
-        let initialFrame = isPresentation ? dismissedFrame : presentedFrame
-        let finalFrame = isPresentation ? presentedFrame : dismissedFrame
+        let initialFrame: CGRect
+        let finalFrame: CGRect
+        switch mode {
+        case .presentation:
+            initialFrame = dismissedFrame
+            finalFrame = presentedFrame
+        case .dismissal:
+            initialFrame = presentedFrame
+            finalFrame = dismissedFrame
+        }
 
         let animationDuration = transitionDuration(using: transitionContext)
         controller.view.frame = initialFrame
@@ -54,8 +73,9 @@ extension SlideInPresentationAnimator: UIViewControllerAnimatedTransitioning {
             withDuration: animationDuration,
             animations: {
                 controller.view.frame = finalFrame
-            }, completion: { finished in
-                if !self.isPresentation {
+            }, completion: { [weak self] _ in
+                let finished = !transitionContext.transitionWasCancelled
+                if let mode = self?.mode, case .dismissal = mode, finished {
                     controller.view.removeFromSuperview()
                 }
                 transitionContext.completeTransition(finished)
