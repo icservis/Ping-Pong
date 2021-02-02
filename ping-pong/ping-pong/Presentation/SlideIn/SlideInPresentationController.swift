@@ -10,9 +10,9 @@ import UIKit
 
 enum SlideInPresentationDirection {
     case top
-    case leading
+    case left
     case bottom
-    case trailing
+    case right
 }
 
 enum SlideInPresentationProportion {
@@ -48,8 +48,9 @@ enum SlideInPresentationDimmingEffect {
     case blur(style: UIBlurEffect.Style)
 }
 
-enum SlideInPresentationTransitionMode {
+enum SlideInPresentationTransitionPhase {
     case presentation
+    // case management
     case dismissal
 }
 
@@ -128,9 +129,9 @@ class SlideInPresentationController: UIPresentationController {
         let translate = gesture.translation(in: gesture.view)
         let percent: CGFloat
         switch direction {
-        case .leading:
+        case .left:
             percent = 1 - translate.x / gesture.view!.bounds.size.width
-        case .trailing:
+        case .right:
             percent = translate.x / gesture.view!.bounds.size.width
         case .top:
             percent = 1 - translate.y / gesture.view!.bounds.size.height
@@ -199,24 +200,23 @@ class SlideInPresentationController: UIPresentationController {
         )
     }
 
+    override func presentationTransitionDidEnd(_ completed: Bool) {
+        if !completed {
+            switch dimmingEffect {
+            case .dimming:
+                dimmingView.removeFromSuperview()
+            case .blur:
+                blurView.removeFromSuperview()
+            }
+        }
+    }
+
     override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
-
-        let removeEffect: (() -> Void) = {
-            switch self.dimmingEffect {
-            case .dimming:
-                self.dimmingView.removeFromSuperview()
-            case .blur:
-                self.blurView.removeFromSuperview()
-            }
-
-        }
-
         guard let coordinator = presentedViewController.transitionCoordinator else {
             if case .dimming = dimmingEffect {
                 dimmingView.alpha = 0.0
             }
-            removeEffect()
             return
         }
         coordinator.animate(
@@ -225,10 +225,19 @@ class SlideInPresentationController: UIPresentationController {
                     self.dimmingView.alpha = 0.0
                 }
             },
-            completion: { _ in
-                removeEffect()
-            }
+            completion: nil
         )
+    }
+
+    override func dismissalTransitionDidEnd(_ completed: Bool) {
+        if completed {
+            switch dimmingEffect {
+            case .dimming:
+                self.dimmingView.removeFromSuperview()
+            case .blur:
+                self.blurView.removeFromSuperview()
+            }
+        }
     }
 
     override func containerViewWillLayoutSubviews() {
@@ -240,7 +249,7 @@ class SlideInPresentationController: UIPresentationController {
         withParentContainerSize parentSize: CGSize
     ) -> CGSize {
         switch direction {
-        case .leading, .trailing:
+        case .left, .right:
             return CGSize(
                 width: parentSize.width * proportion.value,
                 height: parentSize.height
@@ -263,7 +272,7 @@ class SlideInPresentationController: UIPresentationController {
             withParentContainerSize: containerView.bounds.size
         )
         switch direction {
-        case .trailing:
+        case .right:
             frame.origin.x = containerView.frame.width * proportion.reversedValue
         case .bottom:
             frame.origin.y = containerView.frame.height * proportion.reversedValue

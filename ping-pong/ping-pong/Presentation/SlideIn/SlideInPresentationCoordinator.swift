@@ -40,13 +40,13 @@ extension SlideInPresentationCoordinator: UIViewControllerTransitioningDelegate 
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        return SlideInPresentationAnimator(direction: direction, mode: .presentation)
+        return SlideInPresentationAnimator(direction: direction, phase: .presentation)
     }
 
     func animationController(
         forDismissed dismissed: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        return SlideInPresentationAnimator(direction: direction, mode: .dismissal)
+        return SlideInPresentationAnimator(direction: direction, phase: .dismissal)
     }
 
     func interactionControllerForDismissal(
@@ -64,7 +64,7 @@ extension SlideInPresentationCoordinator: UIAdaptivePresentationControllerDelega
         if traitCollection.verticalSizeClass == .compact && disableCompactVerticalSize {
             return .overFullScreen
         } else {
-            return .custom
+            return .none
         }
     }
 

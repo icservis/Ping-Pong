@@ -223,6 +223,16 @@
 			path = UserInterface;
 			sourceTree = "<group>";
 		};
+		8497F46F25C991CA00A77C8C /* SlideIn */ = {
+			isa = PBXGroup;
+			children = (
+				84E3CF7D25C715850072DE08 /* SlideInPresentationCoordinator.swift */,
+				84E3CFDD25C727E40072DE08 /* SlideInPresentationController.swift */,
+				84E3CFE425C73C140072DE08 /* SlideInPresentationAnimator.swift */,
+			);
+			path = SlideIn;
+			sourceTree = "<group>";
+		};
 		84A2C14923FD5B46005ACB5A /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,9 +308,7 @@
 		84E3CF7C25C713E20072DE08 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				84E3CF7D25C715850072DE08 /* SlideInPresentationCoordinator.swift */,
-				84E3CFDD25C727E40072DE08 /* SlideInPresentationController.swift */,
-				84E3CFE425C73C140072DE08 /* SlideInPresentationAnimator.swift */,
+				8497F46F25C991CA00A77C8C /* SlideIn */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
