@@ -30,6 +30,6 @@ final class GamePlayState: BaseState {
     }
 
     override func didEnter(from previousState: GKState?) {
-        scene.loadGame()
+        
     }
 }

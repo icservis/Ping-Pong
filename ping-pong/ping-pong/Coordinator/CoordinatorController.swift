@@ -10,13 +10,26 @@ import UIKit
 import GameKit
 import Logging
 
+typealias GameCenterCloseBlock = () -> Void
+
 protocol Coordinator: AnyObject {
     var currentController: UIViewController? { get }
-    func configureAccessPoint(isActive: Bool, showHighlights: Bool)
+
+    func loadGameCenterDashboard(completion: GameCenterCloseBlock?)
+    func configureAccessPoint(
+        isActive: Bool,
+        showHighlights: Bool,
+        location: GKAccessPoint.Location
+    )
 
     func loadMainMenu()
     func loadGame(level: Player.Difficulty)
     func loadPauseMenu(completion: PauseMenuController.CloseBlock?)
+    func loadGameOver(
+        score: Player.Score,
+        time: TimeInterval,
+        completion: GameOverController.CloseBlock?
+    )
 }
 
 final class CoordinatorController: UIViewController {
@@ -64,15 +77,8 @@ final class CoordinatorController: UIViewController {
         loadIntro()
     }
 
-    @IBAction func showGameCenterDashboard(_ sender: Any?, completion: (() -> Void)?) {
-        let vc = GKGameCenterViewController(state: .dashboard)
-        vc.gameCenterDelegate = self
-        present(
-            vc,
-            animated: true,
-            completion: completion
-        )
-    }
+
+    private var gameCenterCloseBlock: GameCenterCloseBlock?
 
     override var shouldAutorotate: Bool {
         return false
@@ -91,19 +97,6 @@ private extension CoordinatorController {
     func loadIntro() {
         logger.trace("Load Intro")
         transition(to: introController)
-    }
-
-    func authenticateUser() {
-        logger.trace("Authenticate user")
-        let player = GKLocalPlayer.local
-        player.authenticateHandler = { [weak self] vc, error in
-            guard error == nil else {
-                print(error?.localizedDescription ?? "Authentification error")
-                return
-            }
-            guard let self = self, let vc = vc else { return }
-            self.present(vc, animated: true, completion: nil)
-        }
     }
 
     func loadViewController(_ viewController: UIViewController) {
@@ -153,9 +146,28 @@ private extension CoordinatorController {
         guard let storyboard = storyboard else { return nil }
         return storyboard.instantiateViewController(identifier: identifier)
     }
+
+    func authenticateUser() {
+        logger.trace("Authenticate user")
+        let player = GKLocalPlayer.local
+        player.authenticateHandler = { [weak self] vc, error in
+            guard error == nil else {
+                print(error?.localizedDescription ?? "Authentification error")
+                return
+            }
+            guard let self = self, let vc = vc else { return }
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
 }
 
 extension CoordinatorController: Coordinator {
+    func loadGame(level: Player.Difficulty) {
+        logger.debug("Load game level: \(level)")
+        gameController.level = level
+        transition(to: gameController)
+    }
+
     func loadMainMenu() {
         logger.debug("Load Main Menu")
         transition(to: mainMenuController)
@@ -171,17 +183,40 @@ extension CoordinatorController: Coordinator {
         present(pauseMenuController, animated: true, completion: nil)
     }
 
-    func loadGame(level: Player.Difficulty) {
-        logger.debug("Load game level: \(level)")
-        gameController.level = level
-        transition(to: gameController)
+    func loadGameOver(
+        score: Player.Score,
+        time: TimeInterval,
+        completion: GameOverController.CloseBlock?
+    ) {
+        logger.debug("Game over")
+        guard let gameOverController = instatiateController(identifier: "GameOver") as? GameOverController else { return }
+        presenter.direction = .bottom
+        gameOverController.transitioningDelegate = presenter
+        gameOverController.modalPresentationStyle = .custom
+        gameOverController.closeBlock = completion
+        present(gameOverController, animated: true, completion: nil)
     }
 
-    func configureAccessPoint(isActive: Bool, showHighlights: Bool) {
+    func configureAccessPoint(
+        isActive: Bool,
+        showHighlights: Bool,
+        location: GKAccessPoint.Location
+    ) {
         logger.debug("Configure Access Point isActive: \(isActive)")
-        GKAccessPoint.shared.location = .topLeading
+        GKAccessPoint.shared.location = location
         GKAccessPoint.shared.showHighlights = showHighlights
         GKAccessPoint.shared.isActive = isActive
+    }
+
+    func loadGameCenterDashboard(completion: GameCenterCloseBlock?) {
+        self.gameCenterCloseBlock = completion
+        let vc = GKGameCenterViewController(state: .dashboard)
+        vc.gameCenterDelegate = self
+        present(
+            vc,
+            animated: true,
+            completion: nil
+        )
     }
 }
 
@@ -190,6 +225,8 @@ extension CoordinatorController: GKGameCenterControllerDelegate {
         _ gameCenterViewController: GKGameCenterViewController
     ) {
         logger.trace("GameCenter Controlled did finish presentation")
-        gameCenterViewController.dismiss(animated: true, completion: nil)
+        gameCenterViewController.dismiss(animated: true) { [weak self] in
+            self?.gameCenterCloseBlock?()
+        }
     }
 }

@@ -10,22 +10,9 @@ import UIKit
 
 class SlideInPresentationAnimator: NSObject {
     private let direction: SlideInPresentationDirection
-    enum Mode {
-        case presentation
-        case dismissal
+    private let mode: SlideInPresentationTransitionMode
 
-        var key: UITransitionContextViewControllerKey {
-            switch self {
-            case .presentation:
-                return .to
-            case .dismissal:
-                return .from
-            }
-        }
-    }
-    private let mode: Mode
-
-    init(direction: SlideInPresentationDirection, mode: Mode) {
+    init(direction: SlideInPresentationDirection, mode: SlideInPresentationTransitionMode) {
         self.direction = direction
         self.mode = mode
     }
@@ -81,5 +68,16 @@ extension SlideInPresentationAnimator: UIViewControllerAnimatedTransitioning {
                 transitionContext.completeTransition(finished)
             }
         )
+    }
+}
+
+extension SlideInPresentationTransitionMode {
+    var key: UITransitionContextViewControllerKey {
+        switch self {
+        case .presentation:
+            return .to
+        case .dismissal:
+            return .from
+        }
     }
 }

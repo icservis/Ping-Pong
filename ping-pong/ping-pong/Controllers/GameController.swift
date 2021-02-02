@@ -9,7 +9,7 @@
 import UIKit
 import GameKit
 
-class GameController: BaseViewController {
+final class GameController: BaseViewController {
     var level: Player.Difficulty = .easy
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,5 +24,17 @@ class GameController: BaseViewController {
 
     func pauseGame(completion: PauseMenuController.CloseBlock?) {
         coordinator?.loadPauseMenu(completion: completion)
+    }
+
+    func gameOver(
+        score: Player.Score,
+        time: TimeInterval,
+        completion: GameOverController.CloseBlock?
+    ) {
+        coordinator?.loadGameOver(
+            score: score,
+            time: time,
+            completion: completion
+        )
     }
 }

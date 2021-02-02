@@ -163,6 +163,33 @@
             </objects>
             <point key="canvasLocation" x="2013.5999999999999" y="755.17241379310349"/>
         </scene>
+        <!--Game Over Controller-->
+        <scene sceneID="esK-WV-waY">
+            <objects>
+                <viewController storyboardIdentifier="GameOver" useStoryboardIdentifierAsRestorationIdentifier="YES" id="O7N-5y-V4N" customClass="GameOverController" customModule="ping_pong" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hHy-ri-JYl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Over" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjk-uI-Gdq">
+                                <rect key="frame" x="138.5" y="60" width="98" height="21"/>
+                                <fontDescription key="fontDescription" name="LLPixel" family="LLPixel" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="chx-6c-FQG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yjk-uI-Gdq" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="GBX-pu-gxs"/>
+                            <constraint firstItem="yjk-uI-Gdq" firstAttribute="top" secondItem="chx-6c-FQG" secondAttribute="top" constant="60" id="ypP-QJ-ozu"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KkX-sx-V19" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2778" y="755"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <resources>

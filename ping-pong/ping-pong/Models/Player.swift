@@ -36,13 +36,15 @@ class Player: NSObject, NSCoding {
         }
     }
 
-    typealias Score = (player: Int, enemy: Int)
+    typealias ScoreType = Int
+    typealias Score = (player: ScoreType, enemy: ScoreType)
     var score: Score = (player: 0, enemy: 0) {
         didSet {
             scoreChanged?(score)
             store()
         }
     }
+    static let finalScore: ScoreType = 10
 
     var scoreChanged: ((_ score: Score) -> Void)?
 
@@ -120,11 +122,13 @@ class Player: NSObject, NSCoding {
         self.score = (player: 0, enemy: 0)
     }
 
-    func increasePlayersScore() {
+    func increasePlayersScore() -> Bool {
         self.score = (player: self.score.player + 1, enemy:self.score.enemy)
+        return self.score.player < Self.finalScore
     }
 
-    func increaseEnemysScore() {
+    func increaseEnemysScore() -> Bool {
         self.score = (player: self.score.player, enemy:self.score.enemy + 1)
+        return self.score.enemy < Self.finalScore
     }
 }

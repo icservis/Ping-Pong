@@ -30,6 +30,6 @@ final class LevelsMenuState: BaseState {
     }
 
     override func didEnter(from previousState: GKState?) {
-        scene.loadLevelsMenu()
+        
     }
 }

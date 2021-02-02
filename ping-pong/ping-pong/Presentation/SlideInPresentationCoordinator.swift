@@ -10,8 +10,9 @@ import UIKit
 
 class SlideInPresentationCoordinator: NSObject {
     var direction: SlideInPresentationDirection = .bottom
-    var proportion: CGFloat = 0.4
-    var disableCompactHeight = false
+    var proportion: SlideInPresentationProportion = .normal
+    var dimmingEffect: SlideInPresentationDimmingEffect = .dimming
+    var disableCompactVerticalSize = false
 
     weak var interactionController: UIPercentDrivenInteractiveTransition?
 }
@@ -27,7 +28,8 @@ extension SlideInPresentationCoordinator: UIViewControllerTransitioningDelegate 
             presentedViewController: presented,
             presenting: presenting,
             direction: direction,
-            proportion: proportion
+            proportion: proportion,
+            dimmingEffect: dimmingEffect
         )
         presentationController.delegate = self
         return presentationController
@@ -59,10 +61,10 @@ extension SlideInPresentationCoordinator: UIAdaptivePresentationControllerDelega
         for controller: UIPresentationController,
         traitCollection: UITraitCollection
     ) -> UIModalPresentationStyle {
-        if traitCollection.verticalSizeClass == .compact && disableCompactHeight {
+        if traitCollection.verticalSizeClass == .compact && disableCompactVerticalSize {
             return .overFullScreen
         } else {
-            return .none
+            return .custom
         }
     }
 

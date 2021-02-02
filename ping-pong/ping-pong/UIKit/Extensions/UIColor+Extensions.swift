@@ -19,4 +19,11 @@ extension UIColor {
         static let border: UIColor = appSilver
         static let background: UIColor = appWhite
     }
+
+    struct GameOver {
+        static let labelText: UIColor = appBlack
+        static let buttonText: UIColor = appBlack
+        static let border: UIColor = appSilver
+        static let background: UIColor = appWhite
+    }
 }

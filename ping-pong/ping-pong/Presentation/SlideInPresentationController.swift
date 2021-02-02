@@ -8,9 +8,56 @@
 
 import UIKit
 
+enum SlideInPresentationDirection {
+    case top
+    case leading
+    case bottom
+    case trailing
+}
+
+enum SlideInPresentationProportion {
+    typealias Value = CGFloat
+    case normal
+    case full
+    case value(Value)
+
+    init?(value: Value) {
+        let range: ClosedRange<Value> = (0...1)
+        precondition(range.contains(value))
+        self = SlideInPresentationProportion.value(value)
+    }
+
+    var value: Value {
+        switch self {
+        case .normal:
+            return 0.45
+        case .full:
+            return 0.95
+        case let .value(value):
+            return value
+        }
+    }
+
+    var reversedValue: Value {
+        return 1 - self.value
+    }
+}
+
+enum SlideInPresentationDimmingEffect {
+    case dimming
+    case blur(style: UIBlurEffect.Style)
+}
+
+enum SlideInPresentationTransitionMode {
+    case presentation
+    case dismissal
+}
+
+
 class SlideInPresentationController: UIPresentationController {
     private let direction: SlideInPresentationDirection
-    private let proportion: CGFloat
+    private let proportion: SlideInPresentationProportion
+    private let dimmingEffect: SlideInPresentationDimmingEffect
 
     private var interactionController: UIPercentDrivenInteractiveTransition? {
         didSet {
@@ -20,23 +67,32 @@ class SlideInPresentationController: UIPresentationController {
     }
 
     lazy private var dimmingView: UIView = {
+        guard case .dimming = dimmingEffect else { fatalError() }
         let dimmingView = UIView()
-        dimmingView.translatesAutoresizingMaskIntoConstraints = false
         dimmingView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         dimmingView.alpha = 0.0
         return dimmingView
     }()
 
+    private var blurView: UIVisualEffectView {
+        guard case let .blur(style) = dimmingEffect else { fatalError() }
+        let blurEffect = UIBlurEffect(style: style)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.backgroundColor = .clear
+        blurView.alpha = 1.0
+        return blurView
+    }
+
     init(
         presentedViewController: UIViewController,
         presenting presentingViewController: UIViewController?,
         direction: SlideInPresentationDirection,
-        proportion: CGFloat
+        proportion: SlideInPresentationProportion,
+        dimmingEffect: SlideInPresentationDimmingEffect
     ) {
         self.direction = direction
-        let range: ClosedRange<CGFloat> = (0...1)
-        precondition(range.contains(proportion))
         self.proportion = proportion
+        self.dimmingEffect = dimmingEffect
         super.init(
             presentedViewController: presentedViewController,
             presenting: presentingViewController
@@ -50,7 +106,13 @@ class SlideInPresentationController: UIPresentationController {
             target: self,
             action: #selector(handleTap)
         )
-        dimmingView.addGestureRecognizer(recogniser)
+
+        switch dimmingEffect {
+        case .dimming:
+            dimmingView.addGestureRecognizer(recogniser)
+        case .blur:
+            blurView.addGestureRecognizer(recogniser)
+        }
     }
 
     @objc private func handleTap() {
@@ -64,7 +126,17 @@ class SlideInPresentationController: UIPresentationController {
 
     @objc private func handleGesture(_ gesture: UIPanGestureRecognizer) {
         let translate = gesture.translation(in: gesture.view)
-        let percent   = translate.y / gesture.view!.bounds.size.height
+        let percent: CGFloat
+        switch direction {
+        case .leading:
+            percent = 1 - translate.x / gesture.view!.bounds.size.width
+        case .trailing:
+            percent = translate.x / gesture.view!.bounds.size.width
+        case .top:
+            percent = 1 - translate.y / gesture.view!.bounds.size.height
+        case .bottom:
+            percent = translate.y / gesture.view!.bounds.size.height
+        }
 
         if gesture.state == .began {
             interactionController = UIPercentDrivenInteractiveTransition()
@@ -88,21 +160,40 @@ class SlideInPresentationController: UIPresentationController {
         super.presentationTransitionWillBegin()
 
         guard let containerView = containerView else { return }
-        containerView.insertSubview(dimmingView, at: 0)
-        NSLayoutConstraint.activate([
-            dimmingView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            dimmingView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            dimmingView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            dimmingView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
-        ])
+        switch dimmingEffect {
+        case .dimming:
+            dimmingView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.insertSubview(dimmingView, at: 0)
+
+            NSLayoutConstraint.activate([
+                dimmingView.topAnchor.constraint(equalTo: containerView.topAnchor),
+                dimmingView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                dimmingView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                dimmingView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            ])
+        case .blur:
+            blurView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.insertSubview(blurView, at: 0)
+
+            NSLayoutConstraint.activate([
+                blurView.topAnchor.constraint(equalTo: containerView.topAnchor),
+                blurView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                blurView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                blurView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            ])
+        }
 
         guard let coordinator = presentedViewController.transitionCoordinator else {
-            dimmingView.alpha = 1.0
+            if case .dimming = dimmingEffect {
+                dimmingView.alpha = 1.0
+            }
             return
         }
         coordinator.animate(
             alongsideTransition: { (context) in
-                self.dimmingView.alpha = 1.0
+                if case .dimming = self.dimmingEffect {
+                    self.dimmingView.alpha = 1.0
+                }
             },
             completion: nil
         )
@@ -111,17 +202,32 @@ class SlideInPresentationController: UIPresentationController {
     override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
 
-        dimmingView.removeFromSuperview()
+        let removeEffect: (() -> Void) = {
+            switch self.dimmingEffect {
+            case .dimming:
+                self.dimmingView.removeFromSuperview()
+            case .blur:
+                self.blurView.removeFromSuperview()
+            }
+
+        }
 
         guard let coordinator = presentedViewController.transitionCoordinator else {
-            dimmingView.alpha = 0.0
+            if case .dimming = dimmingEffect {
+                dimmingView.alpha = 0.0
+            }
+            removeEffect()
             return
         }
         coordinator.animate(
             alongsideTransition: { (context) in
-                self.dimmingView.alpha = 0.0
+                if case .dimming = self.dimmingEffect {
+                    self.dimmingView.alpha = 0.0
+                }
             },
-            completion: nil
+            completion: { _ in
+                removeEffect()
+            }
         )
     }
 
@@ -136,13 +242,13 @@ class SlideInPresentationController: UIPresentationController {
         switch direction {
         case .leading, .trailing:
             return CGSize(
-                width: parentSize.width * proportion,
+                width: parentSize.width * proportion.value,
                 height: parentSize.height
             )
         case .top, .bottom:
             return CGSize(
                 width: parentSize.width,
-                height: parentSize.height * proportion
+                height: parentSize.height * proportion.value
             )
         }
     }
@@ -158,9 +264,9 @@ class SlideInPresentationController: UIPresentationController {
         )
         switch direction {
         case .trailing:
-            frame.origin.x = containerView.frame.width * (1.0 - proportion)
+            frame.origin.x = containerView.frame.width * proportion.reversedValue
         case .bottom:
-            frame.origin.y = containerView.frame.height * (1.0 - proportion)
+            frame.origin.y = containerView.frame.height * proportion.reversedValue
         default:
             frame.origin = .zero
         }

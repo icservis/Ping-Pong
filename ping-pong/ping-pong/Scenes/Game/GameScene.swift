@@ -16,9 +16,27 @@ class GameScene: BaseScene {
     var enemySprite: SKSpriteNode!
     var playerScoreLabel: SKLabelNode!
     var enemyScoreLabel: SKLabelNode!
+    var timeLabel: SKLabelNode!
     var pauseResumeButton: ActionButton!
 
     let playPingAction = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
+
+    var startTime: TimeInterval = 0
+    var currentTime: TimeInterval = 0 {
+        didSet {
+            if startTime == 0 { startTime = currentTime }
+            timeLabel.text = timeIntervalFormatter.string(from: currentTime - startTime)
+        }
+    }
+
+    lazy var timeIntervalFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        formatter.maximumUnitCount = 0
+        formatter.allowedUnits = [.minute, .second]
+        return formatter
+    }()
 
     private lazy var sceneBorder: SKPhysicsBody = {
         let sceneBorder = SKPhysicsBody(edgeLoopFrom: frame)
@@ -37,11 +55,14 @@ class GameScene: BaseScene {
         playerScoreLabel = (childNode(withName: "playerScore") as! SKLabelNode)
         enemyScoreLabel = (childNode(withName: "enemyScore") as! SKLabelNode)
 
+        timeLabel = (childNode(withName: "time") as! SKLabelNode)
+
         pauseResumeButton = (childNode(withName: "resume") as! ActionButton)
         pauseResumeButton.onStateChange = { [weak self] state in
             guard let self = self, case .selected = state else { return }
             view.isPaused = true
-            self.controller?.pauseGame { [unowned view] in
+            self.controller?.pauseGame { [unowned view] result in
+                guard case .resume = result else { return }
                 view.isPaused = false
             }
         }
@@ -54,6 +75,8 @@ class GameScene: BaseScene {
         physicsBody = sceneBorder
 
         physicsWorld.contactDelegate = self
+
+        player.resetScore()
     }
 
     override func scoreChanged(_ score: Player.Score) {
@@ -71,16 +94,32 @@ class GameScene: BaseScene {
         let randomY = Int.random(in: 50...75)
         let radomSign = Bool.random() ? -1 : 1
         if playerWhoWon == enemySprite {
-            player.increaseEnemysScore()
+            guard player.increaseEnemysScore() else {
+                self.gameOver()
+                return
+            }
             resetBall()
             let impulse = CGVector(dx: radomSign * randomX, dy: -randomY)
             ballSprite.physicsBody?.applyImpulse(impulse)
         }
         if playerWhoWon == playerSprite {
-            player.increasePlayersScore()
+            guard player.increasePlayersScore() else {
+                self.gameOver()
+                return
+            }
             resetBall()
             let impulse = CGVector(dx: radomSign * randomX, dy: randomY)
             ballSprite.physicsBody?.applyImpulse(impulse)
+        }
+    }
+
+    private func gameOver() {
+        view?.isPaused = true
+        self.controller?.gameOver(
+            score: player.score,
+            time: currentTime - startTime
+        ) { [weak self] result in
+            self?.player.resetScore()
         }
     }
     
@@ -115,6 +154,7 @@ class GameScene: BaseScene {
     
     
     override func update(_ currentTime: TimeInterval) {
+        self.currentTime = currentTime
         // Called before each frame is rendered
         let followBall = SKAction.moveTo(x: ballSprite.position.x, duration: 0.5)
         enemySprite.run(followBall)

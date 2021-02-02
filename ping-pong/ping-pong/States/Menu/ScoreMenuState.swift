@@ -30,6 +30,6 @@ final class ScoreMenuState: BaseState {
     }
 
     override func didEnter(from previousState: GKState?) {
-        scene.loadScoreMenu()
+       
     }
 }
