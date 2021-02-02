@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 840DB17725C9F963002BB63D /* joystix monospace.ttf */; };
 		8416125B220A2155000A3B27 /* ball-ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8416125A220A2155000A3B27 /* ball-ping.caf */; };
 		842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */; };
 		842D3AB425C5FBC200318334 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D3AB325C5FBC200318334 /* UIView+Extensions.swift */; };
@@ -31,6 +32,11 @@
 		844E85E625AB05680071B82C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844E85E525AB05680071B82C /* Player.swift */; };
 		844E860F25AB0EBA0071B82C /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844E860E25AB0EBA0071B82C /* FileSystem.swift */; };
 		844E861925AB5F420071B82C /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 844E861825AB5F420071B82C /* Logging */; };
+		8452580125C9EFB400A436DF /* NumberFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */; };
+		8452581625C9F28600A436DF /* digital-7 (mono).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581225C9F28400A436DF /* digital-7 (mono).ttf */; };
+		8452581725C9F28600A436DF /* digital-7 (italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581325C9F28500A436DF /* digital-7 (italic).ttf */; };
+		8452581825C9F28600A436DF /* digital-7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581425C9F28500A436DF /* digital-7.ttf */; };
+		8452581925C9F28600A436DF /* digital-7 (mono italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581525C9F28500A436DF /* digital-7 (mono italic).ttf */; };
 		848005F225C8A131006659B4 /* GameOverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848005F125C8A131006659B4 /* GameOverController.swift */; };
 		84897936225A56070027818C /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84897935225A56070027818C /* ActionButton.swift */; };
 		84A2C14D23FD5C13005ACB5A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84A2C14B23FD5C13005ACB5A /* GameScene.sks */; };
@@ -50,6 +56,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840DB17725C9F963002BB63D /* joystix monospace.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "joystix monospace.ttf"; sourceTree = "<group>"; };
 		8416125A220A2155000A3B27 /* ball-ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ball-ping.caf"; sourceTree = "<group>"; };
 		842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LLPIXEL3.ttf; sourceTree = "<group>"; };
 		842D3AB325C5FBC200318334 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -75,6 +82,11 @@
 		844E85B525A9B4170071B82C /* GameOverMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverMenuState.swift; sourceTree = "<group>"; };
 		844E85E525AB05680071B82C /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		844E860E25AB0EBA0071B82C /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
+		8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extensions.swift"; sourceTree = "<group>"; };
+		8452581225C9F28400A436DF /* digital-7 (mono).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono).ttf"; sourceTree = "<group>"; };
+		8452581325C9F28500A436DF /* digital-7 (italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (italic).ttf"; sourceTree = "<group>"; };
+		8452581425C9F28500A436DF /* digital-7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7.ttf"; sourceTree = "<group>"; };
+		8452581525C9F28500A436DF /* digital-7 (mono italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono italic).ttf"; sourceTree = "<group>"; };
 		848005F125C8A131006659B4 /* GameOverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverController.swift; sourceTree = "<group>"; };
 		84897935225A56070027818C /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		84A2C14B23FD5C13005ACB5A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -109,6 +121,11 @@
 		84161257220A1217000A3B27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				840DB17725C9F963002BB63D /* joystix monospace.ttf */,
+				8452581325C9F28500A436DF /* digital-7 (italic).ttf */,
+				8452581525C9F28500A436DF /* digital-7 (mono italic).ttf */,
+				8452581225C9F28400A436DF /* digital-7 (mono).ttf */,
+				8452581425C9F28500A436DF /* digital-7.ttf */,
 				842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */,
 				8416125A220A2155000A3B27 /* ball-ping.caf */,
 			);
@@ -284,6 +301,7 @@
 				84E3D0BC25C7F9F60072DE08 /* UIColor+Extensions.swift */,
 				84E3CF8325C717840072DE08 /* UIFont+Extensions.swift */,
 				842D3AB325C5FBC200318334 /* UIView+Extensions.swift */,
+				8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -391,13 +409,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8452581925C9F28600A436DF /* digital-7 (mono italic).ttf in Resources */,
 				8446E84C22071299008FF376 /* Main.storyboard in Resources */,
 				8446E84E2207129C008FF376 /* Assets.xcassets in Resources */,
 				8416125B220A2155000A3B27 /* ball-ping.caf in Resources */,
 				8446E8512207129C008FF376 /* LaunchScreen.storyboard in Resources */,
+				8452581625C9F28600A436DF /* digital-7 (mono).ttf in Resources */,
 				842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */,
 				84A2C14D23FD5C13005ACB5A /* GameScene.sks in Resources */,
+				840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */,
+				8452581725C9F28600A436DF /* digital-7 (italic).ttf in Resources */,
 				8446E84522071299008FF376 /* Actions.sks in Resources */,
+				8452581825C9F28600A436DF /* digital-7.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +437,7 @@
 				84E3CF8A25C71BD70072DE08 /* PauseMenuController.swift in Sources */,
 				844E85E625AB05680071B82C /* Player.swift in Sources */,
 				84E3CF8425C717840072DE08 /* UIFont+Extensions.swift in Sources */,
+				8452580125C9EFB400A436DF /* NumberFormatter+Extensions.swift in Sources */,
 				8446E84122071299008FF376 /* AppDelegate.swift in Sources */,
 				844E85B625A9B4170071B82C /* GameOverMenuState.swift in Sources */,
 				84E3D0BD25C7F9F60072DE08 /* UIColor+Extensions.swift in Sources */,

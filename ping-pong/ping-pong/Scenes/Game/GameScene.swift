@@ -21,20 +21,16 @@ class GameScene: BaseScene {
 
     let playPingAction = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
 
-    var startTime: TimeInterval = 0
-    var currentTime: TimeInterval = 0 {
-        didSet {
-            if startTime == 0 { startTime = currentTime }
-            timeLabel.text = timeIntervalFormatter.string(from: currentTime - startTime)
-        }
-    }
+    var timer: Timer?
+    var currentTime: TimeInterval = 0
+    let delta: TimeInterval = 0.1
 
-    lazy var timeIntervalFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        formatter.maximumUnitCount = 0
-        formatter.allowedUnits = [.minute, .second]
+    lazy var elapsedTimeFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.allowsFloats = true
+
         return formatter
     }()
 
@@ -46,6 +42,17 @@ class GameScene: BaseScene {
         sceneBorder.linearDamping = 0
         return sceneBorder
     }()
+
+    func randomVector(positiveY: Bool) -> CGVector {
+        let randomX = Int.random(in: 50...75)
+        let randomY = Int.random(in: 50...75)
+        let randomSignX = Bool.random() ? 1 : -1
+        let randomSignY = positiveY ? 1 : -1
+        return CGVector(
+            dx: randomSignX * randomX,
+            dy: randomSignY * randomY
+        )
+    }
 
     override func didMove(to view: SKView) {
         ballSprite = (childNode(withName: "ball") as! SKSpriteNode)
@@ -67,16 +74,32 @@ class GameScene: BaseScene {
             }
         }
 
-        let impulse = CGVector(
-            dx: CGFloat.random(in: 50...75),
-            dy: CGFloat.random(in: 50...75)
-        )
+        let impulse = randomVector(positiveY: true)
         ballSprite.physicsBody?.applyImpulse(impulse)
         physicsBody = sceneBorder
 
         physicsWorld.contactDelegate = self
 
         player.resetScore()
+        setTimer()
+    }
+
+    private func setTimer() {
+        self.timer = Timer.scheduledTimer(
+            withTimeInterval: delta,
+            repeats: true,
+            block: { [weak self] timer in
+                guard let self = self, let view = self.view, !view.isPaused else { return }
+                self.currentTime = self.currentTime + self.delta
+
+                DispatchQueue.global(qos: .default).async {
+                    let timeString = self.elapsedTimeFormatter.string(from: self.currentTime)
+                    DispatchQueue.main.async {
+                        self.timeLabel.text = timeString
+                    }
+                }
+            }
+        )
     }
 
     override func scoreChanged(_ score: Player.Score) {
@@ -90,16 +113,13 @@ class GameScene: BaseScene {
     }
 
     func endGame(playerWhoWon: SKSpriteNode) {
-        let randomX = Int.random(in: 50...75)
-        let randomY = Int.random(in: 50...75)
-        let radomSign = Bool.random() ? -1 : 1
         if playerWhoWon == enemySprite {
             guard player.increaseEnemysScore() else {
                 self.gameOver()
                 return
             }
             resetBall()
-            let impulse = CGVector(dx: radomSign * randomX, dy: -randomY)
+            let impulse = randomVector(positiveY: false)
             ballSprite.physicsBody?.applyImpulse(impulse)
         }
         if playerWhoWon == playerSprite {
@@ -108,18 +128,24 @@ class GameScene: BaseScene {
                 return
             }
             resetBall()
-            let impulse = CGVector(dx: radomSign * randomX, dy: randomY)
+            let impulse = randomVector(positiveY: true)
             ballSprite.physicsBody?.applyImpulse(impulse)
         }
     }
 
     private func gameOver() {
         view?.isPaused = true
+        timer?.invalidate()
         self.controller?.gameOver(
             score: player.score,
-            time: currentTime - startTime
+            time: currentTime
         ) { [weak self] result in
-            self?.player.resetScore()
+            guard let self = self else { return }
+            self.player.resetScore()
+            self.view?.isPaused = false
+            self.resetBall()
+            let impulse = self.randomVector(positiveY: true)
+            self.ballSprite.physicsBody?.applyImpulse(impulse)
         }
     }
     
@@ -154,7 +180,6 @@ class GameScene: BaseScene {
     
     
     override func update(_ currentTime: TimeInterval) {
-        self.currentTime = currentTime
         // Called before each frame is rendered
         let followBall = SKAction.moveTo(x: ballSprite.position.x, duration: 0.5)
         enemySprite.run(followBall)

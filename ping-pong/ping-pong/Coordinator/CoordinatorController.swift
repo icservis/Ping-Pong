@@ -193,7 +193,17 @@ extension CoordinatorController: Coordinator {
         presenter.direction = .bottom
         gameOverController.transitioningDelegate = presenter
         gameOverController.modalPresentationStyle = .custom
-        gameOverController.closeBlock = completion
+        gameOverController.score = score
+        gameOverController.time = time
+        gameOverController.closeBlock = { [weak self] result in
+            switch result {
+            case .mainMenu:
+                self?.loadMainMenu()
+            case .restart:
+                break
+            }
+            completion?(result)
+        }
         present(gameOverController, animated: true, completion: nil)
     }
 

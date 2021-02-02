@@ -11,6 +11,9 @@
         <array key="LLPIXEL3.ttf">
             <string>LLPixel</string>
         </array>
+        <array key="joystix monospace.ttf">
+            <string>JoystixMonospace-Regular</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Coordinator Controller-->
@@ -139,8 +142,8 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pause" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="816-BW-hzp">
-                                <rect key="frame" x="162" y="60" width="51.5" height="21"/>
-                                <fontDescription key="fontDescription" name="LLPixel" family="LLPixel" pointSize="17"/>
+                                <rect key="frame" x="139" y="40" width="97" height="39"/>
+                                <fontDescription key="fontDescription" name="LLPixel" family="LLPixel" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -151,7 +154,7 @@
                             <constraint firstItem="816-BW-hzp" firstAttribute="centerX" secondItem="FU1-EG-2QK" secondAttribute="centerX" id="3lN-Ec-Xpx"/>
                             <constraint firstItem="y2Z-Gt-WgN" firstAttribute="top" secondItem="pVE-0w-xUs" secondAttribute="top" constant="20" id="E5J-pp-LA1"/>
                             <constraint firstItem="pVE-0w-xUs" firstAttribute="trailing" secondItem="y2Z-Gt-WgN" secondAttribute="trailing" constant="16" id="LLu-ts-Vtn"/>
-                            <constraint firstItem="816-BW-hzp" firstAttribute="top" secondItem="pVE-0w-xUs" secondAttribute="top" constant="60" id="gGA-vx-7dh"/>
+                            <constraint firstItem="816-BW-hzp" firstAttribute="top" secondItem="pVE-0w-xUs" secondAttribute="top" constant="40" id="gGA-vx-7dh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -172,23 +175,68 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Over" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjk-uI-Gdq">
-                                <rect key="frame" x="138.5" y="60" width="98" height="21"/>
-                                <fontDescription key="fontDescription" name="LLPixel" family="LLPixel" pointSize="17"/>
+                                <rect key="frame" x="95.5" y="40" width="184" height="39"/>
+                                <fontDescription key="fontDescription" name="LLPixel" family="LLPixel" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scK-Cl-CpJ">
+                                <rect key="frame" x="162.5" y="233" width="50" height="30"/>
+                                <state key="normal" title="Restart"/>
+                                <connections>
+                                    <action selector="restartAction:" destination="O7N-5y-V4N" eventType="touchUpInside" id="VNl-F5-G7V"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GzH-lw-cEt">
+                                <rect key="frame" x="149.5" y="183" width="76" height="30"/>
+                                <state key="normal" title="Main Menu"/>
+                                <connections>
+                                    <action selector="mainMenuAction:" destination="O7N-5y-V4N" eventType="touchUpInside" id="CT3-8H-gVZ"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YBr-ln-A1K">
+                                <rect key="frame" x="40" y="109" width="295" height="54"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsO-Kd-EYR">
+                                        <rect key="frame" x="0.0" y="0.0" width="295" height="17"/>
+                                        <fontDescription key="fontDescription" name="JoystixMonospace-Regular" family="Joystix" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOx-tL-Pk6">
+                                        <rect key="frame" x="0.0" y="37" width="295" height="17"/>
+                                        <fontDescription key="fontDescription" name="JoystixMonospace-Regular" family="Joystix" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="chx-6c-FQG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="GzH-lw-cEt" firstAttribute="top" secondItem="YBr-ln-A1K" secondAttribute="bottom" constant="20" id="013-fh-kOI"/>
+                            <constraint firstItem="YBr-ln-A1K" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="0V3-b4-mf5"/>
+                            <constraint firstItem="scK-Cl-CpJ" firstAttribute="top" secondItem="GzH-lw-cEt" secondAttribute="bottom" constant="20" id="2qh-pN-Cse"/>
                             <constraint firstItem="yjk-uI-Gdq" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="GBX-pu-gxs"/>
-                            <constraint firstItem="yjk-uI-Gdq" firstAttribute="top" secondItem="chx-6c-FQG" secondAttribute="top" constant="60" id="ypP-QJ-ozu"/>
+                            <constraint firstItem="YBr-ln-A1K" firstAttribute="leading" secondItem="chx-6c-FQG" secondAttribute="leading" constant="40" id="Zkr-ij-pjy"/>
+                            <constraint firstItem="GzH-lw-cEt" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="fU4-VD-QyZ"/>
+                            <constraint firstItem="scK-Cl-CpJ" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="nIH-B3-fqq"/>
+                            <constraint firstItem="YBr-ln-A1K" firstAttribute="top" secondItem="yjk-uI-Gdq" secondAttribute="bottom" constant="30" id="x9k-tf-05O"/>
+                            <constraint firstItem="yjk-uI-Gdq" firstAttribute="top" secondItem="chx-6c-FQG" secondAttribute="top" constant="40" id="ypP-QJ-ozu"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="elapsedTimeLabel" destination="FOx-tL-Pk6" id="Erb-2f-oEt"/>
+                        <outlet property="mainMenuButton" destination="GzH-lw-cEt" id="Rmg-1H-leO"/>
+                        <outlet property="restartButton" destination="scK-Cl-CpJ" id="8KZ-du-1xT"/>
+                        <outlet property="scoreLabel" destination="hsO-Kd-EYR" id="Si4-PP-aNJ"/>
+                        <outlet property="titleLabel" destination="yjk-uI-Gdq" id="zVX-Kg-haS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KkX-sx-V19" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2778" y="755"/>
+            <point key="canvasLocation" x="2776.8000000000002" y="754.27286356821594"/>
         </scene>
     </scenes>
     <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

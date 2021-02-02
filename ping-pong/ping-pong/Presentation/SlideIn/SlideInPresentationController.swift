@@ -60,6 +60,24 @@ class SlideInPresentationController: UIPresentationController {
     private let proportion: SlideInPresentationProportion
     private let dimmingEffect: SlideInPresentationDimmingEffect
 
+    init(
+        presentedViewController: UIViewController,
+        presenting presentingViewController: UIViewController?,
+        direction: SlideInPresentationDirection,
+        proportion: SlideInPresentationProportion,
+        dimmingEffect: SlideInPresentationDimmingEffect
+    ) {
+        self.direction = direction
+        self.proportion = proportion
+        self.dimmingEffect = dimmingEffect
+        super.init(
+            presentedViewController: presentedViewController,
+            presenting: presentingViewController
+        )
+        self.setupTapGesture()
+        self.setupPanGesture()
+    }
+
     private var interactionController: UIPercentDrivenInteractiveTransition? {
         didSet {
             guard let coordinator = presentedViewController.transitioningDelegate as? SlideInPresentationCoordinator else { return }
@@ -82,24 +100,6 @@ class SlideInPresentationController: UIPresentationController {
         blurView.backgroundColor = .clear
         blurView.alpha = 1.0
         return blurView
-    }
-
-    init(
-        presentedViewController: UIViewController,
-        presenting presentingViewController: UIViewController?,
-        direction: SlideInPresentationDirection,
-        proportion: SlideInPresentationProportion,
-        dimmingEffect: SlideInPresentationDimmingEffect
-    ) {
-        self.direction = direction
-        self.proportion = proportion
-        self.dimmingEffect = dimmingEffect
-        super.init(
-            presentedViewController: presentedViewController,
-            presenting: presentingViewController
-        )
-        self.setupTapGesture()
-        self.setupPanGesture()
     }
 
     private func setupTapGesture() {
@@ -201,6 +201,8 @@ class SlideInPresentationController: UIPresentationController {
     }
 
     override func presentationTransitionDidEnd(_ completed: Bool) {
+        super.presentationTransitionDidEnd(completed)
+
         if !completed {
             switch dimmingEffect {
             case .dimming:
@@ -213,6 +215,7 @@ class SlideInPresentationController: UIPresentationController {
 
     override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
+
         guard let coordinator = presentedViewController.transitionCoordinator else {
             if case .dimming = dimmingEffect {
                 dimmingView.alpha = 0.0
@@ -230,6 +233,8 @@ class SlideInPresentationController: UIPresentationController {
     }
 
     override func dismissalTransitionDidEnd(_ completed: Bool) {
+        super.dismissalTransitionDidEnd(completed)
+
         if completed {
             switch dimmingEffect {
             case .dimming:
@@ -241,6 +246,8 @@ class SlideInPresentationController: UIPresentationController {
     }
 
     override func containerViewWillLayoutSubviews() {
+        super.containerViewWillLayoutSubviews()
+
         presentedView?.frame = frameOfPresentedViewInContainerView
     }
 
