@@ -79,9 +79,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Qv0-07-biH">
+                                <rect key="frame" x="159" y="268.5" width="57" height="130"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFL-ic-cUi">
+                                        <rect key="frame" x="0.0" y="0.0" width="57" height="30"/>
+                                        <state key="normal" title="Random">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadGameLevelEasy:" destination="3iG-O8-wcH" eventType="touchUpInside" id="Ucg-5f-AzE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bH-yg-VrF">
+                                        <rect key="frame" x="0.0" y="50" width="57" height="30"/>
+                                        <state key="normal" title="Random">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadGameLevelMedium:" destination="3iG-O8-wcH" eventType="touchUpInside" id="fyt-41-biU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FRj-Li-Awj">
+                                        <rect key="frame" x="0.0" y="100" width="57" height="30"/>
+                                        <state key="normal" title="Random">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadGameLevelHard:" destination="3iG-O8-wcH" eventType="touchUpInside" id="gIv-Qz-mui"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpW-ku-Aq8">
-                                <rect key="frame" x="167" y="597" width="41" height="30"/>
-                                <state key="normal" title="Game">
+                                <rect key="frame" x="159" y="597" width="57" height="30"/>
+                                <state key="normal" title="Random">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -89,7 +121,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Menu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T3-xp-HMB">
-                                <rect key="frame" x="144" y="72" width="87" height="21"/>
+                                <rect key="frame" x="144" y="72" width="87" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -99,12 +131,17 @@
                         <constraints>
                             <constraint firstItem="hpW-ku-Aq8" firstAttribute="centerX" secondItem="DWT-gd-F3P" secondAttribute="centerX" id="0HN-c5-edF"/>
                             <constraint firstItem="6T3-xp-HMB" firstAttribute="top" secondItem="DeZ-5p-nqr" secondAttribute="top" constant="72" id="3Ju-H3-aQt"/>
+                            <constraint firstItem="Qv0-07-biH" firstAttribute="centerY" secondItem="DWT-gd-F3P" secondAttribute="centerY" id="4ZW-wX-HGV"/>
                             <constraint firstItem="6T3-xp-HMB" firstAttribute="centerX" secondItem="DWT-gd-F3P" secondAttribute="centerX" id="JID-bZ-iOa"/>
                             <constraint firstItem="DeZ-5p-nqr" firstAttribute="bottom" secondItem="hpW-ku-Aq8" secondAttribute="bottom" constant="40" id="JqE-nK-ybZ"/>
+                            <constraint firstItem="Qv0-07-biH" firstAttribute="centerX" secondItem="DWT-gd-F3P" secondAttribute="centerX" id="Rh6-eg-tmi"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="gameButton" destination="hpW-ku-Aq8" id="0Jx-g2-ZZ6"/>
+                        <outlet property="gameButton" destination="hpW-ku-Aq8" id="a6R-8y-bM3"/>
+                        <outlet property="gameLevelEasy" destination="vFL-ic-cUi" id="sPG-JZ-UUm"/>
+                        <outlet property="gameLevelHard" destination="FRj-Li-Awj" id="N2N-pZ-8Vl"/>
+                        <outlet property="gameLevelMedium" destination="7bH-yg-VrF" id="6fl-0B-slu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCG-FL-eDQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -147,6 +184,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NlP-7G-s4f">
+                                <rect key="frame" x="162.5" y="189" width="50" height="30"/>
+                                <state key="normal" title="Restart"/>
+                                <connections>
+                                    <action selector="restartAction:" destination="h3L-JB-uG9" eventType="touchUpInside" id="mQu-Xo-fp8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0fc-3U-kJS">
+                                <rect key="frame" x="149.5" y="139" width="76" height="30"/>
+                                <state key="normal" title="Main Menu"/>
+                                <connections>
+                                    <action selector="mainMenuAction:" destination="h3L-JB-uG9" eventType="touchUpInside" id="qLF-68-k7T"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="pVE-0w-xUs"/>
                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
@@ -154,11 +205,17 @@
                             <constraint firstItem="816-BW-hzp" firstAttribute="centerX" secondItem="FU1-EG-2QK" secondAttribute="centerX" id="3lN-Ec-Xpx"/>
                             <constraint firstItem="y2Z-Gt-WgN" firstAttribute="top" secondItem="pVE-0w-xUs" secondAttribute="top" constant="20" id="E5J-pp-LA1"/>
                             <constraint firstItem="pVE-0w-xUs" firstAttribute="trailing" secondItem="y2Z-Gt-WgN" secondAttribute="trailing" constant="16" id="LLu-ts-Vtn"/>
+                            <constraint firstItem="NlP-7G-s4f" firstAttribute="top" secondItem="0fc-3U-kJS" secondAttribute="bottom" constant="20" id="Onf-mk-6vK"/>
+                            <constraint firstItem="NlP-7G-s4f" firstAttribute="centerX" secondItem="FU1-EG-2QK" secondAttribute="centerX" id="Zh3-qY-WIG"/>
                             <constraint firstItem="816-BW-hzp" firstAttribute="top" secondItem="pVE-0w-xUs" secondAttribute="top" constant="40" id="gGA-vx-7dh"/>
+                            <constraint firstItem="0fc-3U-kJS" firstAttribute="centerX" secondItem="FU1-EG-2QK" secondAttribute="centerX" id="gIH-XG-YTF"/>
+                            <constraint firstItem="0fc-3U-kJS" firstAttribute="top" secondItem="816-BW-hzp" secondAttribute="bottom" constant="60" id="yff-BE-xYc"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="y2Z-Gt-WgN" id="fkf-0c-6mw"/>
+                        <outlet property="mainMenuButton" destination="0fc-3U-kJS" id="Zxa-Fa-Imy"/>
+                        <outlet property="restartButton" destination="NlP-7G-s4f" id="jej-cu-QUI"/>
                         <outlet property="titleLabel" destination="816-BW-hzp" id="Sq2-3J-ZFN"/>
                     </connections>
                 </viewController>
@@ -181,31 +238,31 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scK-Cl-CpJ">
-                                <rect key="frame" x="162.5" y="233" width="50" height="30"/>
+                                <rect key="frame" x="162.5" y="231" width="50" height="30"/>
                                 <state key="normal" title="Restart"/>
                                 <connections>
                                     <action selector="restartAction:" destination="O7N-5y-V4N" eventType="touchUpInside" id="VNl-F5-G7V"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GzH-lw-cEt">
-                                <rect key="frame" x="149.5" y="183" width="76" height="30"/>
+                                <rect key="frame" x="149.5" y="181" width="76" height="30"/>
                                 <state key="normal" title="Main Menu"/>
                                 <connections>
                                     <action selector="mainMenuAction:" destination="O7N-5y-V4N" eventType="touchUpInside" id="CT3-8H-gVZ"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YBr-ln-A1K">
-                                <rect key="frame" x="40" y="109" width="295" height="54"/>
+                                <rect key="frame" x="40" y="109" width="295" height="52"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsO-Kd-EYR">
-                                        <rect key="frame" x="0.0" y="0.0" width="295" height="17"/>
-                                        <fontDescription key="fontDescription" name="JoystixMonospace-Regular" family="Joystix" pointSize="14"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="295" height="16"/>
+                                        <fontDescription key="fontDescription" name="JoystixMonospace-Regular" family="Joystix" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOx-tL-Pk6">
-                                        <rect key="frame" x="0.0" y="37" width="295" height="17"/>
-                                        <fontDescription key="fontDescription" name="JoystixMonospace-Regular" family="Joystix" pointSize="14"/>
+                                        <rect key="frame" x="0.0" y="36" width="295" height="16"/>
+                                        <fontDescription key="fontDescription" name="JoystixMonospace-Regular" family="Joystix" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>

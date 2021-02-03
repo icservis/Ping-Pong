@@ -13,6 +13,13 @@ extension UIColor {
     static let appSilver: UIColor = .gray
     static let appWhite: UIColor = .white
 
+    struct MainMenu {
+        static let labelText: UIColor = appBlack
+        static let buttonText: UIColor = appBlack
+        static let border: UIColor = appSilver
+        static let background: UIColor = appWhite
+    }
+
     struct PauseMenu {
         static let labelText: UIColor = appBlack
         static let buttonText: UIColor = appBlack

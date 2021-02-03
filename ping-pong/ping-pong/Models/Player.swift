@@ -16,7 +16,8 @@ class Player: NSObject, NSCoding {
         return logger
     }()
 
-    enum Difficulty: Int, CaseIterable {
+    // MARK: Level
+    enum Difficulty: Int, CaseIterable, CustomStringConvertible {
         case easy
         case medium
         case hard
@@ -29,25 +30,61 @@ class Player: NSObject, NSCoding {
             var g = SystemRandomNumberGenerator()
             return Difficulty.random(using: &g)
         }
-    }
-    var level: Difficulty = .easy {
-        didSet {
-            store()
+
+        var description: String {
+            switch self {
+            case .easy:
+                return NSLocalizedString("EASY", comment: "GAME_LEVEL_EASY")
+            case .medium:
+                return NSLocalizedString("MEDIUM", comment: "GAME_LEVEL_MEDIUM")
+            case .hard:
+                return NSLocalizedString("HARD", comment: "GAME_LEVEL_HARD")
+            }
         }
     }
 
+    var level: Difficulty = .easy {
+        didSet {
+            levelChanged?(level)
+        }
+    }
+
+    var levelChanged: ((_ level: Difficulty) -> Void)?
+
+    func set(level: Difficulty) {
+        logger.trace("Player set level: \(level)")
+        self.level = level
+    }
+
+    // MARK: Score
     typealias ScoreType = Int
+    static let finalScore: ScoreType = 10
     typealias Score = (player: ScoreType, enemy: ScoreType)
+
     var score: Score = (player: 0, enemy: 0) {
         didSet {
             scoreChanged?(score)
-            store()
         }
     }
-    static let finalScore: ScoreType = 10
 
     var scoreChanged: ((_ score: Score) -> Void)?
 
+    func resetScore() {
+        logger.trace("Player reset score")
+        self.score = (player: 0, enemy: 0)
+    }
+
+    func increasePlayersScore() -> Bool {
+        self.score = (player: self.score.player + 1, enemy:self.score.enemy)
+        return self.score.player < Self.finalScore
+    }
+
+    func increaseEnemysScore() -> Bool {
+        self.score = (player: self.score.player, enemy:self.score.enemy + 1)
+        return self.score.enemy < Self.finalScore
+    }
+
+    // MARK: Default Player
     static func defaultPlayer() -> Player {
         let player = Player(level: .easy, score: (0, 0))
         return player
@@ -78,57 +115,5 @@ class Player: NSObject, NSCoding {
         coder.encode(level, forKey: Keys.level.rawValue)
         coder.encode(score.player, forKey: Keys.scorePlayer.rawValue)
         coder.encode(score.enemy, forKey: Keys.scoreEnemy.rawValue)
-    }
-
-    func store() {
-        let defaults = UserDefaults.standard
-        defaults.set(level.rawValue, forKey: Keys.level.rawValue)
-        defaults.set(score.player, forKey: Keys.scorePlayer.rawValue)
-        defaults.set(score.enemy, forKey: Keys.scoreEnemy.rawValue)
-        defaults.synchronize()
-        logger.trace("Player store to persistence level: \(level), score: \(score)")
-    }
-
-    func restore() {
-        let defaults = UserDefaults.standard
-        guard
-            let levelValue = defaults.value(forKey: Keys.level.rawValue) as? Int,
-            let level = Difficulty(rawValue: levelValue),
-            let scorePlayer = defaults.value(forKey: Keys.scorePlayer.rawValue) as? Int,
-            let scoreEnemy = defaults.value(forKey: Keys.scoreEnemy.rawValue) as? Int
-        else {
-            logger.error("Player restore failed")
-            reset()
-            return
-        }
-        let score = (player: scorePlayer, enemy: scoreEnemy)
-        self.level = level
-        self.score = score
-        logger.trace("Player restored from persistence: level: \(level), score:\(score)")
-    }
-
-    func reset() {
-        set(level: .easy)
-        resetScore()
-    }
-
-    func set(level: Difficulty) {
-        logger.trace("Player set level: \(level)")
-        self.level = level
-    }
-
-    func resetScore() {
-        logger.trace("Player reset score")
-        self.score = (player: 0, enemy: 0)
-    }
-
-    func increasePlayersScore() -> Bool {
-        self.score = (player: self.score.player + 1, enemy:self.score.enemy)
-        return self.score.player < Self.finalScore
-    }
-
-    func increaseEnemysScore() -> Bool {
-        self.score = (player: self.score.player, enemy:self.score.enemy + 1)
-        return self.score.enemy < Self.finalScore
     }
 }

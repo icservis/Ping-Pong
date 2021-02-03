@@ -11,9 +11,30 @@ import UIKit
 final class PauseMenuController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton! {
         didSet {
+            closeButton.setTitle("X", for: .normal)
             closeButton.titleLabel?.textColor = UIColor.PauseMenu.buttonText
             closeButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
             closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        }
+    }
+
+    @IBOutlet private weak var restartButton: UIButton! {
+        didSet {
+            let title = NSLocalizedString("Restart", comment: "PAUSEMENU_BUTTON_RESTART")
+            restartButton.setTitle(title, for: .normal)
+            restartButton.titleLabel?.textColor = UIColor.PauseMenu.buttonText
+            restartButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
+            restartButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        }
+    }
+
+    @IBOutlet private weak var mainMenuButton: UIButton! {
+        didSet {
+            let title = NSLocalizedString("Main Menu", comment: "PAUSEMENU_BUTTON_MAINMENU")
+            mainMenuButton.setTitle(title, for: .normal)
+            mainMenuButton.titleLabel?.textColor = UIColor.PauseMenu.buttonText
+            mainMenuButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
+            mainMenuButton.titleLabel?.adjustsFontForContentSizeCategory = true
         }
     }
 

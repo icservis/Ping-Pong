@@ -113,9 +113,9 @@ class GameOverController: UIViewController {
     private func setupContent() {
         titleLabel.text = "\(NSLocalizedString("Game Over", comment: "GAMEOVER_TITLE_GAMEOVER"))"
         scoreLabel.text = (score.player > score.enemy)
-            ? NSLocalizedString("You Won", comment: "GAMEOVER_TITLE_YOUWON")
-            : NSLocalizedString("You Lost", comment: "GAMEOVER_TITLE_YOULOST")
-            + "\(score.player) : \(score.enemy)"
+            ? NSLocalizedString("You Won", comment: "GAMEOVER_LABEL_YOUWON")
+            : NSLocalizedString("You Lost", comment: "GAMEOVER_LABEL_YOULOST")
+            + " \(score.player) : \(score.enemy)"
 
         if let timeString = elapsedTimeFormatter.string(from: time) {
             elapsedTimeLabel.text = "\(NSLocalizedString("Time", comment: "GAMEOVER_LABEL_TIME")): \(timeString) sec"

@@ -23,10 +23,15 @@ class BaseScene: SKScene {
         player.scoreChanged = { [weak self] score in
             self?.scoreChanged(score)
         }
+        player.levelChanged = { [weak self] level in
+            self?.levelChanged(level)
+        }
         return player
     }()
 
     func scoreChanged(_ score: Player.Score) { }
+
+    func levelChanged(_ level: Player.Difficulty) { }
     
     lazy var stateMachine: GameStateMachine = {
         return GameStateMachine.defaultMachine(scene: self)

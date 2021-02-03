@@ -179,7 +179,17 @@ extension CoordinatorController: Coordinator {
         presenter.direction = .bottom
         pauseMenuController.transitioningDelegate = presenter
         pauseMenuController.modalPresentationStyle = .custom
-        pauseMenuController.closeBlock = completion
+        pauseMenuController.closeBlock = { [weak self] result in
+            switch result {
+            case .mainMenu:
+                self?.loadMainMenu()
+            case .restart:
+                break
+            case .resume:
+                break
+            }
+            completion?(result)
+        }
         present(pauseMenuController, animated: true, completion: nil)
     }
 

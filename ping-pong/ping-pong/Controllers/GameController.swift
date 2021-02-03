@@ -11,6 +11,8 @@ import GameKit
 
 final class GameController: BaseViewController {
     var level: Player.Difficulty = .easy
+    weak var gameScene: GameScene?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,8 +20,13 @@ final class GameController: BaseViewController {
             return
         }
         gameScene.controller = self
-        gameScene.player.set(level: level)
-        gameScene.player.resetScore()
+        self.gameScene = gameScene
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        gameScene?.resetGame(level: level)
     }
 
     func pauseGame(completion: PauseMenuController.CloseBlock?) {
