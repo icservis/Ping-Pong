@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import CoreHaptics
 
 class GameScene: BaseScene {
     weak var controller: GameController?
@@ -34,6 +35,14 @@ class GameScene: BaseScene {
         return formatter
     }()
 
+    // Haptic Engine & State:
+    private var engine: CHHapticEngine!
+    private var engineNeedsStart = true
+
+    lazy var supportsHaptics: Bool = {
+        return (UIApplication.shared.delegate as? AppDelegate)?.supportsHaptics ?? false
+    }()
+
     private lazy var sceneBorder: SKPhysicsBody = {
         let sceneBorder = SKPhysicsBody(edgeLoopFrom: frame)
         sceneBorder.friction = 0
@@ -43,9 +52,11 @@ class GameScene: BaseScene {
         return sceneBorder
     }()
 
+    let kMaxVelocity: Int = 100
+    let kMinVelocity: Int = 50
     func randomVector(positiveY: Bool) -> CGVector {
-        let randomX = Int.random(in: 50...75)
-        let randomY = Int.random(in: 50...75)
+        let randomX = Int.random(in: kMinVelocity...kMaxVelocity)
+        let randomY = Int.random(in: kMinVelocity...kMaxVelocity)
         let randomSignX = Bool.random() ? 1 : -1
         let randomSignY = positiveY ? 1 : -1
         return CGVector(
@@ -73,6 +84,8 @@ class GameScene: BaseScene {
                 view.isPaused = false
             }
         }
+
+        createAndStartHapticEngine()
 
         let impulse = randomVector(positiveY: true)
         ballSprite.physicsBody?.applyImpulse(impulse)
@@ -142,8 +155,10 @@ class GameScene: BaseScene {
         ) { [weak self] result in
             guard let self = self else { return }
             self.player.resetScore()
-            self.view?.isPaused = false
             self.resetBall()
+
+            guard case .restart = result else { return }
+            self.view?.isPaused = false
             let impulse = self.randomVector(positiveY: true)
             self.ballSprite.physicsBody?.applyImpulse(impulse)
         }
@@ -193,6 +208,128 @@ class GameScene: BaseScene {
     }
 }
 
+//
+// Haptics
+//
+
+private extension GameScene {
+    func createAndStartHapticEngine() {
+        guard supportsHaptics else { return }
+
+        // Create and configure a haptic engine.
+        do {
+            engine = try CHHapticEngine()
+        } catch let error {
+            fatalError("Engine Creation Error: \(error)")
+        }
+
+        // The stopped handler alerts engine stoppage.
+        engine.stoppedHandler = { reason in
+            print("Stop Handler: The engine stopped for reason: \(reason.rawValue)")
+            switch reason {
+            case .audioSessionInterrupt:
+                debugPrint("Audio session interrupt.")
+            case .applicationSuspended:
+                debugPrint("Application suspended.")
+            case .idleTimeout:
+                debugPrint("Idle timeout.")
+            case .notifyWhenFinished:
+                debugPrint("Finished.")
+            case .systemError:
+                debugPrint("System error.")
+            case .engineDestroyed:
+                debugPrint("Engine destroyed.")
+            case .gameControllerDisconnect:
+                debugPrint("Controller disconnected.")
+            @unknown default:
+                debugPrint("Unknown error")
+            }
+
+            // Indicate that the next time the app requires a haptic, the app must call engine.start().
+            self.engineNeedsStart = true
+        }
+
+        // The reset handler notifies the app that it must reload all its content.
+        // If necessary, it recreates all players and restarts the engine in response to a server restart.
+        engine.resetHandler = {
+            print("The engine reset --> Restarting now!")
+
+            // Tell the rest of the app to start the engine the next time a haptic is necessary.
+            self.engineNeedsStart = true
+        }
+
+        // Start haptic engine to prepare for use.
+        do {
+            try engine.start()
+
+            // Indicate that the next time the app requires a haptic, the app doesn't need to call engine.start().
+            engineNeedsStart = false
+        } catch let error {
+            print("The engine failed to start with error: \(error)")
+        }
+    }
+
+    func playHapticResponse() {
+        // Play haptic here.
+        do {
+            // Start the engine if necessary.
+            if engineNeedsStart {
+                try engine.start()
+                engineNeedsStart = false
+            }
+
+            // Map the bounce velocity to intensity & sharpness.
+            guard let velocity = ballSprite.physicsBody?.velocity else { return }
+            let xVelocity = Float(velocity.dx)
+            let yVelocity = Float(velocity.dy)
+
+            // Normalize magnitude to map one number to haptic parameters:
+            let magnitude = sqrtf(xVelocity * xVelocity + yVelocity * yVelocity)
+            let normalizedMagnitude = min(max(magnitude / Float(kMaxVelocity), 0.0), 1.0)
+
+            // Create a haptic pattern player from normalized magnitude.
+            let hapticPlayer = try playerForMagnitude(normalizedMagnitude)
+
+            // Start player, fire and forget
+            try hapticPlayer?.start(atTime: CHHapticTimeImmediate)
+        } catch let error {
+            print("Haptic Playback Error: \(error)")
+        }
+    }
+
+    func playerForMagnitude(_ magnitude: Float) throws -> CHHapticPatternPlayer? {
+        let volume: Float = linearInterpolation(alpha: magnitude, min: 0.5, max: 1)
+        let decay: Float = linearInterpolation(alpha: magnitude, min: 0.0, max: 0.1)
+        let audioEvent = CHHapticEvent(
+            eventType: .audioContinuous,
+            parameters: [
+                CHHapticEventParameter(parameterID: .audioPitch, value: -0.15),
+                CHHapticEventParameter(parameterID: .audioVolume, value: volume),
+                CHHapticEventParameter(parameterID: .decayTime, value: decay),
+                CHHapticEventParameter(parameterID: .sustained, value: 0)
+            ],
+            relativeTime: 0
+        )
+
+        let sharpness = linearInterpolation(alpha: magnitude, min: 0.9, max: 0.5)
+        let intensity = linearInterpolation(alpha: magnitude, min: 0.375, max: 1.0)
+        let hapticEvent = CHHapticEvent(
+            eventType: .hapticTransient,
+            parameters: [
+                CHHapticEventParameter(parameterID: .hapticSharpness, value: sharpness),
+                CHHapticEventParameter(parameterID: .hapticIntensity, value: intensity)
+            ],
+            relativeTime: 0)
+
+        let pattern = try CHHapticPattern(events: [audioEvent, hapticEvent], parameters: [])
+        return try engine.makePlayer(with: pattern)
+    }
+
+    private func linearInterpolation(alpha: Float, min: Float, max: Float) -> Float {
+        return min + alpha * (max - min)
+    }
+}
+
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         guard
@@ -202,7 +339,12 @@ extension GameScene: SKPhysicsContactDelegate {
 
         let nodes: Set<SKSpriteNode> = [spriteNodeA, spriteNodeB]
         guard nodes.contains(ballSprite) else { return }
-        run(playPingAction)
+
+        if supportsHaptics {
+            playHapticResponse()
+        } else {
+            run(playPingAction)
+        }
     }
 
     func didEnd(_ contact: SKPhysicsContact) { }
