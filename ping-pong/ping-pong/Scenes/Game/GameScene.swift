@@ -271,7 +271,7 @@ private extension GameScene {
     }
 
     func randomVector(positiveY: Bool) -> CGVector {
-        let randomX = Int.random(in: configuration.minVelocity...configuration.maxVelocity) / 3
+        let randomX = Int.random(in: configuration.minVelocity...configuration.maxVelocity) / 5
         let randomY = Int.random(in: configuration.minVelocity...configuration.maxVelocity)
         let randomSignX = Bool.random() ? 1 : -1
         let randomSignY = positiveY ? 1 : -1
