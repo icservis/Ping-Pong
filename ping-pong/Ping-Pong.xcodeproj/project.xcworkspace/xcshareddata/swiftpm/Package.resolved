@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "ModalPresentation",
+        "repositoryURL": "git@github.com:icservis/ModalPresentation.git",
+        "state": {
+          "branch": "main",
+          "revision": "13c80e24a5547c80381b6931d802ecbbab166ab1",
+          "version": null
+        }
+      },
+      {
         "package": "swift-log",
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {

@@ -32,6 +32,7 @@
 		844E85E625AB05680071B82C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844E85E525AB05680071B82C /* Player.swift */; };
 		844E860F25AB0EBA0071B82C /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844E860E25AB0EBA0071B82C /* FileSystem.swift */; };
 		844E861925AB5F420071B82C /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 844E861825AB5F420071B82C /* Logging */; };
+		8452430525CC68E90042D09E /* ModalPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 8452430425CC68E90042D09E /* ModalPresentation */; };
 		8452580125C9EFB400A436DF /* NumberFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */; };
 		8452581625C9F28600A436DF /* digital-7 (mono).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581225C9F28400A436DF /* digital-7 (mono).ttf */; };
 		8452581725C9F28600A436DF /* digital-7 (italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581325C9F28500A436DF /* digital-7 (italic).ttf */; };
@@ -44,11 +45,8 @@
 		84A2C15023FD5F81005ACB5A /* BaseScene+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C14F23FD5F81005ACB5A /* BaseScene+Actions.swift */; };
 		84DAA42725C5A03F00E1FF03 /* IntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA42625C5A03F00E1FF03 /* IntroController.swift */; };
 		84DC16B525C5EBE100F55306 /* Localizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DC16B425C5EBE100F55306 /* Localizer.swift */; };
-		84E3CF7E25C715850072DE08 /* SlideInPresentationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3CF7D25C715850072DE08 /* SlideInPresentationCoordinator.swift */; };
 		84E3CF8425C717840072DE08 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3CF8325C717840072DE08 /* UIFont+Extensions.swift */; };
 		84E3CF8A25C71BD70072DE08 /* PauseMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3CF8925C71BD70072DE08 /* PauseMenuController.swift */; };
-		84E3CFDE25C727E40072DE08 /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3CFDD25C727E40072DE08 /* SlideInPresentationController.swift */; };
-		84E3CFE525C73C140072DE08 /* SlideInPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3CFE425C73C140072DE08 /* SlideInPresentationAnimator.swift */; };
 		84E3CFE825C745070072DE08 /* ClampingPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3CFE725C745070072DE08 /* ClampingPropertyWrapper.swift */; };
 		84E3CFEB25C7469D0072DE08 /* Comparable+Clamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3CFEA25C7469D0072DE08 /* Comparable+Clamped.swift */; };
 		84E3D0BD25C7F9F60072DE08 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3D0BC25C7F9F60072DE08 /* UIColor+Extensions.swift */; };
@@ -94,11 +92,8 @@
 		84A2C14F23FD5F81005ACB5A /* BaseScene+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseScene+Actions.swift"; sourceTree = "<group>"; };
 		84DAA42625C5A03F00E1FF03 /* IntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroController.swift; sourceTree = "<group>"; };
 		84DC16B425C5EBE100F55306 /* Localizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizer.swift; sourceTree = "<group>"; };
-		84E3CF7D25C715850072DE08 /* SlideInPresentationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationCoordinator.swift; sourceTree = "<group>"; };
 		84E3CF8325C717840072DE08 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		84E3CF8925C71BD70072DE08 /* PauseMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseMenuController.swift; sourceTree = "<group>"; };
-		84E3CFDD25C727E40072DE08 /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
-		84E3CFE425C73C140072DE08 /* SlideInPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationAnimator.swift; sourceTree = "<group>"; };
 		84E3CFE725C745070072DE08 /* ClampingPropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClampingPropertyWrapper.swift; sourceTree = "<group>"; };
 		84E3CFEA25C7469D0072DE08 /* Comparable+Clamped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamped.swift"; sourceTree = "<group>"; };
 		84E3D0BC25C7F9F60072DE08 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -111,6 +106,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				844E861925AB5F420071B82C /* Logging in Frameworks */,
+				8452430525CC68E90042D09E /* ModalPresentation in Frameworks */,
 				8446E8682207137D008FF376 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -156,7 +152,6 @@
 				84DC16AE25C5E43F00F55306 /* Coordinator */,
 				844E858E25A8D05B0071B82C /* Controllers */,
 				844E85E425AB03350071B82C /* Models */,
-				84E3CF7C25C713E20072DE08 /* Presentation */,
 				84A2C14923FD5B46005ACB5A /* Scenes */,
 				844E858125A8CEC10071B82C /* States */,
 				84E3CF7925C70FE70072DE08 /* SpriteKit */,
@@ -240,16 +235,6 @@
 			path = UserInterface;
 			sourceTree = "<group>";
 		};
-		8497F46F25C991CA00A77C8C /* SlideIn */ = {
-			isa = PBXGroup;
-			children = (
-				84E3CF7D25C715850072DE08 /* SlideInPresentationCoordinator.swift */,
-				84E3CFDD25C727E40072DE08 /* SlideInPresentationController.swift */,
-				84E3CFE425C73C140072DE08 /* SlideInPresentationAnimator.swift */,
-			);
-			path = SlideIn;
-			sourceTree = "<group>";
-		};
 		84A2C14923FD5B46005ACB5A /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,14 +308,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		84E3CF7C25C713E20072DE08 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				8497F46F25C991CA00A77C8C /* SlideIn */,
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
 		84E3CF8225C716800072DE08 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +334,7 @@
 			name = "ping-pong";
 			packageProductDependencies = (
 				844E861825AB5F420071B82C /* Logging */,
+				8452430425CC68E90042D09E /* ModalPresentation */,
 			);
 			productName = "ping-pong";
 			productReference = 8446E83D22071299008FF376 /* ping-pong.app */;
@@ -394,6 +372,7 @@
 			mainGroup = 8446E83422071298008FF376;
 			packageReferences = (
 				844E861725AB5F420071B82C /* XCRemoteSwiftPackageReference "swift-log" */,
+				8452430325CC68E90042D09E /* XCRemoteSwiftPackageReference "ModalPresentation" */,
 			);
 			productRefGroup = 8446E83E22071299008FF376 /* Products */;
 			projectDirPath = "";
@@ -447,8 +426,6 @@
 				848005F225C8A131006659B4 /* GameOverController.swift in Sources */,
 				844B41F425B8DA810051C202 /* MainMenuController.swift in Sources */,
 				844E859025A8D0770071B82C /* BaseViewController.swift in Sources */,
-				84E3CFE525C73C140072DE08 /* SlideInPresentationAnimator.swift in Sources */,
-				84E3CF7E25C715850072DE08 /* SlideInPresentationCoordinator.swift in Sources */,
 				84A2C14E23FD5C13005ACB5A /* GameScene.swift in Sources */,
 				84DAA42725C5A03F00E1FF03 /* IntroController.swift in Sources */,
 				84897936225A56070027818C /* ActionButton.swift in Sources */,
@@ -461,7 +438,6 @@
 				844E860F25AB0EBA0071B82C /* FileSystem.swift in Sources */,
 				844E859625A9AFA10071B82C /* MainMenuState.swift in Sources */,
 				84A2C15023FD5F81005ACB5A /* BaseScene+Actions.swift in Sources */,
-				84E3CFDE25C727E40072DE08 /* SlideInPresentationController.swift in Sources */,
 				84DC16B525C5EBE100F55306 /* Localizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -759,6 +735,14 @@
 				minimumVersion = 1.4.0;
 			};
 		};
+		8452430325CC68E90042D09E /* XCRemoteSwiftPackageReference "ModalPresentation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:icservis/ModalPresentation.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -766,6 +750,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 844E861725AB5F420071B82C /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
+		};
+		8452430425CC68E90042D09E /* ModalPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8452430325CC68E90042D09E /* XCRemoteSwiftPackageReference "ModalPresentation" */;
+			productName = ModalPresentation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

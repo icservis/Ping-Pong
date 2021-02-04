@@ -8,6 +8,7 @@
 
 import UIKit
 import GameKit
+import ModalPresentation
 import Logging
 
 typealias GameCenterCloseBlock = () -> Void
