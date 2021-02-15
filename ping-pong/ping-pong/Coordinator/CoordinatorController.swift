@@ -177,6 +177,7 @@ extension CoordinatorController: Coordinator {
     func loadPauseMenu(completion: PauseMenuController.CloseBlock?) {
         logger.debug("Pause game")
         guard let pauseMenuController = instatiateController(identifier: "PauseMenu") as? PauseMenuController else { return }
+        presenter.type = .page
         presenter.direction = .bottom
         pauseMenuController.transitioningDelegate = presenter
         pauseMenuController.modalPresentationStyle = .custom
