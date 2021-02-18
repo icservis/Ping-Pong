@@ -102,7 +102,7 @@ class GameOverController: UIViewController {
         self.view.alpha = 0.9
         self.view.backgroundColor = UIColor.GameOver.background
         self.view.roundedCorners(
-            corners: [.topLeft, .topRight, .bottomLeft, .bottomRight],
+            corners: [.bottomLeft, .bottomRight],
             radius: 10.0
         )
         let layer = view.layer
