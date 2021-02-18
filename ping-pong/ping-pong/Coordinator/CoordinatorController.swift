@@ -177,7 +177,6 @@ extension CoordinatorController: Coordinator {
     func loadPauseMenu(completion: PauseMenuController.CloseBlock?) {
         logger.debug("Pause game")
         guard let pauseMenuController = instatiateController(identifier: "PauseMenu") as? PauseMenuController else { return }
-        presenter.type = .page
         presenter.direction = .bottom
         pauseMenuController.transitioningDelegate = presenter
         pauseMenuController.modalPresentationStyle = .custom
@@ -202,7 +201,8 @@ extension CoordinatorController: Coordinator {
     ) {
         logger.debug("Game over")
         guard let gameOverController = instatiateController(identifier: "GameOver") as? GameOverController else { return }
-        presenter.direction = .bottom
+        presenter.direction = .top
+        presenter.relativeSize = .init(proportion: .custom(1), length: .custom(0.60))
         gameOverController.transitioningDelegate = presenter
         gameOverController.modalPresentationStyle = .custom
         gameOverController.score = score
