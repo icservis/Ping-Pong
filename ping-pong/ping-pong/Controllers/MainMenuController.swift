@@ -14,6 +14,10 @@ final class MainMenuController: BaseViewController {
         super.viewDidLoad()
     }
 
+    @IBOutlet weak var contentView: UIView!
+
+    @IBOutlet weak var backgroundView: UIImageView!
+
     @IBOutlet weak var gameButton: UIButton! {
         didSet {
             gameButton.titleLabel?.textColor = UIColor.MainMenu.buttonText
