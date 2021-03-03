@@ -20,8 +20,6 @@ final class IntroController: BaseViewController {
         }
     }
 
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         animatedHeightConstraint.constant = 0

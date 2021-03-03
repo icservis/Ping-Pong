@@ -20,6 +20,8 @@ class GameScene: BaseScene {
     var timeLabel: SKLabelNode!
     var levelLabel: SKLabelNode!
 
+    var countdownLabel: SKLabelNode!
+
     let playPingAction = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
 
     var timer: Timer?
@@ -89,10 +91,14 @@ class GameScene: BaseScene {
     private func restartGame() {
         player.resetScore()
         resetBall()
-        setTimer()
-        view?.isPaused = false
-        let impulse = randomVector(positiveY: true)
-        ballSprite.physicsBody?.applyImpulse(impulse)
+        countdown(initialCount: 5) { [weak self] in
+            guard let self = self else { return }
+            self.setTimer()
+            self.view?.isPaused = false
+            let impulse = self.randomVector(positiveY: true)
+            self.ballSprite.physicsBody?.applyImpulse(impulse)
+        }
+
     }
 
     func resetGame(level: Player.Difficulty) {
@@ -208,9 +214,9 @@ private extension GameScene {
     }
 
     func setTimer() {
-        self.timer?.invalidate()
+        timer?.invalidate()
         resetTime()
-        self.timer = Timer.scheduledTimer(
+        timer = Timer.scheduledTimer(
             withTimeInterval: delta,
             repeats: true,
             block: { [weak self] timer in
@@ -279,6 +285,54 @@ private extension GameScene {
             dx: randomSignX * randomX,
             dy: randomSignY * randomY
         )
+    }
+
+    func countdown(initialCount: Int, completion: (() -> Void)?) {
+        var remainingCount = initialCount
+        countdownLabel = SKLabelNode(fontNamed: "digital-7")
+        countdownLabel.horizontalAlignmentMode = .center
+        countdownLabel.verticalAlignmentMode = .center
+        countdownLabel.position = CGPoint(x: 0, y: 0)
+        countdownLabel.fontColor = SKColor.white
+        countdownLabel.fontSize = 500
+        countdownLabel.zPosition = 100
+        addChild(countdownLabel)
+
+        let setCounterText: (Int) -> Void = { count in
+            self.countdownLabel.text = "\(count)"
+
+            let seq = SKAction.sequence([
+                SKAction.scale(to: 2.0, duration: 0.2),
+                SKAction.scale(to: 1.0, duration: 0.2),
+                SKAction.scale(to: 2.0, duration: 0.2),
+                SKAction.wait(forDuration: 0.2),
+                SKAction.scale(to: 0.0, duration: 0.1)
+            ])
+            self.countdownLabel.run(seq)
+        }
+
+        setCounterText(remainingCount)
+
+        let countdownAction: () -> Void = {
+            remainingCount -= 1
+            setCounterText(remainingCount)
+        }
+
+        let endCountdown: () -> Void = {
+            self.countdownLabel.removeFromParent()
+            completion?()
+        }
+
+        let counterDecrement = SKAction.sequence([
+                                    SKAction.wait(forDuration: 1.0),
+                                    SKAction.run(countdownAction)
+        ])
+
+        run(SKAction.sequence([
+                                SKAction.repeat(counterDecrement, count: initialCount),
+                                SKAction.run(endCountdown)
+        ]))
+
     }
 }
 

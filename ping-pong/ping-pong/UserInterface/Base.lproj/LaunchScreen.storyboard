@@ -24,16 +24,11 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="10x-Nz-XUG"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="8RG-NC-aCR"/>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="CBU-2S-oUi"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="KWg-Hb-i0n"/>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Ki3-Z4-LN5"/>
                             <constraint firstItem="Wgn-ik-ElU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="4" id="Zjv-EG-pCK"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="aRf-1X-l7O"/>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="qHe-E2-mRw"/>
                             <constraint firstItem="Wgn-ik-ElU" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="reJ-92-ZSH"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="shL-t1-lEZ"/>
                             <constraint firstItem="Wgn-ik-ElU" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="32" id="yz4-eD-rMU"/>
