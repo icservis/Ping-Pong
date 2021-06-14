@@ -9,6 +9,7 @@
 import UIKit
 import GameKit
 import ModalPresentation
+import CountdownTimer
 import Logging
 
 typealias GameCenterCloseBlock = () -> Void
@@ -31,6 +32,18 @@ protocol Coordinator: AnyObject {
         time: TimeInterval,
         completion: GameOverController.CloseBlock?
     )
+    func loadCountDownTimer(
+        initialCount: Int,
+        completion: CountDownController.CompletionBlock?
+    )
+}
+
+enum StoryboardIdentifier: String {
+    case intro = "Intro"
+    case game = "Game"
+    case mainMenu = "MainMenu"
+    case pauseMenu = "PauseMenu"
+    case gameOver = "GameOver"
 }
 
 final class CoordinatorController: UIViewController {
@@ -47,7 +60,7 @@ final class CoordinatorController: UIViewController {
     }
 
     lazy var introController: IntroController = {
-        guard let controller = instatiateController(identifier: "Intro") as? IntroController else {
+        guard let controller = instatiateController(identifier: .intro) as? IntroController else {
             fatalError("Can not instantiate controller")
         }
         controller.coordinator = self
@@ -55,7 +68,7 @@ final class CoordinatorController: UIViewController {
     }()
 
     lazy var mainMenuController: MainMenuController = {
-        guard let controller = instatiateController(identifier: "MainMenu") as? MainMenuController else {
+        guard let controller = instatiateController(identifier: .mainMenu) as? MainMenuController else {
             fatalError("Can not instantiate controller")
         }
         controller.coordinator = self
@@ -63,7 +76,7 @@ final class CoordinatorController: UIViewController {
     }()
 
     lazy var gameController: GameController = {
-        guard let controller = instatiateController(identifier: "Game") as? GameController else {
+        guard let controller = instatiateController(identifier: .game) as? GameController else {
             fatalError("Can not instantiate controller")
         }
         controller.coordinator = self
@@ -120,7 +133,7 @@ private extension CoordinatorController {
         view.layoutIfNeeded()
     }
 
-    func transition(to newController: UIViewController) {
+    func transition(to newController: UIViewController, completion: (() -> Void)? = nil) {
         guard let currentController = currentController else {
             loadViewController(newController)
             return
@@ -139,13 +152,14 @@ private extension CoordinatorController {
             self?.currentController?.removeFromParent()
             self?.currentController = newController
             newController.didMove(toParent: self)
+            completion?()
         }
     }
 
-    func instatiateController(identifier: String) -> UIViewController? {
-        logger.trace("Instantiate controller with identifier \(identifier)")
+    func instatiateController(identifier: StoryboardIdentifier) -> UIViewController? {
+        logger.trace("Instantiate controller with identifier \(identifier.rawValue)")
         guard let storyboard = storyboard else { return nil }
-        return storyboard.instantiateViewController(identifier: identifier)
+        return storyboard.instantiateViewController(identifier: identifier.rawValue)
     }
 
     func authenticateUser() {
@@ -176,7 +190,7 @@ extension CoordinatorController: Coordinator {
 
     func loadPauseMenu(completion: PauseMenuController.CloseBlock?) {
         logger.debug("Pause game")
-        guard let pauseMenuController = instatiateController(identifier: "PauseMenu") as? PauseMenuController else { return }
+        guard let pauseMenuController = instatiateController(identifier: .pauseMenu) as? PauseMenuController else { return }
         presenter.direction = .bottom
         pauseMenuController.transitioningDelegate = presenter
         pauseMenuController.modalPresentationStyle = .custom
@@ -200,7 +214,7 @@ extension CoordinatorController: Coordinator {
         completion: GameOverController.CloseBlock?
     ) {
         logger.debug("Game over")
-        guard let gameOverController = instatiateController(identifier: "GameOver") as? GameOverController else { return }
+        guard let gameOverController = instatiateController(identifier: .gameOver) as? GameOverController else { return }
         presenter.direction = .top
         presenter.relativeSize = .init(proportion: .custom(1), length: .custom(0.60))
         gameOverController.transitioningDelegate = presenter
@@ -232,11 +246,32 @@ extension CoordinatorController: Coordinator {
 
     func loadGameCenterDashboard(completion: GameCenterCloseBlock?) {
         self.gameCenterCloseBlock = completion
-        let vc = GKGameCenterViewController(state: .dashboard)
-        vc.gameCenterDelegate = self
+        let gameCenterController = GKGameCenterViewController(state: .dashboard)
+        gameCenterController.gameCenterDelegate = self
         present(
-            vc,
+            gameCenterController,
             animated: true,
+            completion: nil
+        )
+    }
+
+    func loadCountDownTimer(initialCount: Int, completion: CountDownController.CompletionBlock?) {
+        logger.debug("Load CountDownTimer Controller")
+        let countDownController = CountDownController()
+        countDownController.initialCount = initialCount
+        countDownController.tick = { [weak self] count in
+            self?.logger.trace("CountDown Tick: \(count)")
+        }
+        countDownController.completion = { [weak self] in
+            guard let self = self else { return }
+            self.dismiss(animated: false) {
+                completion?()
+            }
+        }
+        countDownController.modalPresentationStyle = .overFullScreen
+        present(
+            countDownController,
+            animated: false,
             completion: nil
         )
     }

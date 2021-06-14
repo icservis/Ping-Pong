@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 840DB17725C9F963002BB63D /* joystix monospace.ttf */; };
+		84129D622673C16C003D0DD4 /* CountdownTimer in Frameworks */ = {isa = PBXBuildFile; productRef = 84129D612673C16C003D0DD4 /* CountdownTimer */; };
+		84129D7026751F76003D0DD4 /* digital-7 (mono italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84129D6C26751F76003D0DD4 /* digital-7 (mono italic).ttf */; };
+		84129D7126751F76003D0DD4 /* digital-7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84129D6D26751F76003D0DD4 /* digital-7.ttf */; };
+		84129D7226751F76003D0DD4 /* digital-7 (italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84129D6E26751F76003D0DD4 /* digital-7 (italic).ttf */; };
+		84129D7326751F76003D0DD4 /* digital-7 (mono).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84129D6F26751F76003D0DD4 /* digital-7 (mono).ttf */; };
 		8416125B220A2155000A3B27 /* ball-ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8416125A220A2155000A3B27 /* ball-ping.caf */; };
 		842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */; };
 		842D3AB425C5FBC200318334 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D3AB325C5FBC200318334 /* UIView+Extensions.swift */; };
@@ -34,10 +39,6 @@
 		844E861925AB5F420071B82C /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 844E861825AB5F420071B82C /* Logging */; };
 		8452430525CC68E90042D09E /* ModalPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 8452430425CC68E90042D09E /* ModalPresentation */; };
 		8452580125C9EFB400A436DF /* NumberFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */; };
-		8452581625C9F28600A436DF /* digital-7 (mono).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581225C9F28400A436DF /* digital-7 (mono).ttf */; };
-		8452581725C9F28600A436DF /* digital-7 (italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581325C9F28500A436DF /* digital-7 (italic).ttf */; };
-		8452581825C9F28600A436DF /* digital-7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581425C9F28500A436DF /* digital-7.ttf */; };
-		8452581925C9F28600A436DF /* digital-7 (mono italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8452581525C9F28500A436DF /* digital-7 (mono italic).ttf */; };
 		848005F225C8A131006659B4 /* GameOverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848005F125C8A131006659B4 /* GameOverController.swift */; };
 		84897936225A56070027818C /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84897935225A56070027818C /* ActionButton.swift */; };
 		84A2C14D23FD5C13005ACB5A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84A2C14B23FD5C13005ACB5A /* GameScene.sks */; };
@@ -55,6 +56,10 @@
 
 /* Begin PBXFileReference section */
 		840DB17725C9F963002BB63D /* joystix monospace.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "joystix monospace.ttf"; sourceTree = "<group>"; };
+		84129D6C26751F76003D0DD4 /* digital-7 (mono italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono italic).ttf"; sourceTree = "<group>"; };
+		84129D6D26751F76003D0DD4 /* digital-7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7.ttf"; sourceTree = "<group>"; };
+		84129D6E26751F76003D0DD4 /* digital-7 (italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (italic).ttf"; sourceTree = "<group>"; };
+		84129D6F26751F76003D0DD4 /* digital-7 (mono).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono).ttf"; sourceTree = "<group>"; };
 		8416125A220A2155000A3B27 /* ball-ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ball-ping.caf"; sourceTree = "<group>"; };
 		842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LLPIXEL3.ttf; sourceTree = "<group>"; };
 		842D3AB325C5FBC200318334 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -81,10 +86,6 @@
 		844E85E525AB05680071B82C /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		844E860E25AB0EBA0071B82C /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extensions.swift"; sourceTree = "<group>"; };
-		8452581225C9F28400A436DF /* digital-7 (mono).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono).ttf"; sourceTree = "<group>"; };
-		8452581325C9F28500A436DF /* digital-7 (italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (italic).ttf"; sourceTree = "<group>"; };
-		8452581425C9F28500A436DF /* digital-7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7.ttf"; sourceTree = "<group>"; };
-		8452581525C9F28500A436DF /* digital-7 (mono italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono italic).ttf"; sourceTree = "<group>"; };
 		848005F125C8A131006659B4 /* GameOverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverController.swift; sourceTree = "<group>"; };
 		84897935225A56070027818C /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		84A2C14B23FD5C13005ACB5A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -108,6 +109,7 @@
 				844E861925AB5F420071B82C /* Logging in Frameworks */,
 				8452430525CC68E90042D09E /* ModalPresentation in Frameworks */,
 				8446E8682207137D008FF376 /* GameKit.framework in Frameworks */,
+				84129D622673C16C003D0DD4 /* CountdownTimer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,11 +119,11 @@
 		84161257220A1217000A3B27 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84129D6E26751F76003D0DD4 /* digital-7 (italic).ttf */,
+				84129D6C26751F76003D0DD4 /* digital-7 (mono italic).ttf */,
+				84129D6F26751F76003D0DD4 /* digital-7 (mono).ttf */,
+				84129D6D26751F76003D0DD4 /* digital-7.ttf */,
 				840DB17725C9F963002BB63D /* joystix monospace.ttf */,
-				8452581325C9F28500A436DF /* digital-7 (italic).ttf */,
-				8452581525C9F28500A436DF /* digital-7 (mono italic).ttf */,
-				8452581225C9F28400A436DF /* digital-7 (mono).ttf */,
-				8452581425C9F28500A436DF /* digital-7.ttf */,
 				842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */,
 				8416125A220A2155000A3B27 /* ball-ping.caf */,
 			);
@@ -335,6 +337,7 @@
 			packageProductDependencies = (
 				844E861825AB5F420071B82C /* Logging */,
 				8452430425CC68E90042D09E /* ModalPresentation */,
+				84129D612673C16C003D0DD4 /* CountdownTimer */,
 			);
 			productName = "ping-pong";
 			productReference = 8446E83D22071299008FF376 /* ping-pong.app */;
@@ -346,7 +349,7 @@
 		8446E83522071298008FF376 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "IC Servis, s.r.o.";
 				TargetAttributes = {
@@ -373,6 +376,7 @@
 			packageReferences = (
 				844E861725AB5F420071B82C /* XCRemoteSwiftPackageReference "swift-log" */,
 				8452430325CC68E90042D09E /* XCRemoteSwiftPackageReference "ModalPresentation" */,
+				84129D602673C16C003D0DD4 /* XCRemoteSwiftPackageReference "CountdownTimer" */,
 			);
 			productRefGroup = 8446E83E22071299008FF376 /* Products */;
 			projectDirPath = "";
@@ -388,18 +392,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8452581925C9F28600A436DF /* digital-7 (mono italic).ttf in Resources */,
+				84129D7326751F76003D0DD4 /* digital-7 (mono).ttf in Resources */,
 				8446E84C22071299008FF376 /* Main.storyboard in Resources */,
+				84129D7226751F76003D0DD4 /* digital-7 (italic).ttf in Resources */,
 				8446E84E2207129C008FF376 /* Assets.xcassets in Resources */,
 				8416125B220A2155000A3B27 /* ball-ping.caf in Resources */,
 				8446E8512207129C008FF376 /* LaunchScreen.storyboard in Resources */,
-				8452581625C9F28600A436DF /* digital-7 (mono).ttf in Resources */,
+				84129D7026751F76003D0DD4 /* digital-7 (mono italic).ttf in Resources */,
 				842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */,
 				84A2C14D23FD5C13005ACB5A /* GameScene.sks in Resources */,
 				840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */,
-				8452581725C9F28600A436DF /* digital-7 (italic).ttf in Resources */,
 				8446E84522071299008FF376 /* Actions.sks in Resources */,
-				8452581825C9F28600A436DF /* digital-7.ttf in Resources */,
+				84129D7126751F76003D0DD4 /* digital-7.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +514,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -528,7 +532,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -593,7 +597,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -649,7 +653,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -667,7 +671,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -688,7 +692,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -727,6 +731,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		84129D602673C16C003D0DD4 /* XCRemoteSwiftPackageReference "CountdownTimer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:icservis/CountdownTimer.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		844E861725AB5F420071B82C /* XCRemoteSwiftPackageReference "swift-log" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
@@ -746,6 +758,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		84129D612673C16C003D0DD4 /* CountdownTimer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84129D602673C16C003D0DD4 /* XCRemoteSwiftPackageReference "CountdownTimer" */;
+			productName = CountdownTimer;
+		};
 		844E861825AB5F420071B82C /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 844E861725AB5F420071B82C /* XCRemoteSwiftPackageReference "swift-log" */;

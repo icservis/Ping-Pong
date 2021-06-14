@@ -20,8 +20,6 @@ class GameScene: BaseScene {
     var timeLabel: SKLabelNode!
     var levelLabel: SKLabelNode!
 
-    var countdownLabel: SKLabelNode!
-
     let playPingAction = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
 
     var timer: Timer?
@@ -88,32 +86,9 @@ class GameScene: BaseScene {
         createAndStartHapticEngine()
     }
 
-    private func restartGame() {
-        player.resetScore()
-        resetBall()
-        countdown(initialCount: 5) { [weak self] in
-            guard let self = self else { return }
-            self.setTimer()
-            self.view?.isPaused = false
-            let impulse = self.randomVector(positiveY: true)
-            self.ballSprite.physicsBody?.applyImpulse(impulse)
-        }
-
-    }
-
     func resetGame(level: Player.Difficulty) {
         player.set(level: level)
-        restartGame()
-    }
-
-    func resetBall() {
-        ballSprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        ballSprite.position = CGPoint(x: 0, y: 0)
-    }
-
-    func resetTime() {
-        self.currentTime = 0
-        self.timeLabel.text = self.elapsedTimeFormatter.string(from: self.currentTime)
+        restartGame(playerHasServis: true)
     }
 
     override func scoreChanged(_ score: Player.Score) {
@@ -127,14 +102,17 @@ class GameScene: BaseScene {
 
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        let followBall = SKAction.moveTo(x: ballSprite.position.x, duration: configuration.followBallDuration)
+        let followBall = SKAction.moveTo(
+            x: ballSprite.position.x,
+            duration: configuration.followBallDuration
+        )
         enemySprite.run(followBall)
 
         if ballSprite.position.y <= playerSprite.position.y {
-            endGame(playerWhoWon: enemySprite)
+            endGame(whoWon: enemySprite)
         }
         if ballSprite.position.y >= enemySprite.position.y {
-            endGame(playerWhoWon: playerSprite)
+            endGame(whoWon: playerSprite)
         }
     }
 
@@ -190,7 +168,6 @@ class GameScene: BaseScene {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //debugPrint("touchesCancelled: \(touches), event: \(event)")
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
 }
@@ -201,78 +178,104 @@ class GameScene: BaseScene {
 private extension GameScene {
     func pauseGame() {
         view?.isPaused = true
-        self.controller?.pauseGame { [weak self, unowned view] result in
+        self.controller?.pauseGame { [weak self, weak view] result in
             switch result {
             case .resume:
                 view?.isPaused = false
             case .restart:
-                self?.restartGame()
+                self?.restartGame(playerHasServis: true)
             case .mainMenu:
                 break
             }
         }
     }
 
-    func setTimer() {
-        timer?.invalidate()
+    func restartGame(playerHasServis: Bool) {
+        player.resetScore()
+        resetBall()
         resetTime()
-        timer = Timer.scheduledTimer(
-            withTimeInterval: delta,
-            repeats: true,
-            block: { [weak self] timer in
-                guard let self = self, let view = self.view, !view.isPaused else { return }
-                self.currentTime = self.currentTime + self.delta
-
-                DispatchQueue.global(qos: .default).async {
-                    let timeString = self.elapsedTimeFormatter.string(from: self.currentTime)
-                    DispatchQueue.main.async {
-                        self.timeLabel.text = timeString
-                    }
-                }
-            }
-        )
+        controller?.loadCountDownTimer(initialCount: 3) { [weak self] in
+            guard let self = self else { return }
+            self.view?.isPaused = false
+            self.restartTimer()
+            let impulse = self.randomVector(positiveY: playerHasServis)
+            self.ballSprite.physicsBody?.applyImpulse(impulse)
+        }
     }
 
-    func endGame(playerWhoWon: SKSpriteNode) {
-        if playerWhoWon == enemySprite {
+    func endGame(whoWon: SKSpriteNode) {
+        resetBall()
+        let impulse: CGVector
+        switch whoWon {
+        case enemySprite:
             guard player.increaseEnemysScore() else {
                 self.gameOver()
                 return
             }
-            resetBall()
-            let impulse = randomVector(positiveY: false)
-            ballSprite.physicsBody?.applyImpulse(impulse)
-        }
-        if playerWhoWon == playerSprite {
+
+            impulse = randomVector(positiveY: false)
+        case playerSprite:
             guard player.increasePlayersScore() else {
                 self.gameOver()
                 return
             }
-            resetBall()
-            let impulse = randomVector(positiveY: true)
-            ballSprite.physicsBody?.applyImpulse(impulse)
+            impulse = randomVector(positiveY: true)
+        default:
+            return
         }
+        ballSprite.physicsBody?.applyImpulse(impulse)
     }
 
     func gameOver() {
         view?.isPaused = true
         timer?.invalidate()
+        let playerHasWon = self.player.score.player > self.player.score.enemy
         self.controller?.gameOver(
             score: player.score,
             time: currentTime
         ) { [weak self] result in
             guard let self = self else { return }
-            let playerHasWon = self.player.score.player > self.player.score.enemy
-            self.player.resetScore()
-            self.resetBall()
-            self.resetTime()
+            switch result {
+            case .restart:
+                self.restartGame(playerHasServis: playerHasWon)
+            case .mainMenu:
+                break;
+            }
+        }
+    }
 
-            guard case .restart = result else { return }
-            self.setTimer()
-            self.view?.isPaused = false
+    func restartTimer() {
+        timer?.invalidate()
+        resetTime()
+        timer = Timer.scheduledTimer(
+            withTimeInterval: delta,
+            repeats: true,
+            block: { [weak self, weak view] timer in
+                guard
+                    let self = self,
+                    let view = view, !view.isPaused
+                else { return }
+                self.setTime(self.currentTime + self.delta)
+            }
+        )
+    }
 
-            let impulse = self.randomVector(positiveY: playerHasWon)
-            self.ballSprite.physicsBody?.applyImpulse(impulse)
+    func resetBall() {
+        ballSprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        ballSprite.position = CGPoint(x: 0, y: 0)
+    }
+
+    func resetTime() {
+        setTime(0)
+    }
+
+    func setTime(_ time: TimeInterval) {
+        self.currentTime = time
+        DispatchQueue.global(qos: .default).async {
+            let timeString = self.elapsedTimeFormatter.string(from: time)
+            DispatchQueue.main.async {
+                self.timeLabel.text = timeString
+            }
         }
     }
 
@@ -285,54 +288,6 @@ private extension GameScene {
             dx: randomSignX * randomX,
             dy: randomSignY * randomY
         )
-    }
-
-    func countdown(initialCount: Int, completion: (() -> Void)?) {
-        var remainingCount = initialCount
-        countdownLabel = SKLabelNode(fontNamed: "digital-7")
-        countdownLabel.horizontalAlignmentMode = .center
-        countdownLabel.verticalAlignmentMode = .center
-        countdownLabel.position = CGPoint(x: 0, y: 0)
-        countdownLabel.fontColor = SKColor.white
-        countdownLabel.fontSize = 500
-        countdownLabel.zPosition = 100
-        addChild(countdownLabel)
-
-        let setCounterText: (Int) -> Void = { count in
-            self.countdownLabel.text = "\(count)"
-
-            let seq = SKAction.sequence([
-                SKAction.scale(to: 2.0, duration: 0.2),
-                SKAction.scale(to: 1.0, duration: 0.2),
-                SKAction.scale(to: 2.0, duration: 0.2),
-                SKAction.wait(forDuration: 0.2),
-                SKAction.scale(to: 0.0, duration: 0.1)
-            ])
-            self.countdownLabel.run(seq)
-        }
-
-        setCounterText(remainingCount)
-
-        let countdownAction: () -> Void = {
-            remainingCount -= 1
-            setCounterText(remainingCount)
-        }
-
-        let endCountdown: () -> Void = {
-            self.countdownLabel.removeFromParent()
-            completion?()
-        }
-
-        let counterDecrement = SKAction.sequence([
-                                    SKAction.wait(forDuration: 1.0),
-                                    SKAction.run(countdownAction)
-        ])
-
-        run(SKAction.sequence([
-                                SKAction.repeat(counterDecrement, count: initialCount),
-                                SKAction.run(endCountdown)
-        ]))
-
     }
 }
 
@@ -353,24 +308,24 @@ private extension GameScene {
 
         // The stopped handler alerts engine stoppage.
         engine.stoppedHandler = { reason in
-            print("Stop Handler: The engine stopped for reason: \(reason.rawValue)")
+            self.logger.debug("Stop Handler: The engine stopped for reason: \(reason.rawValue)")
             switch reason {
             case .audioSessionInterrupt:
-                debugPrint("Audio session interrupt.")
+                self.logger.trace("Audio session interrupt.")
             case .applicationSuspended:
-                debugPrint("Application suspended.")
+                self.logger.trace("Application suspended.")
             case .idleTimeout:
-                debugPrint("Idle timeout.")
+                self.logger.trace("Idle timeout.")
             case .notifyWhenFinished:
-                debugPrint("Finished.")
+                self.logger.trace("Finished.")
             case .systemError:
-                debugPrint("System error.")
+                self.logger.trace("System error.")
             case .engineDestroyed:
-                debugPrint("Engine destroyed.")
+                self.logger.trace("Engine destroyed.")
             case .gameControllerDisconnect:
-                debugPrint("Controller disconnected.")
+                self.logger.trace("Controller disconnected.")
             @unknown default:
-                debugPrint("Unknown error")
+                self.logger.trace("Unknown error")
             }
 
             // Indicate that the next time the app requires a haptic, the app must call engine.start().
@@ -380,8 +335,7 @@ private extension GameScene {
         // The reset handler notifies the app that it must reload all its content.
         // If necessary, it recreates all players and restarts the engine in response to a server restart.
         engine.resetHandler = {
-            print("The engine reset --> Restarting now!")
-
+            self.logger.debug("The engine reset --> Restarting now!")
             // Tell the rest of the app to start the engine the next time a haptic is necessary.
             self.engineNeedsStart = true
         }
@@ -393,7 +347,7 @@ private extension GameScene {
             // Indicate that the next time the app requires a haptic, the app doesn't need to call engine.start().
             engineNeedsStart = false
         } catch let error {
-            print("The engine failed to start with error: \(error)")
+            self.logger.debug("The engine failed to start with error: \(error)")
         }
     }
 
@@ -421,8 +375,8 @@ private extension GameScene {
             // Start player, fire and forget
             try hapticPlayer?.start(atTime: CHHapticTimeImmediate)
         } catch let error {
-            print("Haptic Playback Error: \(error)")
-        }
+            logger.debug("Haptic Playback Error: \(error)")
+         }
     }
 
     func playerForMagnitude(_ magnitude: Float) throws -> CHHapticPatternPlayer? {

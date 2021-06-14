@@ -31,7 +31,6 @@ final class IntroController: BaseViewController {
     }
 
     private func start() {
-
         UIView.animate(
             withDuration: 1,
             delay: 0,
