@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "CountdownTimer",
+        "repositoryURL": "git@github.com:icservis/CountdownTimer.git",
+        "state": {
+          "branch": "master",
+          "revision": "4ed66014626ea91d686bf7e3e1807c836add2053",
+          "version": null
+        }
+      },
+      {
         "package": "ModalPresentation",
         "repositoryURL": "git@github.com:icservis/ModalPresentation.git",
         "state": {
