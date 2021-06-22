@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ping-Pong &apos;70</string>
+	<string>Ping-Pong '70</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -19,16 +19,16 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>LLPIXEL3.ttf</string>
-        <string>digital-7.ttf</string>
-        <string>digital-7 (mono).ttf</string>
-        <string>digital-7 (italic).ttf</string>
-        <string>digital-7 (mono italic).ttf</string>
+		<string>digital-7.ttf</string>
+		<string>digital-7 (mono).ttf</string>
+		<string>digital-7 (italic).ttf</string>
+		<string>digital-7 (mono italic).ttf</string>
 		<string>joystix monospace.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
