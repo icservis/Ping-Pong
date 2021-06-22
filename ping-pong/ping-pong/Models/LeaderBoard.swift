@@ -34,4 +34,15 @@ extension Player.Difficulty {
             return "top_hard"
         }
     }
+
+    var context: Int {
+        switch self {
+        case .easy:
+            return 1
+        case .medium:
+            return 2
+        case .hard:
+            return 3
+        }
+    }
 }

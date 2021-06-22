@@ -36,17 +36,8 @@ final class ElapsedTime: NSObject {
         self.value = 0
     }
 
-    lazy var elapsedTimeFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 1
-        formatter.maximumFractionDigits = 1
-        formatter.allowsFloats = true
-
-        return formatter
-    }()
-
     func string() -> String? {
-        self.elapsedTimeFormatter.string(from: self.value)
+        self.value.toString(precision: .deciseconds)
     }
 
     class func string(for value: Value) -> String? {

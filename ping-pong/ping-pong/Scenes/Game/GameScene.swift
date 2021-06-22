@@ -201,9 +201,11 @@ private extension GameScene {
         controller?.loadCountDownTimer(initialCount: 3) { [weak self] in
             guard let self = self else { return }
             self.view?.isPaused = false
-            self.restartTimer()
-            let impulse = self.randomVector(positiveY: playerHasServis)
-            self.ballSprite.physicsBody?.applyImpulse(impulse)
+            self.resetTimer(delay: 1) { [weak self] in
+                guard let self = self else { return }
+                let impulse = self.randomVector(positiveY: playerHasServis)
+                self.ballSprite.physicsBody?.applyImpulse(impulse)
+            }
         }
     }
 
@@ -226,7 +228,7 @@ private extension GameScene {
         default:
             return
         }
-        pauseTimer(delay: 3) { [weak self] in
+        pauseTimer(delay: 1) { [weak self] in
             guard let self = self else { return }
             self.ballSprite.physicsBody?.applyImpulse(impulse)
         }
@@ -251,20 +253,24 @@ private extension GameScene {
         }
     }
 
-    func restartTimer() {
+    func resetTimer(delay: TimeInterval, completion: (() -> Void)?) {
         timer?.invalidate()
         resetTime()
-        timer = Timer.scheduledTimer(
-            withTimeInterval: ElapsedTime.delta,
-            repeats: true,
-            block: { [weak self] timer in
-                guard
-                    let self = self,
-                    let view = self.view, !view.isPaused
-                else { return }
-                self.currentTime.update(with: ElapsedTime.delta)
-            }
-        )
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self = self else { return }
+            self.timer = Timer.scheduledTimer(
+                withTimeInterval: ElapsedTime.delta,
+                repeats: true,
+                block: { [weak self] timer in
+                    guard
+                        let self = self,
+                        let view = self.view, !view.isPaused
+                    else { return }
+                    self.currentTime.update(with: ElapsedTime.delta)
+                }
+            )
+            completion?()
+        }
     }
 
     func pauseTimer(delay: TimeInterval, completion: (() -> Void)?) {
