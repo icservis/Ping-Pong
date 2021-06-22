@@ -20,6 +20,10 @@ class BaseViewController: UIViewController {
 
     weak var coordinator: Coordinator?
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
     @discardableResult
     func loadScene(
         _ fileNamed: String,

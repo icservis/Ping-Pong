@@ -23,16 +23,18 @@ class GameScene: BaseScene {
     let playPingAction = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
 
     var timer: Timer?
-    var currentTime: TimeInterval = 0
-    let delta: TimeInterval = 0.1
-
-    lazy var elapsedTimeFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 1
-        formatter.maximumFractionDigits = 1
-        formatter.allowsFloats = true
-
-        return formatter
+    lazy var currentTime : ElapsedTime = {
+        let elapsedTime = ElapsedTime()
+        elapsedTime.valueChangedBlock = { [weak self] time in
+            guard let self = self else { return }
+            DispatchQueue.global(qos: .default).async {
+                let timeString = elapsedTime.string()
+                DispatchQueue.main.async {
+                    self.timeLabel.text = timeString
+                }
+            }
+        }
+        return elapsedTime
     }()
 
     private lazy var sceneBorder: SKPhysicsBody = {
@@ -43,6 +45,8 @@ class GameScene: BaseScene {
         sceneBorder.linearDamping = 0
         return sceneBorder
     }()
+
+    private var gameIsPaused: Bool = false
 
     private var engine: CHHapticEngine!
     private var engineNeedsStart = true
@@ -204,15 +208,14 @@ private extension GameScene {
     }
 
     func endGame(whoWon: SKSpriteNode) {
-        resetBall()
         let impulse: CGVector
+        self.resetBall()
         switch whoWon {
         case enemySprite:
             guard player.increaseEnemysScore() else {
                 self.gameOver()
                 return
             }
-
             impulse = randomVector(positiveY: false)
         case playerSprite:
             guard player.increasePlayersScore() else {
@@ -223,7 +226,10 @@ private extension GameScene {
         default:
             return
         }
-        ballSprite.physicsBody?.applyImpulse(impulse)
+        pauseTimer(delay: 3) { [weak self] in
+            guard let self = self else { return }
+            self.ballSprite.physicsBody?.applyImpulse(impulse)
+        }
     }
 
     func gameOver() {
@@ -231,6 +237,7 @@ private extension GameScene {
         timer?.invalidate()
         let playerHasWon = self.player.score.player > self.player.score.enemy
         self.controller?.gameOver(
+            level: player.level,
             score: player.score,
             time: currentTime
         ) { [weak self] result in
@@ -248,16 +255,35 @@ private extension GameScene {
         timer?.invalidate()
         resetTime()
         timer = Timer.scheduledTimer(
-            withTimeInterval: delta,
+            withTimeInterval: ElapsedTime.delta,
             repeats: true,
-            block: { [weak self, weak view] timer in
+            block: { [weak self] timer in
                 guard
                     let self = self,
-                    let view = view, !view.isPaused
+                    let view = self.view, !view.isPaused
                 else { return }
-                self.setTime(self.currentTime + self.delta)
+                self.currentTime.update(with: ElapsedTime.delta)
             }
         )
+    }
+
+    func pauseTimer(delay: TimeInterval, completion: (() -> Void)?) {
+        timer?.invalidate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self = self else { return }
+            self.timer = Timer.scheduledTimer(
+                withTimeInterval: ElapsedTime.delta,
+                repeats: true,
+                block: { [weak self] timer in
+                    guard
+                        let self = self,
+                        let view = self.view, !view.isPaused
+                    else { return }
+                    self.currentTime.update(with: ElapsedTime.delta)
+                }
+            )
+            completion?()
+        }
     }
 
     func resetBall() {
@@ -266,17 +292,7 @@ private extension GameScene {
     }
 
     func resetTime() {
-        setTime(0)
-    }
-
-    func setTime(_ time: TimeInterval) {
-        self.currentTime = time
-        DispatchQueue.global(qos: .default).async {
-            let timeString = self.elapsedTimeFormatter.string(from: time)
-            DispatchQueue.main.async {
-                self.timeLabel.text = timeString
-            }
-        }
+        self.currentTime.reset()
     }
 
     func randomVector(positiveY: Bool) -> CGVector {

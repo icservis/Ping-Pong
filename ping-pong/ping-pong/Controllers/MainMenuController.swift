@@ -24,7 +24,7 @@ final class MainMenuController: BaseViewController {
             gameButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
             gameButton.titleLabel?.adjustsFontForContentSizeCategory = true
             gameButton.setTitle(
-                NSLocalizedString("Random level", comment: "MAINMENU_BUTTON_LEVELRANDOM"),
+                nil, //NSLocalizedString("Random level", comment: "MAINMENU_BUTTON_LEVELRANDOM"),
                 for: .normal
             )
         }
@@ -41,7 +41,7 @@ final class MainMenuController: BaseViewController {
             gameLevelEasy.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
             gameLevelEasy.titleLabel?.adjustsFontForContentSizeCategory = true
             gameLevelEasy.setTitle(
-                NSLocalizedString("Easy level", comment: "MAINMENU_BUTTON_LEVELEASY"),
+                nil, //NSLocalizedString("Easy level", comment: "MAINMENU_BUTTON_LEVELEASY"),
                 for: .normal
             )
         }
@@ -58,7 +58,7 @@ final class MainMenuController: BaseViewController {
             gameLevelMedium.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
             gameLevelMedium.titleLabel?.adjustsFontForContentSizeCategory = true
             gameLevelMedium.setTitle(
-                NSLocalizedString("Medium level", comment: "MAINMENU_BUTTON_LEVELMEDIUM"),
+                nil, //NSLocalizedString("Medium level", comment: "MAINMENU_BUTTON_LEVELMEDIUM"),
                 for: .normal
             )
         }
@@ -75,7 +75,7 @@ final class MainMenuController: BaseViewController {
             gameLevelHard.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
             gameLevelHard.titleLabel?.adjustsFontForContentSizeCategory = true
             gameLevelHard.setTitle(
-                NSLocalizedString("Hard level", comment: "MAINMENU_BUTTON_LEVELHARD"),
+                nil, //NSLocalizedString("Hard level", comment: "MAINMENU_BUTTON_LEVELHARD"),
                 for: .normal
             )
         }
@@ -84,5 +84,21 @@ final class MainMenuController: BaseViewController {
         let level = Player.Difficulty.hard
         logger.trace("Load Game level: \(level)")
         coordinator?.loadGame(level: level)
+    }
+
+    @IBOutlet weak var gameCenterDashboard: UIButton! {
+        didSet {
+            gameCenterDashboard.titleLabel?.textColor = UIColor.MainMenu.buttonText
+            gameCenterDashboard.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
+            gameCenterDashboard.titleLabel?.adjustsFontForContentSizeCategory = true
+            gameCenterDashboard.setTitle(
+                NSLocalizedString("GameCenter", comment: "MAINMENU_BUTTON_GAMECENTER"),
+                for: .normal
+            )
+        }
+    }
+    @IBAction func loadGameCenterDashboard(_ sender: UIButton) {
+        logger.trace("Load Game Center")
+        coordinator?.loadGameCenterDashboard(completion: { })
     }
 }

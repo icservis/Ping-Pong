@@ -13,28 +13,31 @@ import CountdownTimer
 import Logging
 
 typealias GameCenterCloseBlock = () -> Void
+typealias GameScoreCompletionBlock = (Error?) -> Void
 
 protocol Coordinator: AnyObject {
     var currentController: UIViewController? { get }
-
-    func loadGameCenterDashboard(completion: GameCenterCloseBlock?)
-    func configureAccessPoint(
-        isActive: Bool,
-        showHighlights: Bool,
-        location: GKAccessPoint.Location
-    )
 
     func loadMainMenu()
     func loadGame(level: Player.Difficulty)
     func loadPauseMenu(completion: PauseMenuController.CloseBlock?)
     func loadGameOver(
+        level: Player.Difficulty,
         score: Player.Score,
-        time: TimeInterval,
+        time: ElapsedTime,
         completion: GameOverController.CloseBlock?
     )
     func loadCountDownTimer(
         initialCount: Int,
         completion: CountDownController.CompletionBlock?
+    )
+
+    func loadGameCenterDashboard(completion: GameCenterCloseBlock?)
+    func saveScoreToGameCenter(
+        level: Player.Difficulty,
+        score: Player.Score,
+        time: ElapsedTime,
+        completion: GameScoreCompletionBlock?
     )
 }
 
@@ -149,8 +152,9 @@ private extension CoordinatorController {
             options: .transitionCrossDissolve,
             animations: { }
         ) { [weak self] finished in
-            self?.currentController?.removeFromParent()
-            self?.currentController = newController
+            guard let self = self else { return }
+            currentController.removeFromParent()
+            self.currentController = newController
             newController.didMove(toParent: self)
             completion?()
         }
@@ -189,67 +193,65 @@ extension CoordinatorController: Coordinator {
     }
 
     func loadPauseMenu(completion: PauseMenuController.CloseBlock?) {
-        logger.debug("Pause game")
+        logger.debug("Load Pause game")
         guard let pauseMenuController = instatiateController(identifier: .pauseMenu) as? PauseMenuController else { return }
         presenter.direction = .bottom
+        presenter.relativeSize = .init(
+            proportion: .custom(1),
+            length: .custom(0.40)
+        )
         pauseMenuController.transitioningDelegate = presenter
         pauseMenuController.modalPresentationStyle = .custom
         pauseMenuController.closeBlock = { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .mainMenu:
-                self?.loadMainMenu()
+                self.loadMainMenu()
             case .restart:
                 break
             case .resume:
                 break
             }
-            completion?(result)
+            self.dismiss(animated: true) {
+                completion?(result)
+            }
         }
         present(pauseMenuController, animated: true, completion: nil)
     }
 
     func loadGameOver(
+        level: Player.Difficulty,
         score: Player.Score,
-        time: TimeInterval,
+        time: ElapsedTime,
         completion: GameOverController.CloseBlock?
     ) {
-        logger.debug("Game over")
+        logger.debug("Load Game over")
         guard let gameOverController = instatiateController(identifier: .gameOver) as? GameOverController else { return }
         presenter.direction = .top
-        presenter.relativeSize = .init(proportion: .custom(1), length: .custom(0.60))
+        presenter.relativeSize = .init(
+            proportion: .custom(1),
+            length: .custom(0.50)
+        )
         gameOverController.transitioningDelegate = presenter
         gameOverController.modalPresentationStyle = .custom
+        gameOverController.level = level
         gameOverController.score = score
         gameOverController.time = time
+        gameOverController.gameScoreDelegate = self
         gameOverController.closeBlock = { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .mainMenu:
-                self?.loadMainMenu()
+                self.loadMainMenu()
             case .restart:
                 break
             }
-            completion?(result)
+            self.dismiss(animated: true) {
+                completion?(result)
+            }
         }
-        present(gameOverController, animated: true, completion: nil)
-    }
-
-    func configureAccessPoint(
-        isActive: Bool,
-        showHighlights: Bool,
-        location: GKAccessPoint.Location
-    ) {
-        logger.debug("Configure Access Point isActive: \(isActive)")
-        GKAccessPoint.shared.location = location
-        GKAccessPoint.shared.showHighlights = showHighlights
-        GKAccessPoint.shared.isActive = isActive
-    }
-
-    func loadGameCenterDashboard(completion: GameCenterCloseBlock?) {
-        self.gameCenterCloseBlock = completion
-        let gameCenterController = GKGameCenterViewController(state: .dashboard)
-        gameCenterController.gameCenterDelegate = self
         present(
-            gameCenterController,
+            gameOverController,
             animated: true,
             completion: nil
         )
@@ -273,6 +275,62 @@ extension CoordinatorController: Coordinator {
             countDownController,
             animated: false,
             completion: nil
+        )
+    }
+
+    func loadGameCenterDashboard(completion: GameCenterCloseBlock?) {
+        logger.debug("Load GameCenter Dashboard")
+        self.gameCenterCloseBlock = completion
+        let gameCenterController = GKGameCenterViewController(state: .dashboard)
+        gameCenterController.gameCenterDelegate = self
+        present(
+            gameCenterController,
+            animated: true,
+            completion: nil
+        )
+    }
+
+    func saveScoreToGameCenter(
+        level: Player.Difficulty,
+        score: Player.Score,
+        time: ElapsedTime,
+        completion: GameScoreCompletionBlock?
+    ) {
+        logger.debug("Save Score to LeaderBoard")
+        let player = GKLocalPlayer.local
+        guard player.isAuthenticated else { return }
+
+        let levelScore = GKLeaderboardScore()
+        levelScore.player = player
+        levelScore.value = time.score()
+        levelScore.leaderboardID = LeaderBoard.topByLevel(level).identifier
+
+        let allStarsScore = GKLeaderboardScore()
+        allStarsScore.player = player
+        allStarsScore.value = time.score()
+        allStarsScore.leaderboardID = LeaderBoard.weeklyAllStars.identifier
+
+        let scores: [GKLeaderboardScore] = [levelScore]
+
+        let challenges: [GKChallenge] = []
+        GKScore.report(
+            scores,
+            withEligibleChallenges: challenges,
+            withCompletionHandler: completion
+        )
+    }
+}
+
+extension CoordinatorController: GameOverGameScoreProvider {
+    func saveScore(
+        _ gamecontroller: GameOverController,
+        completion: GameScoreCompletionBlock?
+    ) {
+        saveScoreToGameCenter(
+            level: gamecontroller.level,
+            score: gamecontroller.score,
+            time: gamecontroller.time,
+            completion: completion
         )
     }
 }
