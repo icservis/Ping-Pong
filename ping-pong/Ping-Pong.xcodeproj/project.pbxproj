@@ -195,11 +195,11 @@
 			isa = PBXGroup;
 			children = (
 				844E858F25A8D0770071B82C /* BaseViewController.swift */,
-				84DAA42625C5A03F00E1FF03 /* IntroController.swift */,
 				844B41F025B8DA170051C202 /* GameController.swift */,
+				848005F125C8A131006659B4 /* GameOverController.swift */,
+				84DAA42625C5A03F00E1FF03 /* IntroController.swift */,
 				844B41F325B8DA810051C202 /* MainMenuController.swift */,
 				84E3CF8925C71BD70072DE08 /* PauseMenuController.swift */,
-				848005F125C8A131006659B4 /* GameOverController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -227,9 +227,10 @@
 		844E85E425AB03350071B82C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				844E85E525AB05680071B82C /* Player.swift */,
+				84CC81F1267F7425001FDD7E /* ElapsedTime.swift */,
 				844E860E25AB0EBA0071B82C /* FileSystem.swift */,
 				84CC81EF267F5F20001FDD7E /* LeaderBoard.swift */,
+				844E85E525AB05680071B82C /* Player.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -292,11 +293,11 @@
 			isa = PBXGroup;
 			children = (
 				84E3CFEA25C7469D0072DE08 /* Comparable+Clamped.swift */,
+				8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */,
+				84DE9E0E2681CD3B00224E00 /* TimeInterval+Extensions.swift */,
 				84E3D0BC25C7F9F60072DE08 /* UIColor+Extensions.swift */,
 				84E3CF8325C717840072DE08 /* UIFont+Extensions.swift */,
 				842D3AB325C5FBC200318334 /* UIView+Extensions.swift */,
-				8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */,
-				84DE9E0E2681CD3B00224E00 /* TimeInterval+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -313,7 +314,6 @@
 		84E3CF7A25C710280072DE08 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				84CC81F1267F7425001FDD7E /* ElapsedTime.swift */,
 				84DC16B425C5EBE100F55306 /* Localizer.swift */,
 			);
 			path = Utilities;
@@ -542,6 +542,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -681,6 +682,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -702,6 +704,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
