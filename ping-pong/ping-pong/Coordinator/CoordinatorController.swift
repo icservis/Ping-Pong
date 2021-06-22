@@ -230,7 +230,7 @@ extension CoordinatorController: Coordinator {
         presenter.direction = .top
         presenter.relativeSize = .init(
             proportion: .custom(1),
-            length: .custom(0.50)
+            length: .custom(1)
         )
         gameOverController.transitioningDelegate = presenter
         gameOverController.modalPresentationStyle = .custom
@@ -314,6 +314,7 @@ extension CoordinatorController: Coordinator {
         let scores: [GKLeaderboardScore] = [levelScore, allStarsScore]
 
         let challenges: [GKChallenge] = []
+
         GKScore.report(
             scores,
             withEligibleChallenges: challenges,
