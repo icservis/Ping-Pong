@@ -309,8 +309,9 @@ extension CoordinatorController: Coordinator {
         allStarsScore.player = player
         allStarsScore.value = time.score()
         allStarsScore.leaderboardID = LeaderBoard.weeklyAllStars.identifier
+        allStarsScore.context = level.context
 
-        let scores: [GKLeaderboardScore] = [levelScore]
+        let scores: [GKLeaderboardScore] = [levelScore, allStarsScore]
 
         let challenges: [GKChallenge] = []
         GKScore.report(
