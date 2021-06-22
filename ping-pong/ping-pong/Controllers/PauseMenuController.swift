@@ -8,15 +8,7 @@
 
 import UIKit
 
-final class PauseMenuController: UIViewController {
-    @IBOutlet private weak var closeButton: UIButton! {
-        didSet {
-            closeButton.setTitle("X", for: .normal)
-            closeButton.titleLabel?.textColor = UIColor.PauseMenu.buttonText
-            closeButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
-            closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        }
-    }
+final class PauseMenuController: BaseViewController {
 
     @IBOutlet private weak var restartButton: UIButton! {
         didSet {
@@ -46,19 +38,14 @@ final class PauseMenuController: UIViewController {
         }
     }
 
-    @IBAction private func closeAction(_ sender: Any) {
-        closeAction = .resume
-        presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-
     @IBAction private func mainMenuAction(_ sender: Any) {
         closeAction = .mainMenu
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        closeBlock?(closeAction)
     }
 
     @IBAction private func restartAction(_ sender: Any) {
         closeAction = .restart
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        closeBlock?(closeAction)
     }
 
     enum CloseAction {
@@ -78,6 +65,9 @@ final class PauseMenuController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
+        guard closeAction == .resume else { return }
+        closeBlock?(closeAction)
     }
 
     override func viewWillLayoutSubviews() {
@@ -94,9 +84,5 @@ final class PauseMenuController: UIViewController {
         let layer = view.layer
         layer.borderWidth = 1
         layer.borderColor = UIColor.PauseMenu.border.cgColor
-    }
-
-    deinit {
-        closeBlock?(closeAction)
     }
 }

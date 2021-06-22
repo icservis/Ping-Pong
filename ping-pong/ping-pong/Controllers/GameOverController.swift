@@ -8,12 +8,23 @@
 
 import UIKit
 
-class GameOverController: UIViewController {
-    @IBOutlet private weak var closeButton: UIButton! {
+protocol GameOverGameScoreProvider: AnyObject {
+    func saveScore(
+        _ gamecontroller: GameOverController,
+        completion: GameScoreCompletionBlock?
+    )
+}
+
+class GameOverController: BaseViewController {
+    weak var gameScoreDelegate: GameOverGameScoreProvider?
+
+    @IBOutlet private weak var gameCenterButton: UIButton! {
         didSet {
-            closeButton.titleLabel?.textColor = UIColor.GameOver.buttonText
-            closeButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
-            closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
+            let title = NSLocalizedString("Game center", comment: "GAMEOVER_BUTTON_GAMECENTER")
+            gameCenterButton.setTitle(title, for: .normal)
+            gameCenterButton.titleLabel?.textColor = UIColor.GameOver.buttonText
+            gameCenterButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
+            gameCenterButton.titleLabel?.adjustsFontForContentSizeCategory = true
         }
     }
 
@@ -37,6 +48,23 @@ class GameOverController: UIViewController {
         }
     }
 
+    @IBOutlet private weak var saveScoreButton: UIButton! {
+        didSet {
+            let title = NSLocalizedString("Save Score", comment: "GAMEOVER_BUTTON_SAVESCORE")
+            saveScoreButton.setTitle(title, for: .normal)
+            saveScoreButton.titleLabel?.textColor = UIColor.GameOver.buttonText
+            saveScoreButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
+            saveScoreButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        }
+    }
+
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView! {
+        didSet {
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.tintColor = .appBlack
+        }
+    }
+
     @IBOutlet private weak var titleLabel: UILabel! {
         didSet {
             titleLabel.textColor = UIColor.GameOver.labelText
@@ -48,7 +76,7 @@ class GameOverController: UIViewController {
     @IBOutlet private weak var elapsedTimeLabel: UILabel! {
         didSet {
             elapsedTimeLabel.textColor = UIColor.GameOver.labelText
-            elapsedTimeLabel.font = .scaledHeadlineFont(for: .llPixel3)
+            elapsedTimeLabel.font = .scaledSystemFont(for: .llPixel3)
             elapsedTimeLabel.adjustsFontForContentSizeCategory = true
         }
     }
@@ -56,32 +84,42 @@ class GameOverController: UIViewController {
     @IBOutlet private weak var scoreLabel: UILabel! {
         didSet {
             scoreLabel.textColor = UIColor.GameOver.labelText
-            scoreLabel.font = .scaledHeadlineFont(for: .llPixel3)
+            scoreLabel.font = .scaledSystemFont(for: .llPixel3)
             scoreLabel.adjustsFontForContentSizeCategory = true
         }
     }
 
     @IBAction private func mainMenuAction(_ sender: Any) {
         closeAction = .mainMenu
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        closeBlock?(closeAction)
     }
 
     @IBAction private func restartAction(_ sender: Any) {
         closeAction = .restart
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        closeBlock?(closeAction)
     }
 
-    lazy var elapsedTimeFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 1
-        formatter.maximumFractionDigits = 1
-        formatter.allowsFloats = true
-
-        return formatter
-    }()
+    @IBAction private func saveScoreAction(_ sender: UIButton) {
+        sender.isEnabled = false
+        activityIndicator.startAnimating()
+        gameScoreDelegate?.saveScore(self) { [weak self] error in
+            guard let self = self else { return }
+            self.activityIndicator.stopAnimating()
+            if let error = error {
+                self.logger.error("Save error: \(error.localizedDescription)")
+                sender.isEnabled = true
+            } else {
+                let message = NSLocalizedString("Score saved", comment: "GAMEOVER_BUTTON_SCORE_SAVED")
+                sender.setTitle(message, for: .normal)
+                self.closeAction = .mainMenu
+                self.closeBlock?(self.closeAction)
+            }
+        }
+    }
 
     var score: Player.Score = (player: 0, enemy: 0)
-    var time: TimeInterval = 0
+    var level: Player.Difficulty = .easy
+    var time: ElapsedTime = ElapsedTime()
 
     enum CloseAction {
         case restart
@@ -117,14 +155,13 @@ class GameOverController: UIViewController {
             : NSLocalizedString("You Lost", comment: "GAMEOVER_LABEL_YOULOST")
             + " \(score.player) : \(score.enemy)"
 
-        if let timeString = elapsedTimeFormatter.string(from: time) {
+        if let timeString = time.string() {
             elapsedTimeLabel.text = "\(NSLocalizedString("Time", comment: "GAMEOVER_LABEL_TIME")): \(timeString) sec"
         } else {
             elapsedTimeLabel.text = nil
         }
-    }
 
-    deinit {
-        closeBlock?(closeAction)
+        saveScoreButton.isHidden = !(score.player > score.enemy)
+        activityIndicator.stopAnimating()
     }
 }

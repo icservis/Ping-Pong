@@ -8,6 +8,7 @@
 
 import UIKit
 import GameKit
+import CountdownTimer
 
 final class GameController: BaseViewController {
     var level: Player.Difficulty = .easy
@@ -21,6 +22,8 @@ final class GameController: BaseViewController {
         }
         gameScene.controller = self
         self.gameScene = gameScene
+
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -34,13 +37,25 @@ final class GameController: BaseViewController {
     }
 
     func gameOver(
+        level: Player.Difficulty,
         score: Player.Score,
-        time: TimeInterval,
+        time: ElapsedTime,
         completion: GameOverController.CloseBlock?
     ) {
         coordinator?.loadGameOver(
+            level: level,
             score: score,
             time: time,
+            completion: completion
+        )
+    }
+
+    func loadCountDownTimer(
+        initialCount: Int,
+        completion: CountDownController.CompletionBlock?
+    ) {
+        coordinator?.loadCountDownTimer(
+            initialCount: initialCount,
             completion: completion
         )
     }

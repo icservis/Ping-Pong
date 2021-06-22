@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,43 +10,28 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="eWW-4s-iyl">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="MainMenu_bg" translatesAutoresizingMaskIntoConstraints="NO" id="eWW-4s-iyl">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PING TEXT" translatesAutoresizingMaskIntoConstraints="NO" id="Wgn-ik-ElU">
-                                <rect key="frame" x="16" y="27" width="343" height="140"/>
+                                <rect key="frame" x="20" y="32" width="335" height="140"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="FOX-wP-JbN"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PONG TEXT" translatesAutoresizingMaskIntoConstraints="NO" id="1WV-Xu-jf6">
-                                <rect key="frame" x="16" y="175" width="343" height="140"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="aAb-1R-JtE"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Fvi-jh-8IY"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="10x-Nz-XUG"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="8RG-NC-aCR"/>
-                            <constraint firstAttribute="trailing" secondItem="1WV-Xu-jf6" secondAttribute="trailing" constant="16" id="Bpz-RE-aGV"/>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="CBU-2S-oUi"/>
-                            <constraint firstItem="Wgn-ik-ElU" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="27" id="Hmp-XG-3aP"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="KWg-Hb-i0n"/>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Ki3-Z4-LN5"/>
-                            <constraint firstAttribute="trailing" secondItem="Wgn-ik-ElU" secondAttribute="trailing" constant="16" id="PFt-PS-e3j"/>
-                            <constraint firstItem="1WV-Xu-jf6" firstAttribute="top" secondItem="Wgn-ik-ElU" secondAttribute="bottom" constant="8" id="Rha-i4-XJs"/>
+                            <constraint firstItem="Wgn-ik-ElU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="4" id="Zjv-EG-pCK"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="aRf-1X-l7O"/>
-                            <constraint firstItem="1WV-Xu-jf6" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="kTC-8q-A2s"/>
-                            <constraint firstItem="Wgn-ik-ElU" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="q9b-HQ-cak"/>
-                            <constraint firstItem="eWW-4s-iyl" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="qHe-E2-mRw"/>
+                            <constraint firstItem="Wgn-ik-ElU" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="reJ-92-ZSH"/>
                             <constraint firstItem="eWW-4s-iyl" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="shL-t1-lEZ"/>
+                            <constraint firstItem="Wgn-ik-ElU" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="32" id="yz4-eD-rMU"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -58,8 +41,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="MainMenu_bg" width="414" height="896"/>
         <image name="PING TEXT" width="335" height="201"/>
-        <image name="PONG TEXT" width="335" height="201"/>
-        <image name="wallpaper" width="414" height="896"/>
     </resources>
 </document>
