@@ -59,17 +59,38 @@ class GameScene: BaseScene {
         let maxVelocity: Int
         let minVelocity: Int
         let followBallDuration: Double
+        let speedAcceleration: Double
     }
 
-    var minFollowBallDuration: TimeInterval = 0.1
+    private var touchesCounter: Int = 0 {
+        didSet {
+            self.logger.trace("Touches counter: \(touchesCounter)")
+        }
+    }
+    static let minFollowBallDuration: TimeInterval = 0.1
     var configuration: Configuration {
         switch player.level {
         case .easy:
-            return Configuration(maxVelocity: 75, minVelocity: 50, followBallDuration: 5 * minFollowBallDuration)
+            return Configuration(
+                maxVelocity: 75,
+                minVelocity: 50,
+                followBallDuration: 5 * Self.minFollowBallDuration,
+                speedAcceleration: 0.25
+            )
         case .medium:
-            return Configuration(maxVelocity: 100, minVelocity: 75, followBallDuration: 2.5 * minFollowBallDuration)
+            return Configuration(
+                maxVelocity: 100,
+                minVelocity: 75,
+                followBallDuration: 2.5 * Self.minFollowBallDuration,
+                speedAcceleration: 0.5
+            )
         case .hard:
-            return Configuration(maxVelocity: 150, minVelocity: 100, followBallDuration: minFollowBallDuration)
+            return Configuration(
+                maxVelocity: 150,
+                minVelocity: 100,
+                followBallDuration: Self.minFollowBallDuration,
+                speedAcceleration: 1.0
+            )
         }
     }
 
@@ -126,12 +147,12 @@ class GameScene: BaseScene {
     let safeZoneLocationY: CGFloat = -350
 
     func touchDown(atPoint position : CGPoint) {
-        let moveAction = SKAction.moveTo(x: position.x, duration: minFollowBallDuration)
+        let moveAction = SKAction.moveTo(x: position.x, duration: Self.minFollowBallDuration)
         playerSprite.run(moveAction)
     }
     
     func touchMoved(toPoint position : CGPoint) {
-        let moveAction = SKAction.moveTo(x: position.x, duration: minFollowBallDuration)
+        let moveAction = SKAction.moveTo(x: position.x, duration: Self.minFollowBallDuration)
         playerSprite.run(moveAction)
     }
     
@@ -299,6 +320,7 @@ private extension GameScene {
     }
 
     func resetBall() {
+        touchesCounter = 0
         ballSprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         ballSprite.position = CGPoint(x: 0, y: 0)
     }
@@ -476,6 +498,16 @@ extension GameScene: SKPhysicsContactDelegate {
         } else {
             run(playPingAction)
         }
+
+        touchesCounter += 1
+
+        let dy = configuration.speedAcceleration * Double(touchesCounter)
+        let signY: Double = ballSprite.position.y < 0 ? 1 : -1
+        let impulse = CGVector(
+            dx: 0,
+            dy: Int(signY * dy)
+        )
+        self.ballSprite.physicsBody?.applyImpulse(impulse)
     }
 
     func didEnd(_ contact: SKPhysicsContact) { }
