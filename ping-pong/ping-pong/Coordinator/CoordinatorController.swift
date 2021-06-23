@@ -22,9 +22,7 @@ protocol Coordinator: AnyObject {
     func loadGame(level: Player.Difficulty)
     func loadPauseMenu(completion: PauseMenuController.CloseBlock?)
     func loadGameOver(
-        level: Player.Difficulty,
-        score: Player.Score,
-        time: ElapsedTime,
+        result: GameResult,
         completion: GameOverController.CloseBlock?
     )
     func loadCountDownTimer(
@@ -34,9 +32,7 @@ protocol Coordinator: AnyObject {
 
     func loadGameCenterDashboard(completion: GameCenterCloseBlock?)
     func saveScoreToGameCenter(
-        level: Player.Difficulty,
-        score: Player.Score,
-        time: ElapsedTime,
+        result: GameResult,
         completion: GameScoreCompletionBlock?
     )
 }
@@ -220,9 +216,7 @@ extension CoordinatorController: Coordinator {
     }
 
     func loadGameOver(
-        level: Player.Difficulty,
-        score: Player.Score,
-        time: ElapsedTime,
+        result: GameResult,
         completion: GameOverController.CloseBlock?
     ) {
         logger.debug("Load Game over")
@@ -234,9 +228,7 @@ extension CoordinatorController: Coordinator {
         )
         gameOverController.transitioningDelegate = presenter
         gameOverController.modalPresentationStyle = .custom
-        gameOverController.level = level
-        gameOverController.score = score
-        gameOverController.time = time
+        gameOverController.result = result
         gameOverController.gameScoreDelegate = self
         gameOverController.closeBlock = { [weak self] result in
             guard let self = self else { return }
@@ -291,9 +283,7 @@ extension CoordinatorController: Coordinator {
     }
 
     func saveScoreToGameCenter(
-        level: Player.Difficulty,
-        score: Player.Score,
-        time: ElapsedTime,
+        result: GameResult,
         completion: GameScoreCompletionBlock?
     ) {
         logger.debug("Save Score to LeaderBoard")
@@ -302,14 +292,14 @@ extension CoordinatorController: Coordinator {
 
         let levelScore = GKLeaderboardScore()
         levelScore.player = player
-        levelScore.value = time.score()
-        levelScore.leaderboardID = LeaderBoard.topByLevel(level).identifier
+        levelScore.value = result.time.score()
+        levelScore.leaderboardID = LeaderBoard.topByLevel(result.level).identifier
 
         let allStarsScore = GKLeaderboardScore()
         allStarsScore.player = player
-        allStarsScore.value = time.score()
+        allStarsScore.value = result.time.score()
         allStarsScore.leaderboardID = LeaderBoard.weeklyAllStars.identifier
-        allStarsScore.context = level.context
+        allStarsScore.context = result.level.context
 
         let scores: [GKLeaderboardScore] = [levelScore, allStarsScore]
 
@@ -325,13 +315,11 @@ extension CoordinatorController: Coordinator {
 
 extension CoordinatorController: GameOverGameScoreProvider {
     func saveScore(
-        _ gamecontroller: GameOverController,
+        _ result: GameResult,
         completion: GameScoreCompletionBlock?
     ) {
         saveScoreToGameCenter(
-            level: gamecontroller.level,
-            score: gamecontroller.score,
-            time: gamecontroller.time,
+            result: result,
             completion: completion
         )
     }

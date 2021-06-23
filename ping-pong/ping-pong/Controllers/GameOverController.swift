@@ -10,7 +10,7 @@ import UIKit
 
 protocol GameOverGameScoreProvider: AnyObject {
     func saveScore(
-        _ gamecontroller: GameOverController,
+        _ result: GameResult,
         completion: GameScoreCompletionBlock?
     )
 }
@@ -101,8 +101,8 @@ class GameOverController: BaseViewController {
 
     @IBAction private func saveScoreAction(_ sender: UIButton) {
         sender.isEnabled = false
-        activityIndicator.startAnimating()
-        gameScoreDelegate?.saveScore(self) { [weak self] error in
+        self.activityIndicator.startAnimating()
+        self.gameScoreDelegate?.saveScore(self.result) { [weak self] error in
             guard let self = self else { return }
             self.activityIndicator.stopAnimating()
             if let error = error {
@@ -117,9 +117,7 @@ class GameOverController: BaseViewController {
         }
     }
 
-    var score: Player.Score = (player: 0, enemy: 0)
-    var level: Player.Difficulty = .easy
-    var time: ElapsedTime = ElapsedTime()
+    var result: GameResult = GameResult()
 
     enum CloseAction {
         case restart
@@ -149,19 +147,23 @@ class GameOverController: BaseViewController {
     }
 
     private func setupContent() {
-        titleLabel.text = "\(NSLocalizedString("Game Over", comment: "GAMEOVER_TITLE_GAMEOVER"))"
-        scoreLabel.text = (score.player > score.enemy)
-            ? NSLocalizedString("You Won", comment: "GAMEOVER_LABEL_YOUWON")
-            : NSLocalizedString("You Lost", comment: "GAMEOVER_LABEL_YOULOST")
-            + " \(score.player) : \(score.enemy)"
-
-        if let timeString = time.string() {
-            elapsedTimeLabel.text = "\(NSLocalizedString("Time", comment: "GAMEOVER_LABEL_TIME")): \(timeString) sec"
+        self.titleLabel.text = "\(NSLocalizedString("Game Over", comment: "GAMEOVER_TITLE_GAMEOVER"))".uppercased()
+        if self.result.time.isOver {
+            self.scoreLabel.text = NSLocalizedString("You Lost", comment: "GAMEOVER_LABEL_YOULOST")
         } else {
-            elapsedTimeLabel.text = nil
+            self.scoreLabel.text = (self.result.score.player > self.result.score.enemy)
+                ? NSLocalizedString("You Won", comment: "GAMEOVER_LABEL_YOUWON")
+                : NSLocalizedString("You Lost", comment: "GAMEOVER_LABEL_YOULOST")
+                + " \(self.result.score.player) : \(self.result.score.enemy)"
         }
 
-        saveScoreButton.isHidden = !(score.player > score.enemy)
-        activityIndicator.stopAnimating()
+        if self.result.time.isOver {
+            self.elapsedTimeLabel.text = NSLocalizedString("Time is Over", comment: "GAMEOVER_LABEL_TIMEOVER")
+        } else  {
+            self.elapsedTimeLabel.text = "\(NSLocalizedString("Time", comment: "GAMEOVER_LABEL_TIME")): \(self.result.time.string() ?? "-") sec"
+        }
+        self.saveScoreButton.isHidden
+            = !(self.result.score.player > self.result.score.enemy) || self.result.time.isOver
+        self.activityIndicator.stopAnimating()
     }
 }

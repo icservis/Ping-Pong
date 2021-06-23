@@ -25,7 +25,7 @@ class GameScene: BaseScene {
     var timer: Timer?
     lazy var currentTime : ElapsedTime = {
         let elapsedTime = ElapsedTime()
-        elapsedTime.valueChangedBlock = { [weak self] time in
+        elapsedTime.timeChangedBlock = { [weak self] time in
             guard let self = self else { return }
             DispatchQueue.global(qos: .default).async {
                 let timeString = elapsedTime.string()
@@ -266,7 +266,10 @@ private extension GameScene {
                         let self = self,
                         let view = self.view, !view.isPaused
                     else { return }
-                    self.currentTime.update(with: ElapsedTime.delta)
+                    self.currentTime.update { [weak self] time in
+                        guard let self = self else { return }
+                        self.gameOver()
+                    }
                 }
             )
             completion?()
@@ -285,7 +288,10 @@ private extension GameScene {
                         let self = self,
                         let view = self.view, !view.isPaused
                     else { return }
-                    self.currentTime.update(with: ElapsedTime.delta)
+                    self.currentTime.update { [weak self] time in
+                        guard let self = self else { return }
+                        self.gameOver()
+                    }
                 }
             )
             completion?()

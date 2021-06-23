@@ -42,10 +42,13 @@ final class GameController: BaseViewController {
         time: ElapsedTime,
         completion: GameOverController.CloseBlock?
     ) {
-        coordinator?.loadGameOver(
+        let result = GameResult(
             level: level,
             score: score,
-            time: time,
+            time: time
+        )
+        coordinator?.loadGameOver(
+            result: result,
             completion: completion
         )
     }
