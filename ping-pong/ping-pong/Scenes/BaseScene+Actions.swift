@@ -14,7 +14,7 @@ import Logging
 class BaseScene: SKScene {
     lazy var logger: Logger = {
         var logger = Logger(label: "com.ic-servis.ping-pong.baseScene")
-        logger.logLevel = .trace
+        logger.logLevel = .debug
         return logger
     }()
 

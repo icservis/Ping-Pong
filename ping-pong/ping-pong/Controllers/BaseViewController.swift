@@ -14,7 +14,7 @@ import Logging
 class BaseViewController: UIViewController {
     lazy var logger: Logger = {
         var logger = Logger(label: "com.ic-servis.ping-pong.baseViewController")
-        logger.logLevel = .trace
+        logger.logLevel = .debug
         return logger
     }()
 

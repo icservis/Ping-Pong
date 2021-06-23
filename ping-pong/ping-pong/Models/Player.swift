@@ -12,7 +12,7 @@ import Logging
 class Player: NSObject, NSCoding {
     lazy var logger: Logger = {
         var logger = Logger(label: "com.ic-servis.ping-pong.player")
-        logger.logLevel = .trace
+        logger.logLevel = .debug
         return logger
     }()
 

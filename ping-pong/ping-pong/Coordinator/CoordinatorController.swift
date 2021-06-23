@@ -48,7 +48,7 @@ enum StoryboardIdentifier: String {
 final class CoordinatorController: UIViewController {
     lazy var logger: Logger = {
         var logger = Logger(label: "com.ic-servis.ping-pong.coordinatorController")
-        logger.logLevel = .trace
+        logger.logLevel = .debug
         return logger
     }()
 
