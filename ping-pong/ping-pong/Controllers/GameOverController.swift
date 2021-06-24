@@ -58,13 +58,6 @@ class GameOverController: BaseViewController {
         }
     }
 
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView! {
-        didSet {
-            activityIndicator.hidesWhenStopped = true
-            activityIndicator.tintColor = .appBlack
-        }
-    }
-
     @IBOutlet private weak var titleLabel: UILabel! {
         didSet {
             titleLabel.textColor = UIColor.GameOver.labelText
@@ -101,10 +94,8 @@ class GameOverController: BaseViewController {
 
     @IBAction private func saveScoreAction(_ sender: UIButton) {
         sender.isEnabled = false
-        self.activityIndicator.startAnimating()
         self.gameScoreDelegate?.saveScore(self.result) { [weak self] error in
             guard let self = self else { return }
-            self.activityIndicator.stopAnimating()
             if let error = error {
                 self.logger.error("Save error: \(error.localizedDescription)")
                 sender.isEnabled = true
@@ -115,10 +106,6 @@ class GameOverController: BaseViewController {
                 self.closeBlock?(self.closeAction)
             }
         }
-    }
-
-    var isPlayerAuthenticated: Bool {
-        return coordinator?.isPlayerAuthenticated() ?? false
     }
 
     var result: GameResult = GameResult()
@@ -151,23 +138,21 @@ class GameOverController: BaseViewController {
     }
 
     private func setupContent() {
-        self.titleLabel.text = "\(NSLocalizedString("Game Over", comment: "GAMEOVER_TITLE_GAMEOVER"))".uppercased()
         if self.result.time.isOver {
-            self.scoreLabel.text = NSLocalizedString("You Lost", comment: "GAMEOVER_LABEL_YOULOST")
+            // TimeOver
+            self.titleLabel.text = "\(NSLocalizedString("Time is Over", comment: "GAMEOVER_LABEL_TIMEOVER"))".uppercased()
+        } else if self.result.score.player < self.result.score.enemy {
+            // You lost
+            self.titleLabel.text = "\(NSLocalizedString("Game is Over", comment: "GAMEOVER_TITLE_GAMEOVER"))".uppercased()
         } else {
-            self.scoreLabel.text = (self.result.score.player > self.result.score.enemy)
-                ? NSLocalizedString("You Won", comment: "GAMEOVER_LABEL_YOUWON")
-                : NSLocalizedString("You Lost", comment: "GAMEOVER_LABEL_YOULOST")
-                + " \(self.result.score.player) : \(self.result.score.enemy)"
+            // You won
+            self.titleLabel.text = "\(NSLocalizedString("You Won", comment: "GAMEOVER_LABEL_YOUWON"))".uppercased()
         }
 
-        if self.result.time.isOver {
-            self.elapsedTimeLabel.text = NSLocalizedString("Time is Over", comment: "GAMEOVER_LABEL_TIMEOVER")
-        } else  {
-            self.elapsedTimeLabel.text = "\(NSLocalizedString("Time", comment: "GAMEOVER_LABEL_TIME")): \(self.result.time.string() ?? "-") sec"
-        }
-        self.saveScoreButton.isHidden
-            = !(self.result.score.player > self.result.score.enemy) || self.result.time.isOver || !self.isPlayerAuthenticated
-        self.activityIndicator.stopAnimating()
+        self.scoreLabel.text = "\(self.result.score.player) : \(self.result.score.enemy)"
+        self.elapsedTimeLabel.text = "\(self.result.time.string()) sec"
+
+        self.saveScoreButton.isEnabled
+            = (self.result.score.player > self.result.score.enemy) && !self.result.time.isOver
     }
 }

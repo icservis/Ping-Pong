@@ -52,8 +52,8 @@ final class ElapsedTime: NSObject {
         self.time = 0
     }
 
-    func string() -> String? {
-        self.time.toString(precision: .deciseconds)
+    func string() -> String {
+        self.time.toString(precision: .deciseconds) ?? "-"
     }
 
     func score(multiplier: Double = 100) -> Int {
