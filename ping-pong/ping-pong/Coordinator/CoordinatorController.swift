@@ -27,9 +27,11 @@ protocol Coordinator: AnyObject {
     )
     func loadCountDownTimer(
         initialCount: Int,
+        tick: CountDownController.TickBlock?,
         completion: CountDownController.CompletionBlock?
     )
 
+    func isPlayerAuthenticated() -> Bool
     func loadGameCenterDashboard(completion: GameCenterCloseBlock?)
     func saveScoreToGameCenter(
         result: GameResult,
@@ -249,13 +251,15 @@ extension CoordinatorController: Coordinator {
         )
     }
 
-    func loadCountDownTimer(initialCount: Int, completion: CountDownController.CompletionBlock?) {
+    func loadCountDownTimer(
+        initialCount: Int,
+        tick: CountDownController.TickBlock?,
+        completion: CountDownController.CompletionBlock?
+    ) {
         logger.debug("Load CountDownTimer Controller")
         let countDownController = CountDownController()
         countDownController.initialCount = initialCount
-        countDownController.tick = { [weak self] count in
-            self?.logger.trace("CountDown Tick: \(count)")
-        }
+        countDownController.tick = tick
         countDownController.completion = { [weak self] in
             guard let self = self else { return }
             self.dismiss(animated: false) {
@@ -268,6 +272,10 @@ extension CoordinatorController: Coordinator {
             animated: false,
             completion: nil
         )
+    }
+
+    func isPlayerAuthenticated() -> Bool {
+        return GKLocalPlayer.local.isAuthenticated
     }
 
     func loadGameCenterDashboard(completion: GameCenterCloseBlock?) {
@@ -288,7 +296,17 @@ extension CoordinatorController: Coordinator {
     ) {
         logger.debug("Save Score to LeaderBoard")
         let player = GKLocalPlayer.local
-        guard player.isAuthenticated else { return }
+        guard player.isAuthenticated else {
+            let error = NSError(
+                domain: Bundle.main.bundleIdentifier ?? "",
+                code: -1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: NSLocalizedString("You have to login", comment: "ERRO_GAMECENTER_NOTLOGGED")
+                ]
+            )
+            completion?(error)
+            return
+        }
 
         let levelScore = GKLeaderboardScore()
         levelScore.player = player

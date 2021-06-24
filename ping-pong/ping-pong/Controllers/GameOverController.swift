@@ -117,6 +117,10 @@ class GameOverController: BaseViewController {
         }
     }
 
+    var isPlayerAuthenticated: Bool {
+        return coordinator?.isPlayerAuthenticated() ?? false
+    }
+
     var result: GameResult = GameResult()
 
     enum CloseAction {
@@ -163,7 +167,7 @@ class GameOverController: BaseViewController {
             self.elapsedTimeLabel.text = "\(NSLocalizedString("Time", comment: "GAMEOVER_LABEL_TIME")): \(self.result.time.string() ?? "-") sec"
         }
         self.saveScoreButton.isHidden
-            = !(self.result.score.player > self.result.score.enemy) || self.result.time.isOver
+            = !(self.result.score.player > self.result.score.enemy) || self.result.time.isOver || !self.isPlayerAuthenticated
         self.activityIndicator.stopAnimating()
     }
 }

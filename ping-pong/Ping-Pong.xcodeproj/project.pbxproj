@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840C92832684D65200064B00 /* tink.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92812684D65200064B00 /* tink.m4a */; };
+		840C92842684D65200064B00 /* tonk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92822684D65200064B00 /* tonk.m4a */; };
+		840C92872684E97500064B00 /* matchWon.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92852684E97500064B00 /* matchWon.m4a */; };
+		840C92882684E97500064B00 /* matchLost.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92862684E97500064B00 /* matchLost.m4a */; };
+		840C928A2684F05A00064B00 /* notify.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92892684F05A00064B00 /* notify.m4a */; };
 		840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 840DB17725C9F963002BB63D /* joystix monospace.ttf */; };
 		84129D622673C16C003D0DD4 /* CountdownTimer in Frameworks */ = {isa = PBXBuildFile; productRef = 84129D612673C16C003D0DD4 /* CountdownTimer */; };
 		84129D7026751F76003D0DD4 /* digital-7 (mono italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84129D6C26751F76003D0DD4 /* digital-7 (mono italic).ttf */; };
@@ -59,6 +64,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840C92812684D65200064B00 /* tink.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = tink.m4a; path = ../../../Resources/Sounds/tink.m4a; sourceTree = "<group>"; };
+		840C92822684D65200064B00 /* tonk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = tonk.m4a; path = ../../../Resources/Sounds/tonk.m4a; sourceTree = "<group>"; };
+		840C92852684E97500064B00 /* matchWon.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = matchWon.m4a; path = ../../../Resources/Sounds/matchWon.m4a; sourceTree = "<group>"; };
+		840C92862684E97500064B00 /* matchLost.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = matchLost.m4a; path = ../../../Resources/Sounds/matchLost.m4a; sourceTree = "<group>"; };
+		840C92892684F05A00064B00 /* notify.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = notify.m4a; path = ../../../Resources/Sounds/notify.m4a; sourceTree = "<group>"; };
 		840DB17725C9F963002BB63D /* joystix monospace.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "joystix monospace.ttf"; sourceTree = "<group>"; };
 		84129D6C26751F76003D0DD4 /* digital-7 (mono italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono italic).ttf"; sourceTree = "<group>"; };
 		84129D6D26751F76003D0DD4 /* digital-7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7.ttf"; sourceTree = "<group>"; };
@@ -124,7 +134,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		84161257220A1217000A3B27 /* Resources */ = {
+		840C927F2684D60D00064B00 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				84129D6E26751F76003D0DD4 /* digital-7 (italic).ttf */,
@@ -133,7 +143,28 @@
 				84129D6D26751F76003D0DD4 /* digital-7.ttf */,
 				840DB17725C9F963002BB63D /* joystix monospace.ttf */,
 				842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		840C92802684D63100064B00 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
 				8416125A220A2155000A3B27 /* ball-ping.caf */,
+				840C92862684E97500064B00 /* matchLost.m4a */,
+				840C92852684E97500064B00 /* matchWon.m4a */,
+				840C92892684F05A00064B00 /* notify.m4a */,
+				840C92812684D65200064B00 /* tink.m4a */,
+				840C92822684D65200064B00 /* tonk.m4a */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		84161257220A1217000A3B27 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				840C92802684D63100064B00 /* Audio */,
+				840C927F2684D60D00064B00 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -406,15 +437,20 @@
 			files = (
 				84129D7326751F76003D0DD4 /* digital-7 (mono).ttf in Resources */,
 				8446E84C22071299008FF376 /* Main.storyboard in Resources */,
+				840C92842684D65200064B00 /* tonk.m4a in Resources */,
+				840C92872684E97500064B00 /* matchWon.m4a in Resources */,
 				84129D7226751F76003D0DD4 /* digital-7 (italic).ttf in Resources */,
 				8446E84E2207129C008FF376 /* Assets.xcassets in Resources */,
 				8416125B220A2155000A3B27 /* ball-ping.caf in Resources */,
 				8446E8512207129C008FF376 /* LaunchScreen.storyboard in Resources */,
 				84129D7026751F76003D0DD4 /* digital-7 (mono italic).ttf in Resources */,
+				840C92832684D65200064B00 /* tink.m4a in Resources */,
 				842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */,
 				84A2C14D23FD5C13005ACB5A /* GameScene.sks in Resources */,
+				840C92882684E97500064B00 /* matchLost.m4a in Resources */,
 				840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */,
 				8446E84522071299008FF376 /* Actions.sks in Resources */,
+				840C928A2684F05A00064B00 /* notify.m4a in Resources */,
 				84129D7126751F76003D0DD4 /* digital-7.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
