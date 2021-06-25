@@ -10,6 +10,7 @@ import UIKit
 
 extension UIColor {
     static let appBlack: UIColor = .black
+    static let appOrange: UIColor = .orange
     static let appSilver: UIColor = .gray
     static let appWhite: UIColor = .white
 
@@ -29,6 +30,7 @@ extension UIColor {
 
     struct GameOver {
         static let labelText: UIColor = appBlack
+        static let altLabelText: UIColor = appOrange
         static let buttonText: UIColor = appBlack
         static let border: UIColor = appSilver
         static let background: UIColor = appWhite

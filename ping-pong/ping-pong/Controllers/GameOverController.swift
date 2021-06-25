@@ -48,16 +48,6 @@ class GameOverController: BaseViewController {
         }
     }
 
-    @IBOutlet private weak var saveScoreButton: UIButton! {
-        didSet {
-            let title = NSLocalizedString("Save Score", comment: "GAMEOVER_BUTTON_SAVESCORE")
-            saveScoreButton.setTitle(title, for: .normal)
-            saveScoreButton.titleLabel?.textColor = UIColor.GameOver.buttonText
-            saveScoreButton.titleLabel?.font = .scaledButtonFont(for: .llPixel3)
-            saveScoreButton.titleLabel?.adjustsFontForContentSizeCategory = true
-        }
-    }
-
     @IBOutlet private weak var titleLabel: UILabel! {
         didSet {
             titleLabel.textColor = UIColor.GameOver.labelText
@@ -82,6 +72,21 @@ class GameOverController: BaseViewController {
         }
     }
 
+    @IBOutlet private weak var progressLabel: UILabel! {
+        didSet {
+            progressLabel.textColor = UIColor.GameOver.altLabelText
+            progressLabel.font = .scaledSystemFont(for: .llPixel3)
+            progressLabel.adjustsFontForContentSizeCategory = true
+        }
+    }
+
+    @IBOutlet private weak var progressIndicator: UIActivityIndicatorView! {
+        didSet {
+            progressIndicator.hidesWhenStopped = true
+            progressIndicator.tintColor = UIColor.GameOver.altLabelText
+        }
+    }
+
     @IBAction private func mainMenuAction(_ sender: Any) {
         closeAction = .mainMenu
         closeBlock?(closeAction)
@@ -90,22 +95,6 @@ class GameOverController: BaseViewController {
     @IBAction private func restartAction(_ sender: Any) {
         closeAction = .restart
         closeBlock?(closeAction)
-    }
-
-    @IBAction private func saveScoreAction(_ sender: UIButton) {
-        sender.isEnabled = false
-        self.gameScoreDelegate?.saveScore(self.result) { [weak self] error in
-            guard let self = self else { return }
-            if let error = error {
-                self.logger.error("Save error: \(error.localizedDescription)")
-                sender.isEnabled = true
-            } else {
-                let message = NSLocalizedString("Score saved", comment: "GAMEOVER_BUTTON_SCORE_SAVED")
-                sender.setTitle(message, for: .normal)
-                self.closeAction = .mainMenu
-                self.closeBlock?(self.closeAction)
-            }
-        }
     }
 
     var result: GameResult = GameResult()
@@ -123,6 +112,28 @@ class GameOverController: BaseViewController {
         super.viewDidLoad()
         setupView()
         setupContent()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard self.result.shouldSaveScore else { return }
+        self.mainMenuButton.isEnabled = false
+        self.restartButton.isEnabled = false
+        self.progressLabel.text = NSLocalizedString("Saving score to Leaderboards…", comment: "GAMEOVER_LABEL_SAVINGSCORE")
+        self.progressIndicator.startAnimating()
+        self.saveScore { [weak self] error in
+            guard let self = self else { return }
+            self.progressIndicator.stopAnimating()
+            self.mainMenuButton.isEnabled = true
+            self.restartButton.isEnabled = true
+
+            if let error = error {
+                self.progressLabel.text = error.localizedDescription
+            } else {
+                self.progressLabel.text = NSLocalizedString("Score sucesfully saved!", comment: "GAMEOVER_LABEL_SCORESAVED")
+            }
+        }
     }
     
     private func setupView() {
@@ -152,7 +163,11 @@ class GameOverController: BaseViewController {
         self.scoreLabel.text = "\(self.result.score.player) : \(self.result.score.enemy)"
         self.elapsedTimeLabel.text = "\(self.result.time.string()) sec"
 
-        self.saveScoreButton.isEnabled
-            = (self.result.score.player > self.result.score.enemy) && !self.result.time.isOver
+        self.progressIndicator.stopAnimating()
+        self.progressLabel.text = nil
+    }
+
+    private func saveScore(completion: GameScoreCompletionBlock?) {
+        self.gameScoreDelegate?.saveScore(self.result, completion: completion)
     }
 }

@@ -294,16 +294,17 @@ extension CoordinatorController: Coordinator {
         result: GameResult,
         completion: GameScoreCompletionBlock?
     ) {
-        logger.debug("Save Score to LeaderBoard")
+        logger.debug("Saving Score to LeaderBoard")
         let player = GKLocalPlayer.local
         guard player.isAuthenticated else {
             let error = NSError(
                 domain: Bundle.main.bundleIdentifier ?? "",
                 code: -1,
                 userInfo: [
-                    NSLocalizedDescriptionKey: NSLocalizedString("You have to login", comment: "ERRO_GAMECENTER_NOTLOGGED")
+                    NSLocalizedDescriptionKey: NSLocalizedString("Player not authenticated", comment: "ERRO_GAMECENTER_NOTLOGGED")
                 ]
             )
+            logger.error("Save score error: \(error.localizedDescription)")
             completion?(error)
             return
         }
@@ -326,7 +327,14 @@ extension CoordinatorController: Coordinator {
         GKScore.report(
             scores,
             withEligibleChallenges: challenges,
-            withCompletionHandler: completion
+            withCompletionHandler: { [weak self] error in
+                if let error = error {
+                    self?.logger.error("Save score error: \(error.localizedDescription)")
+                } else {
+                    self?.logger.debug("Score saved successfully")
+                }
+                completion?(error)
+            }
         )
     }
 }

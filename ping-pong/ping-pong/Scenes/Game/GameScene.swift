@@ -76,24 +76,24 @@ class GameScene: BaseScene {
                 maxVelocity: 75,
                 minVelocity: 50,
                 followBallDuration: 5 * Self.minFollowBallDuration,
-                speedAcceleration: 2.5,
-                randomYtoX: 5
+                speedAcceleration: 0.5,
+                randomYtoX: 10
             )
         case .medium:
             return Configuration(
                 maxVelocity: 100,
                 minVelocity: 75,
-                followBallDuration: 2.5 * Self.minFollowBallDuration,
-                speedAcceleration: 5,
-                randomYtoX: 5
+                followBallDuration: 3.333 * Self.minFollowBallDuration,
+                speedAcceleration: 1,
+                randomYtoX: 6.667
             )
         case .hard:
             return Configuration(
-                maxVelocity: 150,
+                maxVelocity: 125,
                 minVelocity: 100,
-                followBallDuration: Self.minFollowBallDuration,
-                speedAcceleration: 10,
-                randomYtoX: 5
+                followBallDuration: 1.677 * Self.minFollowBallDuration,
+                speedAcceleration: 2,
+                randomYtoX: 3.333
             )
         }
     }
@@ -148,7 +148,7 @@ class GameScene: BaseScene {
     //
     // MARK: Touches handling
 
-    let safeZoneLocationY: CGFloat = -350
+    static let safeZoneLocationY: CGFloat = -350
 
     func touchDown(atPoint position : CGPoint) {
         let moveAction = SKAction.moveTo(x: position.x, duration: Self.minFollowBallDuration)
@@ -165,7 +165,7 @@ class GameScene: BaseScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = (t.location(in: self))
-            guard location.y < safeZoneLocationY else {
+            guard location.y < Self.safeZoneLocationY else {
                 super.touchesBegan(touches, with: event)
                 return
             }
@@ -176,7 +176,7 @@ class GameScene: BaseScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = (t.location(in: self))
-            guard location.y < safeZoneLocationY else {
+            guard location.y < Self.safeZoneLocationY else {
                 super.touchesMoved(touches, with: event)
                 return
             }
@@ -187,7 +187,7 @@ class GameScene: BaseScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = (t.location(in: self))
-            guard location.y < safeZoneLocationY else {
+            guard location.y < Self.safeZoneLocationY else {
                 // super.touchesEnded(touches, with: event)
                 pauseGame()
                 return
@@ -373,14 +373,17 @@ private extension GameScene {
     }
 
     func randomVector(positiveY: Bool) -> CGVector {
-        let randomX = Double.random(in: configuration.minVelocity...configuration.maxVelocity) / configuration.randomYtoX
-        let randomY = Double.random(in: configuration.minVelocity...configuration.maxVelocity)
+        let randomValue = Double.random(in: configuration.minVelocity...configuration.maxVelocity)
+        let randomX = randomValue / configuration.randomYtoX
+        let randomY = randomValue
         let randomSignX:Double = Bool.random() ? 1 : -1
         let randomSignY:Double = positiveY ? 1 : -1
-        return CGVector(
+        let vector = CGVector(
             dx: CGFloat(randomSignX * randomX),
             dy: CGFloat(randomSignY * randomY)
         )
+        self.logger.trace("Random vector: \(vector)")
+        return vector
     }
 }
 
@@ -542,14 +545,9 @@ extension GameScene: SKPhysicsContactDelegate {
             self.run(self.playPingAction)
         }
 
-        let randomRangeLimit: Double = configuration.speedAcceleration / configuration.randomYtoX
-        let randomRange: ClosedRange<Double> = -randomRangeLimit...randomRangeLimit
-        let randomX = Double.random(in: randomRange)
-        let dx = CGFloat(randomX)
         let signY: Double = ballSprite.position.y < 0 ? 1 : -1
         let dy = CGFloat(signY * configuration.speedAcceleration)
-        let impulse = CGVector(dx: dx, dy: dy)
-        self.logger.trace("impulse: \(impulse)")
+        let impulse = CGVector(dx: 0, dy: dy)
         self.ballSprite.physicsBody?.applyImpulse(impulse)
     }
 

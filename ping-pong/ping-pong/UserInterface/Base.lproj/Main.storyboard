@@ -333,7 +333,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YBr-ln-A1K">
-                                <rect key="frame" x="40" y="109" width="295" height="109"/>
+                                <rect key="frame" x="40" y="109" width="295" height="52"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsO-Kd-EYR">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="16"/>
@@ -342,19 +342,29 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOx-tL-Pk6">
-                                        <rect key="frame" x="0.0" y="43" width="295" height="16"/>
+                                        <rect key="frame" x="0.0" y="36" width="295" height="16"/>
                                         <fontDescription key="fontDescription" name="JoystixMonospace-Regular" family="Joystix" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLu-Bt-5xa">
-                                        <rect key="frame" x="0.0" y="79" width="295" height="30"/>
-                                        <state key="normal" title="Save Score"/>
-                                        <connections>
-                                            <action selector="saveScoreAction:" destination="O7N-5y-V4N" eventType="touchUpInside" id="3Wu-rG-RxZ"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Y2B-fe-YYf">
+                                <rect key="frame" x="137.5" y="201" width="100" height="20.5"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="9zA-QJ-1dd">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20.5"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cmw-AT-GBr">
+                                        <rect key="frame" x="32" y="0.0" width="68" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20.5" id="bHb-5L-p8O"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="j1N-gi-sYK">
                                 <rect key="frame" x="149.5" y="547" width="76" height="80"/>
@@ -381,6 +391,8 @@
                         <constraints>
                             <constraint firstItem="YBr-ln-A1K" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="0V3-b4-mf5"/>
                             <constraint firstItem="yjk-uI-Gdq" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="GBX-pu-gxs"/>
+                            <constraint firstItem="Y2B-fe-YYf" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="GdW-Gu-Yol"/>
+                            <constraint firstItem="Y2B-fe-YYf" firstAttribute="top" secondItem="YBr-ln-A1K" secondAttribute="bottom" constant="40" id="PA2-4s-SHD"/>
                             <constraint firstItem="chx-6c-FQG" firstAttribute="bottom" secondItem="j1N-gi-sYK" secondAttribute="bottom" constant="40" id="X4p-Hm-Bxs"/>
                             <constraint firstItem="YBr-ln-A1K" firstAttribute="leading" secondItem="chx-6c-FQG" secondAttribute="leading" constant="40" id="Zkr-ij-pjy"/>
                             <constraint firstItem="j1N-gi-sYK" firstAttribute="centerX" secondItem="hHy-ri-JYl" secondAttribute="centerX" id="acZ-gg-F34"/>
@@ -394,8 +406,9 @@
                     <connections>
                         <outlet property="elapsedTimeLabel" destination="FOx-tL-Pk6" id="Erb-2f-oEt"/>
                         <outlet property="mainMenuButton" destination="GzH-lw-cEt" id="Rmg-1H-leO"/>
+                        <outlet property="progressIndicator" destination="9zA-QJ-1dd" id="Kvm-ju-t9z"/>
+                        <outlet property="progressLabel" destination="Cmw-AT-GBr" id="7Kz-h0-QWR"/>
                         <outlet property="restartButton" destination="scK-Cl-CpJ" id="8KZ-du-1xT"/>
-                        <outlet property="saveScoreButton" destination="sLu-Bt-5xa" id="cG2-Mr-ikG"/>
                         <outlet property="scoreLabel" destination="hsO-Kd-EYR" id="Si4-PP-aNJ"/>
                         <outlet property="titleLabel" destination="yjk-uI-Gdq" id="zVX-Kg-haS"/>
                     </connections>

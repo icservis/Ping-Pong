@@ -24,4 +24,8 @@ struct GameResult {
         self.score = (player: 0, enemy: 0)
         self.time = ElapsedTime()
     }
+
+    var shouldSaveScore: Bool {
+        return (self.score.player > self.score.enemy) && !self.time.isOver
+    }
 }
