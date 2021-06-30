@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840C92832684D65200064B00 /* tink.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92812684D65200064B00 /* tink.m4a */; };
+		840C92842684D65200064B00 /* tonk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92822684D65200064B00 /* tonk.m4a */; };
+		840C92872684E97500064B00 /* matchWon.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92852684E97500064B00 /* matchWon.m4a */; };
+		840C92882684E97500064B00 /* matchLost.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92862684E97500064B00 /* matchLost.m4a */; };
+		840C928A2684F05A00064B00 /* notify.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 840C92892684F05A00064B00 /* notify.m4a */; };
 		840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 840DB17725C9F963002BB63D /* joystix monospace.ttf */; };
 		84129D622673C16C003D0DD4 /* CountdownTimer in Frameworks */ = {isa = PBXBuildFile; productRef = 84129D612673C16C003D0DD4 /* CountdownTimer */; };
 		84129D7026751F76003D0DD4 /* digital-7 (mono italic).ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84129D6C26751F76003D0DD4 /* digital-7 (mono italic).ttf */; };
@@ -39,11 +44,13 @@
 		844E861925AB5F420071B82C /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 844E861825AB5F420071B82C /* Logging */; };
 		8452430525CC68E90042D09E /* ModalPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 8452430425CC68E90042D09E /* ModalPresentation */; };
 		8452580125C9EFB400A436DF /* NumberFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */; };
+		84682944268668DA00CF486D /* big-bounce.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 84682943268668DA00CF486D /* big-bounce.m4a */; };
 		848005F225C8A131006659B4 /* GameOverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848005F125C8A131006659B4 /* GameOverController.swift */; };
 		84897936225A56070027818C /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84897935225A56070027818C /* ActionButton.swift */; };
 		84A2C14D23FD5C13005ACB5A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 84A2C14B23FD5C13005ACB5A /* GameScene.sks */; };
 		84A2C14E23FD5C13005ACB5A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C14C23FD5C13005ACB5A /* GameScene.swift */; };
 		84A2C15023FD5F81005ACB5A /* BaseScene+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C14F23FD5F81005ACB5A /* BaseScene+Actions.swift */; };
+		84C7F0F72683A6D300A738DB /* GameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7F0F62683A6D300A738DB /* GameResult.swift */; };
 		84CC81F0267F5F20001FDD7E /* LeaderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC81EF267F5F20001FDD7E /* LeaderBoard.swift */; };
 		84CC81F2267F7425001FDD7E /* ElapsedTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC81F1267F7425001FDD7E /* ElapsedTime.swift */; };
 		84DAA42725C5A03F00E1FF03 /* IntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DAA42625C5A03F00E1FF03 /* IntroController.swift */; };
@@ -58,6 +65,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840C92812684D65200064B00 /* tink.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = tink.m4a; path = ../../../Resources/Sounds/tink.m4a; sourceTree = "<group>"; };
+		840C92822684D65200064B00 /* tonk.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = tonk.m4a; path = ../../../Resources/Sounds/tonk.m4a; sourceTree = "<group>"; };
+		840C92852684E97500064B00 /* matchWon.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = matchWon.m4a; path = ../../../Resources/Sounds/matchWon.m4a; sourceTree = "<group>"; };
+		840C92862684E97500064B00 /* matchLost.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = matchLost.m4a; path = ../../../Resources/Sounds/matchLost.m4a; sourceTree = "<group>"; };
+		840C92892684F05A00064B00 /* notify.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = notify.m4a; path = ../../../Resources/Sounds/notify.m4a; sourceTree = "<group>"; };
 		840DB17725C9F963002BB63D /* joystix monospace.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "joystix monospace.ttf"; sourceTree = "<group>"; };
 		84129D6C26751F76003D0DD4 /* digital-7 (mono italic).ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7 (mono italic).ttf"; sourceTree = "<group>"; };
 		84129D6D26751F76003D0DD4 /* digital-7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "digital-7.ttf"; sourceTree = "<group>"; };
@@ -89,11 +101,13 @@
 		844E85E525AB05680071B82C /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		844E860E25AB0EBA0071B82C /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		8452580025C9EFB400A436DF /* NumberFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extensions.swift"; sourceTree = "<group>"; };
+		84682943268668DA00CF486D /* big-bounce.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "big-bounce.m4a"; path = "../../../Resources/Sounds/big-bounce.m4a"; sourceTree = "<group>"; };
 		848005F125C8A131006659B4 /* GameOverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverController.swift; sourceTree = "<group>"; };
 		84897935225A56070027818C /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		84A2C14B23FD5C13005ACB5A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		84A2C14C23FD5C13005ACB5A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		84A2C14F23FD5F81005ACB5A /* BaseScene+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseScene+Actions.swift"; sourceTree = "<group>"; };
+		84C7F0F62683A6D300A738DB /* GameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResult.swift; sourceTree = "<group>"; };
 		84CC81EF267F5F20001FDD7E /* LeaderBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoard.swift; sourceTree = "<group>"; };
 		84CC81F1267F7425001FDD7E /* ElapsedTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElapsedTime.swift; sourceTree = "<group>"; };
 		84DAA42625C5A03F00E1FF03 /* IntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroController.swift; sourceTree = "<group>"; };
@@ -122,7 +136,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		84161257220A1217000A3B27 /* Resources */ = {
+		840C927F2684D60D00064B00 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				84129D6E26751F76003D0DD4 /* digital-7 (italic).ttf */,
@@ -131,7 +145,29 @@
 				84129D6D26751F76003D0DD4 /* digital-7.ttf */,
 				840DB17725C9F963002BB63D /* joystix monospace.ttf */,
 				842B968B220DBE7C00CB49E9 /* LLPIXEL3.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		840C92802684D63100064B00 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				84682943268668DA00CF486D /* big-bounce.m4a */,
 				8416125A220A2155000A3B27 /* ball-ping.caf */,
+				840C92862684E97500064B00 /* matchLost.m4a */,
+				840C92852684E97500064B00 /* matchWon.m4a */,
+				840C92892684F05A00064B00 /* notify.m4a */,
+				840C92812684D65200064B00 /* tink.m4a */,
+				840C92822684D65200064B00 /* tonk.m4a */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		84161257220A1217000A3B27 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				840C92802684D63100064B00 /* Audio */,
+				840C927F2684D60D00064B00 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -231,6 +267,7 @@
 				844E860E25AB0EBA0071B82C /* FileSystem.swift */,
 				84CC81EF267F5F20001FDD7E /* LeaderBoard.swift */,
 				844E85E525AB05680071B82C /* Player.swift */,
+				84C7F0F62683A6D300A738DB /* GameResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -403,15 +440,21 @@
 			files = (
 				84129D7326751F76003D0DD4 /* digital-7 (mono).ttf in Resources */,
 				8446E84C22071299008FF376 /* Main.storyboard in Resources */,
+				840C92842684D65200064B00 /* tonk.m4a in Resources */,
+				84682944268668DA00CF486D /* big-bounce.m4a in Resources */,
+				840C92872684E97500064B00 /* matchWon.m4a in Resources */,
 				84129D7226751F76003D0DD4 /* digital-7 (italic).ttf in Resources */,
 				8446E84E2207129C008FF376 /* Assets.xcassets in Resources */,
 				8416125B220A2155000A3B27 /* ball-ping.caf in Resources */,
 				8446E8512207129C008FF376 /* LaunchScreen.storyboard in Resources */,
 				84129D7026751F76003D0DD4 /* digital-7 (mono italic).ttf in Resources */,
+				840C92832684D65200064B00 /* tink.m4a in Resources */,
 				842B968C220DBE7C00CB49E9 /* LLPIXEL3.ttf in Resources */,
 				84A2C14D23FD5C13005ACB5A /* GameScene.sks in Resources */,
+				840C92882684E97500064B00 /* matchLost.m4a in Resources */,
 				840DB17825C9F963002BB63D /* joystix monospace.ttf in Resources */,
 				8446E84522071299008FF376 /* Actions.sks in Resources */,
+				840C928A2684F05A00064B00 /* notify.m4a in Resources */,
 				84129D7126751F76003D0DD4 /* digital-7.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,6 +498,7 @@
 				84CC81F2267F7425001FDD7E /* ElapsedTime.swift in Sources */,
 				84A2C15023FD5F81005ACB5A /* BaseScene+Actions.swift in Sources */,
 				84DC16B525C5EBE100F55306 /* Localizer.swift in Sources */,
+				84C7F0F72683A6D300A738DB /* GameResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,7 +586,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -550,6 +594,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ic-servis.ping-pong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Ping Pong AdHoc";
@@ -682,7 +727,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -690,6 +735,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ic-servis.ping-pong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Ping Pong Dev";
@@ -704,7 +750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = PH3V9JYRDW;
 				INFOPLIST_FILE = "ping-pong/Support/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -712,6 +758,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ic-servis.ping-pong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Ping Pong AppStore";

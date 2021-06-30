@@ -9,49 +9,55 @@
 import Foundation
 
 final class ElapsedTime: NSObject {
-    typealias Value = TimeInterval
-    typealias ValueChangedBlock = (Value) -> Void
-    static let delta: Value = 0.1
+    typealias Time = TimeInterval
 
-    var value: Value {
+    static let limit: Time = 3_600
+    private(set) var limit: Time
+
+    static let delta: Time = 0.1
+    private(set) var delta: Time
+
+    typealias TimeChangedBlock = (Time) -> Void
+    var timeChangedBlock: TimeChangedBlock?
+
+    private(set) var time: Time {
         didSet {
-            valueChangedBlock?(value)
+            timeChangedBlock?(time)
         }
     }
-    var valueChangedBlock: ValueChangedBlock?
 
-    init(value: Value) {
-        self.value = value
+    typealias TimeOverChangedBlock = (Time) -> Void
+    var timeOverBlock: TimeOverChangedBlock?
+    var isOver: Bool {
+        return self.time > self.limit
+    }
+
+    init(time: Time, limit: Time, delta: Time) {
+        self.time = time
+        self.limit = limit
+        self.delta = delta
     }
 
     override convenience init() {
-        self.init(value: 0)
+        self.init(time: 0, limit: Self.limit, delta: Self.delta)
     }
 
-    func update(with delta: Value) {
-        self.value += delta
+    func update(completion: TimeOverChangedBlock?) {
+        self.time += self.delta
+        guard self.isOver else { return }
+        completion?(self.time)
     }
 
     func reset() {
-        self.value = 0
+        self.time = 0
     }
 
-    func string() -> String? {
-        self.value.toString(precision: .deciseconds)
+    func string() -> String {
+        self.time.toString(precision: .deciseconds) ?? "-"
     }
 
-    class func string(for value: Value) -> String? {
-        let elapsedTime = ElapsedTime(value: value)
-        return elapsedTime.string()
-    }
-
-    func score() -> Int {
-        let scoreValue: Double = self.value * Double(100)
+    func score(multiplier: Double = 100) -> Int {
+        let scoreValue: Double = self.time * multiplier
         return Int(round(scoreValue))
-    }
-
-    class func score(for value: Value) -> Int {
-        let elapsedTime = ElapsedTime(value: value)
-        return elapsedTime.score()
     }
 }

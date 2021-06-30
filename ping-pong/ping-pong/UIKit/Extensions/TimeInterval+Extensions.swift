@@ -16,7 +16,7 @@ extension TimeInterval {
 
     func toString(precision: Precision) -> String? {
         guard self > 0 && self < Double.infinity else {
-            return "0"
+            return nil
         }
 
         let time = NSInteger(self)

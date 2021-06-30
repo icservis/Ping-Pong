@@ -37,25 +37,23 @@ final class GameController: BaseViewController {
     }
 
     func gameOver(
-        level: Player.Difficulty,
-        score: Player.Score,
-        time: ElapsedTime,
+        result: GameResult,
         completion: GameOverController.CloseBlock?
     ) {
         coordinator?.loadGameOver(
-            level: level,
-            score: score,
-            time: time,
+            result: result,
             completion: completion
         )
     }
 
     func loadCountDownTimer(
         initialCount: Int,
+        tick: CountDownController.TickBlock?,
         completion: CountDownController.CompletionBlock?
     ) {
         coordinator?.loadCountDownTimer(
             initialCount: initialCount,
+            tick: tick,
             completion: completion
         )
     }

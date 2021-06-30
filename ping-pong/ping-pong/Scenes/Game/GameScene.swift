@@ -21,11 +21,16 @@ class GameScene: BaseScene {
     var levelLabel: SKLabelNode!
 
     let playPingAction = SKAction.playSoundFileNamed("ball-ping.caf", waitForCompletion: false)
+    let playTinkAction = SKAction.playSoundFileNamed("tink.m4a", waitForCompletion: false)
+    let playTonkAction = SKAction.playSoundFileNamed("tonk.m4a", waitForCompletion: false)
+    let playMatchWonAction = SKAction.playSoundFileNamed("matchWon.m4a", waitForCompletion: false)
+    let playMatchLostAction = SKAction.playSoundFileNamed("matchLost.m4a", waitForCompletion: false)
+    let playNotifyAction = SKAction.playSoundFileNamed("notify.m4a", waitForCompletion: false)
 
     var timer: Timer?
     lazy var currentTime : ElapsedTime = {
         let elapsedTime = ElapsedTime()
-        elapsedTime.valueChangedBlock = { [weak self] time in
+        elapsedTime.timeChangedBlock = { [weak self] time in
             guard let self = self else { return }
             DispatchQueue.global(qos: .default).async {
                 let timeString = elapsedTime.string()
@@ -56,20 +61,40 @@ class GameScene: BaseScene {
     }()
 
     struct Configuration {
-        let maxVelocity: Int
-        let minVelocity: Int
+        let maxVelocity: Double
+        let minVelocity: Double
         let followBallDuration: Double
+        let speedAcceleration: Double
+        let randomYtoX: Double
     }
 
-    var minFollowBallDuration: TimeInterval = 0.1
+    static let minFollowBallDuration: TimeInterval = 0.1
     var configuration: Configuration {
         switch player.level {
         case .easy:
-            return Configuration(maxVelocity: 75, minVelocity: 50, followBallDuration: 5 * minFollowBallDuration)
+            return Configuration(
+                maxVelocity: 75,
+                minVelocity: 50,
+                followBallDuration: 5 * Self.minFollowBallDuration,
+                speedAcceleration: 0.5,
+                randomYtoX: 10
+            )
         case .medium:
-            return Configuration(maxVelocity: 100, minVelocity: 75, followBallDuration: 2.5 * minFollowBallDuration)
+            return Configuration(
+                maxVelocity: 100,
+                minVelocity: 75,
+                followBallDuration: 3.333 * Self.minFollowBallDuration,
+                speedAcceleration: 1,
+                randomYtoX: 6.667
+            )
         case .hard:
-            return Configuration(maxVelocity: 150, minVelocity: 100, followBallDuration: minFollowBallDuration)
+            return Configuration(
+                maxVelocity: 125,
+                minVelocity: 100,
+                followBallDuration: 1.677 * Self.minFollowBallDuration,
+                speedAcceleration: 2,
+                randomYtoX: 3.333
+            )
         }
     }
 
@@ -123,15 +148,15 @@ class GameScene: BaseScene {
     //
     // MARK: Touches handling
 
-    let safeZoneLocationY: CGFloat = -350
+    static let safeZoneLocationY: CGFloat = -350
 
     func touchDown(atPoint position : CGPoint) {
-        let moveAction = SKAction.moveTo(x: position.x, duration: minFollowBallDuration)
+        let moveAction = SKAction.moveTo(x: position.x, duration: Self.minFollowBallDuration)
         playerSprite.run(moveAction)
     }
     
     func touchMoved(toPoint position : CGPoint) {
-        let moveAction = SKAction.moveTo(x: position.x, duration: minFollowBallDuration)
+        let moveAction = SKAction.moveTo(x: position.x, duration: Self.minFollowBallDuration)
         playerSprite.run(moveAction)
     }
     
@@ -140,7 +165,7 @@ class GameScene: BaseScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = (t.location(in: self))
-            guard location.y < safeZoneLocationY else {
+            guard location.y < Self.safeZoneLocationY else {
                 super.touchesBegan(touches, with: event)
                 return
             }
@@ -151,7 +176,7 @@ class GameScene: BaseScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = (t.location(in: self))
-            guard location.y < safeZoneLocationY else {
+            guard location.y < Self.safeZoneLocationY else {
                 super.touchesMoved(touches, with: event)
                 return
             }
@@ -162,7 +187,7 @@ class GameScene: BaseScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let location = (t.location(in: self))
-            guard location.y < safeZoneLocationY else {
+            guard location.y < Self.safeZoneLocationY else {
                 // super.touchesEnded(touches, with: event)
                 pauseGame()
                 return
@@ -181,32 +206,46 @@ class GameScene: BaseScene {
 
 private extension GameScene {
     func pauseGame() {
-        view?.isPaused = true
-        self.controller?.pauseGame { [weak self, weak view] result in
+        self.view?.isPaused = true
+        self.controller?.pauseGame { [weak self] result in
             switch result {
             case .resume:
-                view?.isPaused = false
+                self?.view?.isPaused = false
             case .restart:
                 self?.restartGame(playerHasServis: true)
             case .mainMenu:
-                break
+                break // paused
             }
         }
     }
 
     func restartGame(playerHasServis: Bool) {
-        player.resetScore()
-        resetBall()
-        resetTime()
-        controller?.loadCountDownTimer(initialCount: 3) { [weak self] in
+        self.view?.isPaused = false
+
+        self.player.resetScore()
+        self.resetBall()
+        self.resetPlayerPaddle()
+        self.resetTime()
+
+        self.controller?.loadCountDownTimer(
+            initialCount: 3,
+            tick: { [weak self] tick in
+                guard let self = self else { return }
+                if tick > 0 {
+                    self.run(self.playTinkAction)
+                } else {
+                    self.run(self.playTonkAction)
+                }
+
+            },
+            completion: { [weak self] in
             guard let self = self else { return }
-            self.view?.isPaused = false
-            self.resetTimer(delay: 1) { [weak self] in
+            self.resetTimer(delay: 0) { [weak self] in
                 guard let self = self else { return }
                 let impulse = self.randomVector(positiveY: playerHasServis)
                 self.ballSprite.physicsBody?.applyImpulse(impulse)
             }
-        }
+        })
     }
 
     func endGame(whoWon: SKSpriteNode) {
@@ -228,27 +267,42 @@ private extension GameScene {
         default:
             return
         }
-        pauseTimer(delay: 1) { [weak self] in
+        self.run(self.playNotifyAction)
+        self.pauseTimer(delay: 1) { [weak self] in
             guard let self = self else { return }
+            self.run(self.playTonkAction)
             self.ballSprite.physicsBody?.applyImpulse(impulse)
         }
     }
 
     func gameOver() {
-        view?.isPaused = true
-        timer?.invalidate()
+        self.timer?.invalidate()
         let playerHasWon = self.player.score.player > self.player.score.enemy
-        self.controller?.gameOver(
-            level: player.level,
-            score: player.score,
-            time: currentTime
-        ) { [weak self] result in
+        if playerHasWon {
+            self.run(self.playMatchWonAction)
+        } else {
+            self.run(self.playMatchLostAction)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
-            switch result {
-            case .restart:
-                self.restartGame(playerHasServis: playerHasWon)
-            case .mainMenu:
-                break;
+            self.view?.isPaused = true
+
+            let result = GameResult(
+                level: self.player.level,
+                score: self.player.score,
+                time: self.currentTime
+            )
+            self.controller?.gameOver(
+                result: result
+            ) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .restart:
+                    self.restartGame(playerHasServis: playerHasWon)
+                case .mainMenu:
+                    break;
+                }
             }
         }
     }
@@ -266,7 +320,11 @@ private extension GameScene {
                         let self = self,
                         let view = self.view, !view.isPaused
                     else { return }
-                    self.currentTime.update(with: ElapsedTime.delta)
+                    self.currentTime.update { [weak self] time in
+                        guard let self = self else { return }
+                        self.logger.trace("reset time update \(time)")
+                        self.gameOver()
+                    }
                 }
             )
             completion?()
@@ -285,11 +343,23 @@ private extension GameScene {
                         let self = self,
                         let view = self.view, !view.isPaused
                     else { return }
-                    self.currentTime.update(with: ElapsedTime.delta)
+                    self.currentTime.update { [weak self] time in
+                        guard let self = self else { return }
+                        self.logger.trace("pause time update \(time)")
+                        self.gameOver()
+                    }
                 }
             )
             completion?()
         }
+    }
+
+    func resetPlayerPaddle() {
+        let centerPaddle = SKAction.moveTo(
+            x: 0,
+            duration: 0.5
+        )
+        playerSprite.run(centerPaddle)
     }
 
     func resetBall() {
@@ -298,18 +368,22 @@ private extension GameScene {
     }
 
     func resetTime() {
+        self.timer?.invalidate()
         self.currentTime.reset()
     }
 
     func randomVector(positiveY: Bool) -> CGVector {
-        let randomX = Int.random(in: configuration.minVelocity...configuration.maxVelocity) / 5
-        let randomY = Int.random(in: configuration.minVelocity...configuration.maxVelocity)
-        let randomSignX = Bool.random() ? 1 : -1
-        let randomSignY = positiveY ? 1 : -1
-        return CGVector(
-            dx: randomSignX * randomX,
-            dy: randomSignY * randomY
+        let randomValue = Double.random(in: configuration.minVelocity...configuration.maxVelocity)
+        let randomX = randomValue / configuration.randomYtoX
+        let randomY = randomValue
+        let randomSignX:Double = Bool.random() ? 1 : -1
+        let randomSignY:Double = positiveY ? 1 : -1
+        let vector = CGVector(
+            dx: CGFloat(randomSignX * randomX),
+            dy: CGFloat(randomSignY * randomY)
         )
+        self.logger.trace("Random vector: \(vector)")
+        return vector
     }
 }
 
@@ -446,30 +520,35 @@ extension GameScene: SKPhysicsContactDelegate {
         guard nodes.contains(ballSprite) else { return }
 
         if let dx = ballSprite.physicsBody?.velocity.dx, abs(dx) < 0.1 {
-            let dx = Float(configuration.maxVelocity) / Float.random(in: (2...5))
-            let signX: Float = ballSprite.position.x < 0 ? 1 : -1
+            let dx = CGFloat(configuration.maxVelocity) / CGFloat.random(in: (2...5))
+            let signX: CGFloat = ballSprite.position.x < 0 ? 1 : -1
             let impulse = CGVector(
-                dx: Int(signX * dx),
+                dx: CGFloat(signX * dx),
                 dy: 0
             )
             self.ballSprite.physicsBody?.applyImpulse(impulse)
         }
 
         if let dy = ballSprite.physicsBody?.velocity.dy, abs(dy) < 0.1 {
-            let dy = Float(configuration.maxVelocity) / Float.random(in: (2...5))
-            let signY: Float = ballSprite.position.y < 0 ? 1 : -1
+            let dy = CGFloat(configuration.maxVelocity) / CGFloat.random(in: (2...5))
+            let signY: CGFloat = ballSprite.position.y < 0 ? 1 : -1
             let impulse = CGVector(
                 dx: 0,
-                dy: Int(signY * dy)
+                dy: CGFloat(signY * dy)
             )
             self.ballSprite.physicsBody?.applyImpulse(impulse)
         }
 
         if supportsHaptics {
-            playHapticResponse()
+            self.playHapticResponse()
         } else {
-            run(playPingAction)
+            self.run(self.playPingAction)
         }
+
+        let signY: Double = ballSprite.position.y < 0 ? 1 : -1
+        let dy = CGFloat(signY * configuration.speedAcceleration)
+        let impulse = CGVector(dx: 0, dy: dy)
+        self.ballSprite.physicsBody?.applyImpulse(impulse)
     }
 
     func didEnd(_ contact: SKPhysicsContact) { }

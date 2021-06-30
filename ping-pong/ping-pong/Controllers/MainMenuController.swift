@@ -14,6 +14,10 @@ final class MainMenuController: BaseViewController {
         super.viewDidLoad()
     }
 
+    var isPlayerAuthenticated: Bool {
+        return coordinator?.isPlayerAuthenticated() ?? false
+    }
+
     @IBOutlet weak var contentView: UIView!
 
     @IBOutlet weak var backgroundView: UIImageView!
@@ -95,10 +99,12 @@ final class MainMenuController: BaseViewController {
                 NSLocalizedString("GameCenter", comment: "MAINMENU_BUTTON_GAMECENTER"),
                 for: .normal
             )
+            gameCenterDashboard.isEnabled = isPlayerAuthenticated
         }
     }
     @IBAction func loadGameCenterDashboard(_ sender: UIButton) {
         logger.trace("Load Game Center")
+        guard isPlayerAuthenticated else { return }
         coordinator?.loadGameCenterDashboard(completion: { })
     }
 }
