@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol GameOverGameScoreProvider: AnyObject {
+protocol GameScoreProvider: AnyObject {
     func saveScore(
         _ result: GameResult,
         completion: GameScoreCompletionBlock?
@@ -16,7 +16,7 @@ protocol GameOverGameScoreProvider: AnyObject {
 }
 
 class GameOverController: BaseViewController {
-    weak var gameScoreDelegate: GameOverGameScoreProvider?
+    weak var gameScoreDelegate: GameScoreProvider?
 
     @IBOutlet private weak var gameCenterButton: UIButton! {
         didSet {

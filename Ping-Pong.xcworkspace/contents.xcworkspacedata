@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:ping-pong/Ping-Pong.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ping-pong/../README.md">
+   </FileRef>
+   <FileRef
+      location = "group:ping-pong/../LICENSE">
+   </FileRef>
+   <Group
+      location = "group:docs"
+      name = "docs">
+      <FileRef
+         location = "group:_config.yml">
+      </FileRef>
+      <Group
+         location = "group:_data"
+         name = "_data">
+         <FileRef
+            location = "group:ui-text.yml">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:_includes"
+         name = "_includes">
+         <FileRef
+            location = "group:gtag.html">
+         </FileRef>
+         <FileRef
+            location = "group:social-networks-links.html">
+         </FileRef>
+         <FileRef
+            location = "group:utterances-comment.html">
+         </FileRef>
+         <FileRef
+            location = "group:footer-minimal.html">
+         </FileRef>
+         <FileRef
+            location = "group:ext-css.html">
+         </FileRef>
+         <FileRef
+            location = "group:gtm_head.html">
+         </FileRef>
+         <FileRef
+            location = "group:ext-js.html">
+         </FileRef>
+         <FileRef
+            location = "group:matomo.html">
+         </FileRef>
+         <FileRef
+            location = "group:readtime.html">
+         </FileRef>
+         <FileRef
+            location = "group:fb-comment.html">
+         </FileRef>
+         <FileRef
+            location = "group:social-share.html">
+         </FileRef>
+         <FileRef
+            location = "group:disqus.html">
+         </FileRef>
+         <FileRef
+            location = "group:staticman-comment.html">
+         </FileRef>
+         <FileRef
+            location = "group:footer-scripts.html">
+         </FileRef>
+         <FileRef
+            location = "group:gtm_body.html">
+         </FileRef>
+         <FileRef
+            location = "group:head.html">
+         </FileRef>
+         <FileRef
+            location = "group:comments.html">
+         </FileRef>
+         <FileRef
+            location = "group:search.html">
+         </FileRef>
+         <FileRef
+            location = "group:footer.html">
+         </FileRef>
+         <FileRef
+            location = "group:staticman-comments.html">
+         </FileRef>
+         <FileRef
+            location = "group:header.html">
+         </FileRef>
+         <FileRef
+            location = "group:google_analytics.html">
+         </FileRef>
+         <FileRef
+            location = "group:nav.html">
+         </FileRef>
+         <FileRef
+            location = "group:cloudflare_analytics.html">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:_layouts"
+         name = "_layouts">
+         <FileRef
+            location = "group:post.html">
+         </FileRef>
+         <FileRef
+            location = "group:page.html">
+         </FileRef>
+         <FileRef
+            location = "group:home.html">
+         </FileRef>
+         <FileRef
+            location = "group:default.html">
+         </FileRef>
+         <FileRef
+            location = "group:base.html">
+         </FileRef>
+         <FileRef
+            location = "group:minimal.html">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:_posts"
+         name = "_posts">
+         <FileRef
+            location = "group:2020-02-28-test-markdown.md">
+         </FileRef>
+         <FileRef
+            location = "group:2020-02-26-flake-it-till-you-make-it.md">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:404.html">
+      </FileRef>
+      <FileRef
+         location = "group:aboutme.md">
+      </FileRef>
+      <Group
+         location = "group:assets"
+         name = "assets">
+         <Group
+            location = "group:css"
+            name = "css">
+            <FileRef
+               location = "group:pygment_highlights.css">
+            </FileRef>
+            <FileRef
+               location = "group:bootstrap-social.css">
+            </FileRef>
+            <FileRef
+               location = "group:beautifuljekyll-minimal.css">
+            </FileRef>
+            <FileRef
+               location = "group:beautifuljekyll.css">
+            </FileRef>
+            <FileRef
+               location = "group:staticman.css">
+            </FileRef>
+         </Group>
+         <Group
+            location = "group:js"
+            name = "js">
+            <FileRef
+               location = "group:staticman.js">
+            </FileRef>
+            <FileRef
+               location = "group:beautifuljekyll.js">
+            </FileRef>
+         </Group>
+         <Group
+            location = "group:img"
+            name = "img">
+            <FileRef
+               location = "group:bgimage.png">
+            </FileRef>
+            <FileRef
+               location = "group:install-steps.gif">
+            </FileRef>
+            <FileRef
+               location = "group:avatar-icon.png">
+            </FileRef>
+            <FileRef
+               location = "group:404-southpark.jpg">
+            </FileRef>
+            <FileRef
+               location = "group:hello_world.jpeg">
+            </FileRef>
+            <FileRef
+               location = "group:path.jpg">
+            </FileRef>
+            <FileRef
+               location = "group:thumb.png">
+            </FileRef>
+         </Group>
+      </Group>
+      <FileRef
+         location = "group:beautiful-jekyll-theme.gemspec">
+      </FileRef>
+      <Group
+         location = "group:docs"
+         name = "docs">
+         <FileRef
+            location = "group:index.html">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:feed.xml">
+      </FileRef>
+      <FileRef
+         location = "group:Gemfile">
+      </FileRef>
+      <FileRef
+         location = "group:CHANGELOG.md">
+      </FileRef>
+      <FileRef
+         location = "group:index.html">
+      </FileRef>
+      <FileRef
+         location = "group:LICENSE">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:screenshot.png">
+      </FileRef>
+      <FileRef
+         location = "group:staticman.yml">
+      </FileRef>
+      <FileRef
+         location = "group:tags.html">
+      </FileRef>
+   </Group>
+</Workspace>
