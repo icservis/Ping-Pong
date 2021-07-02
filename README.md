@@ -11,9 +11,15 @@ Based on original tutorial of [Let's Make Pong!](https://www.youtube.com/watch?v
 </p>
 
 ### Credits
+
 Idea & Production: **Sebastián Kučera**
+
 Design & Resources: **Jakub Bondor**
-Developemnt & Programming: **Libor Kučera**
+
+Development & Programming: **Libor Kučera**
 
 ### Links
-Source Code: [GitHub](https://github.com/icservis/Ping-Pong)
+
+[Documentation](https://www.ic-servis.com/Ping-Pong/)
+
+[AppStore](https://apps.apple.com/us/app/ping-pong-70/id1549873371)
