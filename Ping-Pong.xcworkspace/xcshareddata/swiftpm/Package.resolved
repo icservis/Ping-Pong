@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CountdownTimer",
+        "repositoryURL": "git@github.com:icservis/CountdownTimer.git",
+        "state": {
+          "branch": "master",
+          "revision": "4ed66014626ea91d686bf7e3e1807c836add2053",
+          "version": null
+        }
+      },
+      {
+        "package": "ModalPresentation",
+        "repositoryURL": "git@github.com:icservis/ModalPresentation.git",
+        "state": {
+          "branch": "main",
+          "revision": "a70c8b1791a4c6801157b6bf4181fb9f2f0e39a6",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-log",
+        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "state": {
+          "branch": null,
+          "revision": "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
+          "version": "1.4.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
